@@ -2,8 +2,10 @@ package models;
 
 import java.util.ArrayList;
 
-abstract class Project {
-  private String ID;
+import utils.CustomUtils;
+
+public abstract class Project {
+  private String id;
   private String name;
   private String description;
   private int teamSize;
@@ -11,8 +13,8 @@ abstract class Project {
 
   private ArrayList<Task> tasks;
 
-  public Project(String ID, String name, String description, int teamSize, double budget) {
-    this.ID = ID;
+  public Project(String name, String description, int teamSize, double budget) {
+    this.id = CustomUtils.generateID();
     this.name = name;
     this.description = description;
     this.teamSize = teamSize;
@@ -20,8 +22,8 @@ abstract class Project {
     this.tasks = new ArrayList<>();
   }
 
-  public String getID() {
-    return ID;
+  public String getId() {
+    return id;
   }
 
   public String getName() {
@@ -38,5 +40,14 @@ abstract class Project {
 
   public double getBudget() {
     return budget;
+  }
+
+  public String toString() {
+    return System.out
+        .format("\nid: %s, name: %s, type: %s, description: %s, teamSize: %s, budget: %s", id, name,
+            this.getClass().getSimpleName(),
+            description,
+            teamSize, budget)
+        .toString();
   }
 }

@@ -7,10 +7,12 @@ public class AdminUser extends User {
     super(name, email, password);
   }
 
+  @Override
   public boolean canUpdateProject() {
     return true;
   }
 
+  @Override
   public boolean canDeleteProject() {
     return true;
   }

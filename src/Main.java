@@ -1,18 +1,15 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 
-import models.AdminUser;
-import models.RegularUser;
+import models.Project;
 import models.User;
 import utils.ConsoleMenu;
+import utils.Seed;
 
 public class Main {
 
   public static void main(String[] args) {
-    ArrayList<User> users = new ArrayList<>();
-    users.add(new RegularUser("EssliFe", "esslifie@gmail.com", "password"));
-    users.add(new AdminUser("EssliFe", "esslifie@gmail.com", "password"));
-    users.add(new RegularUser("EssliFe", "esslifie@gmail.com", "password"));
-    users.add(new AdminUser("EssliFe", "esslifie@gmail.com", "password"));
+    HashMap<String, User> users = Seed.seedUsers();
+    HashMap<String, Project> projects = Seed.seedProjects();
     // ProjectService projectService = new ProjectService(users);
     // ReportService reportService = new ReportService(users);
     // TaskService taskService = new TaskService(users);
@@ -26,13 +23,15 @@ public class Main {
           menu.setTitle("Add Project");
           break;
         case 2:
-          System.out.println("View Projects");
+          projects.toString();
+          System.out.println();
           break;
         case 3:
           System.out.println("Add Task");
           break;
         case 4:
-          System.out.println("View Tasks");
+          users.toString();
+          System.out.println();
           break;
         case 5:
           System.out.println("Exit");

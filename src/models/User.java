@@ -1,15 +1,23 @@
 
 package models;
 
+import utils.CustomUtils;
+
 public abstract class User {
+  private String id;
   private String name;
   private String email;
   private String password;
 
   public User(String name, String email, String password) {
+    id = CustomUtils.generateID();
     this.name = name;
     this.email = email;
     this.password = password;
+  }
+
+  public String getId() {
+    return id;
   }
 
   public String getName() {
@@ -32,4 +40,9 @@ public abstract class User {
     return false;
   }
 
+  public String toString() {
+    return System.out
+        .format("\nUser [name: %s, email: %s, isAdmin: %s]", this.name, this.email, this.canDeleteProject())
+        .toString();
+  }
 }
