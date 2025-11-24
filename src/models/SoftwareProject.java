@@ -7,4 +7,10 @@ public class SoftwareProject extends Project {
     super(name, description, teamSize, budget);
   }
 
+  @Override
+  String getProjectDetails() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'getProjectDetails'");
+  }
+
 }

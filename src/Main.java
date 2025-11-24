@@ -8,12 +8,16 @@ import utils.Seed;
 public class Main {
 
   public static void main(String[] args) {
+    User currentUser;
     HashMap<String, User> users = Seed.seedUsers();
+    currentUser = users.get("kratos@gmail.com");
     HashMap<String, Project> projects = Seed.seedProjects();
     // ProjectService projectService = new ProjectService(users);
     // ReportService reportService = new ReportService(users);
     // TaskService taskService = new TaskService(users);
     ConsoleMenu menu = new ConsoleMenu();
+    menu.setCurrentUser(users.get("kratos@gmail.com"));
+
     menu.printMenu();
     int choice = menu.getChoice();
 

@@ -2,9 +2,12 @@ package utils;
 
 import java.util.Scanner;
 
+import models.User;
+
 public class ConsoleMenu {
   int choice;
   String title = "Main Menu";
+  User currentUser;
   Scanner scanner = new Scanner(System.in);
 
   public ConsoleMenu() {
@@ -15,6 +18,10 @@ public class ConsoleMenu {
     System.out.print("Enter your choice: ");
     choice = scanner.nextInt();
     return choice;
+  }
+
+  public void setCurrentUser(User user) {
+    currentUser = user;
   }
 
   public void setChoice(int choice) {
@@ -28,7 +35,8 @@ public class ConsoleMenu {
   }
 
   public void printMenu() {
-    this.printTitle();
+    printTitle();
+    printCurrentUser();
     System.out.println("1. Add Project");
     System.out.println("2. View Projects");
     System.out.println("3. Add Task");
@@ -36,7 +44,11 @@ public class ConsoleMenu {
     System.out.println("5. Exit");
   }
 
-  public void printTitle() {
+  private void printCurrentUser() {
+    System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getType());
+  }
+
+  private void printTitle() {
     System.out.println("||================================================================================||");
     System.out.printf("|| Project Management System:  %s %s||\n", title, " ".repeat(50 - title.length()));
     System.out.println("||================================================================================||");

@@ -42,9 +42,16 @@ public abstract class Project {
     return budget;
   }
 
+  abstract String getProjectDetails();
+
+  public String displayProject() {
+    return toString();
+
+  }
+
   public String toString() {
     return System.out
-        .format("\nid: %s, name: %s, type: %s, description: %s, teamSize: %s, budget: %s", id, name,
+        .format("\n %s | %s | %s | %s | %s | %s", id, name,
             this.getClass().getSimpleName(),
             description,
             teamSize, budget)

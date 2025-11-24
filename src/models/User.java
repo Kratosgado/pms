@@ -40,6 +40,10 @@ public abstract class User {
     return false;
   }
 
+  public String getType() {
+    return this.getClass().getSimpleName();
+  }
+
   public String toString() {
     return System.out
         .format("\nUser [name: %s, email: %s, isAdmin: %s]", this.name, this.email, this.canDeleteProject())

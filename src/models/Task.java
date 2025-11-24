@@ -1,36 +1,31 @@
 
 package models;
 
+import interfaces.Completable;
 import utils.TaskStatus;
 
-public class Task {
+public class Task implements Completable {
 
+  private String id;
   private String name;
-  private String description;
   private TaskStatus status;
-  private Project project;
+  private int progress;
   private String userID;
 
-  Task(String name, String description, Project project) {
+  Task(String id, String name) {
+    this.id = id;
     this.name = name;
-    this.description = description;
-    this.project = project;
     this.status = TaskStatus.PENDING;
   }
 
-  Task(String name, String description, TaskStatus status, Project project) {
+  Task(String id, String name, TaskStatus status) {
+    this.id = id;
     this.name = name;
-    this.description = description;
     this.status = status;
-    this.project = project;
   }
 
   public String getName() {
     return name;
-  }
-
-  public String getDescription() {
-    return description;
   }
 
   public TaskStatus getStatus() {
@@ -39,10 +34,6 @@ public class Task {
 
   public void setStatus(TaskStatus status) {
     this.status = status;
-  }
-
-  public Project getProject() {
-    return project;
   }
 
   public String getUserID() {
@@ -54,6 +45,11 @@ public class Task {
   }
 
   public String toString() {
-    return String.format("Task: %s\nDescription: %s\nStatus: %s\nProject: %s", name, description, status, project);
+    return String.format("%s | %s | %s", id, name, status);
+  }
+
+  @Override
+  public boolean isCompleted() {
+    return status == TaskStatus.COMPLETED;
   }
 }
