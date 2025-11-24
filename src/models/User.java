@@ -24,4 +24,7 @@ abstract class User {
     return password;
   }
 
+  public boolean canAddProject() {
+    return false;
+  }
 }

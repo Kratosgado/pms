@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ConsoleMenu {
   int choice;
-  String title = "";
+  String title = "Main Menu";
   Scanner scanner = new Scanner(System.in);
 
   public ConsoleMenu() {
@@ -37,15 +37,8 @@ public class ConsoleMenu {
   }
 
   public void printTitle() {
-    System.out.println("================================================================================");
-    System.out.printf("|| Project Manager System:  %s                ||\n", title.isBlank() ? "Main Menu" : title);
-    System.out.println("================================================================================");
+    System.out.println("||================================================================================||");
+    System.out.printf("|| Project Management System:  %s %s||\n", title, " ".repeat(50 - title.length()));
+    System.out.println("||================================================================================||");
   }
-
-  public void printTitle(String title) {
-    System.out.println("================================================================================");
-    System.out.println("|| " + title + "                                                                   ||");
-    System.out.println("================================================================================");
-  }
-
 }
