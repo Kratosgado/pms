@@ -1,7 +1,7 @@
 
 package models;
 
-abstract class User {
+public abstract class User {
   private String name;
   private String email;
   private String password;
@@ -24,7 +24,12 @@ abstract class User {
     return password;
   }
 
-  public boolean canAddProject() {
+  public boolean canUpdateProject() {
     return false;
   }
+
+  public boolean canDeleteProject() {
+    return false;
+  }
+
 }

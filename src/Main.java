@@ -1,8 +1,21 @@
+import java.util.ArrayList;
+
+import models.AdminUser;
+import models.RegularUser;
+import models.User;
 import utils.ConsoleMenu;
 
 public class Main {
 
   public static void main(String[] args) {
+    ArrayList<User> users = new ArrayList<>();
+    users.add(new RegularUser("EssliFe", "esslifie@gmail.com", "password"));
+    users.add(new AdminUser("EssliFe", "esslifie@gmail.com", "password"));
+    users.add(new RegularUser("EssliFe", "esslifie@gmail.com", "password"));
+    users.add(new AdminUser("EssliFe", "esslifie@gmail.com", "password"));
+    // ProjectService projectService = new ProjectService(users);
+    // ReportService reportService = new ReportService(users);
+    // TaskService taskService = new TaskService(users);
     ConsoleMenu menu = new ConsoleMenu();
     menu.printMenu();
     int choice = menu.getChoice();
