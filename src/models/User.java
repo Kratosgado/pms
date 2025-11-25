@@ -1,16 +1,21 @@
 
 package models;
 
-import utils.CustomUtils;
-
 public abstract class User {
   private String id;
   private String name;
   private String email;
   private String password;
 
-  public User(String name, String email, String password) {
-    id = CustomUtils.generateID();
+  public User(String id, String name, String email) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = "user123";
+  }
+
+  public User(String id, String name, String email, String password) {
+    this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;

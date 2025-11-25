@@ -1,17 +1,41 @@
 package utils;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 import models.User;
+import services.MainService;
+import services.ProjectService;
 
 public class ConsoleMenu {
   int choice;
-  String title = "Main Menu";
-  User currentUser;
   Scanner scanner = new Scanner(System.in);
+  HashMap<String, User> users = Seed.seedUsers();
+  ProjectService projectService = new ProjectService(Seed.seedProjects());
+  public static MainService runningService = new MainService();
+  boolean running = true;
 
   public ConsoleMenu() {
     choice = 0;
+    runningService.setCurrentUser(users.get("kratos@gmail.com"));
+  }
+
+  public void run() {
+    while (running) {
+      runningService.displayMenu();
+      System.out.print("0. Go Back");
+      int choice = getChoice();
+      int result = runningService.handleChoice(choice);
+      if (result == -1)
+        continue;
+      switch (choice) {
+        case 5:
+          System.out.println("Exit");
+          break;
+        default:
+          System.out.println("Invalid Choice");
+      }
+    }
   }
 
   public int getChoice() {
@@ -20,37 +44,8 @@ public class ConsoleMenu {
     return choice;
   }
 
-  public void setCurrentUser(User user) {
-    currentUser = user;
-  }
-
   public void setChoice(int choice) {
     this.choice = choice;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
-    this.printMenu();
-
-  }
-
-  public void printMenu() {
-    printTitle();
-    printCurrentUser();
-    System.out.println("1. Add Project");
-    System.out.println("2. View Projects");
-    System.out.println("3. Add Task");
-    System.out.println("4. View Tasks");
-    System.out.println("5. Exit");
-  }
-
-  private void printCurrentUser() {
-    System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getType());
-  }
-
-  private void printTitle() {
-    System.out.println("||================================================================================||");
-    System.out.printf("|| Project Management System:  %s %s||\n", title, " ".repeat(50 - title.length()));
-    System.out.println("||================================================================================||");
-  }
 }

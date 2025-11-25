@@ -34,4 +34,9 @@ public class CustomUtils {
     return alphaNumeric.charAt(((int) Math.floor(Math.random() * LENGTH)));
 
   }
+
+  public final static String generateId(String prefix, int length) {
+    // 3 should be 003
+    return prefix + String.format("%03d", length);
+  }
 }

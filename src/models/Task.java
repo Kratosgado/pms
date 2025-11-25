@@ -5,20 +5,17 @@ import interfaces.Completable;
 import utils.TaskStatus;
 
 public class Task implements Completable {
-
   private String id;
   private String name;
   private TaskStatus status;
   private int progress;
   private String userID;
 
-  Task(String id, String name) {
-    this.id = id;
-    this.name = name;
-    this.status = TaskStatus.PENDING;
+  public Task(String id, String name) {
+    this(id, name, TaskStatus.PENDING);
   }
 
-  Task(String id, String name, TaskStatus status) {
+  public Task(String id, String name, TaskStatus status) {
     this.id = id;
     this.name = name;
     this.status = status;
