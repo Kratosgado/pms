@@ -35,6 +35,7 @@ public class TaskService extends MainService {
     TaskStatus taskStatus = ValidationUtils.validateTaskStatus(status);
     Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, taskStatus);
     tasks.add(task);
+    System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
 
   public void updateTaskStatus() {
@@ -51,7 +52,7 @@ public class TaskService extends MainService {
     TaskStatus taskStatus = ValidationUtils.validateTaskStatus(status);
     task.setStatus(taskStatus);
     tasks.set(tasks.indexOf(task), task);
-    System.out.println("Task Status Updated");
+    System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
   }
 
   public void removeTask() {
@@ -78,7 +79,7 @@ public class TaskService extends MainService {
     System.out.println("1. Add New Task");
     System.out.println("2. Update Task Status");
     System.out.println("3. Remove Task");
-    System.out.println("5. Exit");
+    System.out.println("4. View Tasks");
   }
 
   @Override
@@ -94,6 +95,11 @@ public class TaskService extends MainService {
         case 3:
           removeTask();
           break;
+        case 4:
+          displayTasks();
+          break;
+        default:
+          return choice;
       }
     } catch (Exception e) {
       System.out.println(e.getMessage());

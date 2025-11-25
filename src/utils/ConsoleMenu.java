@@ -2,33 +2,38 @@ package utils;
 
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Stack;
 
 import models.User;
 import services.MainService;
-import services.ProjectService;
 
 public class ConsoleMenu {
   public static Scanner scanner = new Scanner(System.in);
   HashMap<String, User> users = Seed.seedUsers();
-  ProjectService projectService = new ProjectService(Seed.seedProjects());
-  public static MainService runningService = new MainService();
+  public static Stack<MainService> runningServices = new Stack<>();
   boolean running = true;
 
   public ConsoleMenu() {
-    runningService.setCurrentUser(users.get("kratos@gmail.com"));
+    runningServices.add(new MainService());
+    runningServices.peek().setCurrentUser(users.get("kratos@gmail.com"));
   }
 
   public void run() {
     while (running) {
-      runningService.displayMenu();
+      runningServices.peek().displayMenu();
       System.out.println("0. Go Back");
       int choice = getChoice();
-      int result = runningService.handleChoice(choice);
+      int result = runningServices.peek().handleChoice(choice);
       if (result == -1)
         continue;
-      switch (choice) {
+      switch (result) {
+        case 0:
+          goBack();
+          break;
         case 5:
-          System.out.println("Exit");
+          System.out.println("Exiting...");
+          confirmExit();
+          running = false;
           break;
         default:
           System.out.println("Invalid Choice");
@@ -36,7 +41,16 @@ public class ConsoleMenu {
     }
   }
 
-  public int getChoice() {
+  private void goBack() {
+    if (runningServices.size() == 1) {
+      System.out.println("You can't go back anymore");
+      confirmExit();
+      return;
+    }
+    runningServices.removeLast();
+  }
+
+  private int getChoice() {
     int choice;
     do {
       System.out.print("Enter your choice: ");
@@ -49,6 +63,14 @@ public class ConsoleMenu {
       }
     } while (choice < 0);
     return choice;
+  }
+
+  private void confirmExit() {
+    System.out.print("Are you sure you want to exit? (y/n): ");
+    String choice = scanner.nextLine();
+    if (choice.equals("y")) {
+      running = false;
+    }
   }
 
 }

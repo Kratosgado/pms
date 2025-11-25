@@ -43,7 +43,7 @@ public class MainService {
   public int handleChoice(int choice) {
     switch (choice) {
       case 1:
-        ConsoleMenu.runningService = new ProjectService(Seed.seedProjects());
+        ConsoleMenu.runningServices.add(new ProjectService(Seed.seedProjects()));
         break;
       case 2:
         return 2;
@@ -52,7 +52,7 @@ public class MainService {
       case 4:
         return 4;
       default:
-        System.out.println("Invalid Choice");
+        return choice;
     }
     return -1;
   }

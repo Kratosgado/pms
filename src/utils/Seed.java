@@ -47,6 +47,9 @@ public class Seed {
     id = CustomUtils.getNextId("P", projects.size());
     project = new SoftwareProject(id, "Console", "Project management system", 4, 2000.00);
     projects.add(project);
+    id = CustomUtils.getNextId("P", projects.size());
+    project = new SoftwareProject(id, "TSM", "Task management system", 4, 2000.00);
+    projects.add(project);
     return projects;
   }
 
