@@ -8,7 +8,6 @@ import services.MainService;
 import services.ProjectService;
 
 public class ConsoleMenu {
-  int choice;
   public static Scanner scanner = new Scanner(System.in);
   HashMap<String, User> users = Seed.seedUsers();
   ProjectService projectService = new ProjectService(Seed.seedProjects());
@@ -16,7 +15,6 @@ public class ConsoleMenu {
   boolean running = true;
 
   public ConsoleMenu() {
-    choice = 0;
     runningService.setCurrentUser(users.get("kratos@gmail.com"));
   }
 
@@ -39,13 +37,18 @@ public class ConsoleMenu {
   }
 
   public int getChoice() {
-    System.out.print("Enter your choice: ");
-    choice = scanner.nextInt();
+    int choice;
+    do {
+      System.out.print("Enter your choice: ");
+      String choiceStr = scanner.nextLine();
+      try {
+        choice = Integer.parseInt(choiceStr);
+      } catch (Exception e) {
+        System.out.println("ERROR: Input must be an integer");
+        choice = -1;
+      }
+    } while (choice < 0 || choice > 5);
     return choice;
-  }
-
-  public void setChoice(int choice) {
-    this.choice = choice;
   }
 
 }

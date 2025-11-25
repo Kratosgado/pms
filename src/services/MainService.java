@@ -5,11 +5,15 @@ import utils.ConsoleMenu;
 import utils.Seed;
 
 public class MainService {
-  String title = "Main Menu";
+  String title = "MAIN MENU";
   User currentUser;
 
   public void displayMenu() {
     printTitle();
+    displayOptions();
+  }
+
+  void displayOptions() {
     printCurrentUser();
     System.out.println("1. Manage Projects");
     System.out.println("2. Manage Tasks");
@@ -18,14 +22,18 @@ public class MainService {
     System.out.println("5. Exit");
   }
 
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
   public void setCurrentUser(User user) {
     currentUser = user;
   }
 
   private void printTitle() {
-    System.out.println("||================================================================================||");
+    System.out.println("\n||================================================================================||");
     System.out.printf("|| Project Management System:  %s %s||\n", title, " ".repeat(50 - title.length()));
-    System.out.println("||================================================================================||");
+    System.out.println("||================================================================================||\n");
   }
 
   private void printCurrentUser() {

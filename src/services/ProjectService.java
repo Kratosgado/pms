@@ -15,6 +15,7 @@ public class ProjectService extends MainService {
 
   public ProjectService(ArrayList<Project> projects) {
     this.projects = projects;
+    this.title = "PROJECT CATALOG";
   }
 
   private String listProjects(List<Project> projects) {
@@ -70,7 +71,7 @@ public class ProjectService extends MainService {
   }
 
   @Override
-  public void displayMenu() {
+  void displayOptions() {
     System.out.printf(
         "1. View  All Projects (%s)\n2. Software Projects Only\n3. Hardware Projects Only\n4. Search by Budget Range\n\n",
         projects.size());

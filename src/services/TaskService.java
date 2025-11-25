@@ -14,6 +14,7 @@ public class TaskService extends MainService {
 
   TaskService(ArrayList<Task> tasks) {
     this.tasks = tasks;
+    title = "TASK CATALOG";
   }
 
   private Task getTaskById(String id) throws IllegalArgumentException {
@@ -65,7 +66,7 @@ public class TaskService extends MainService {
   public void displayTasks() {
     System.out.println("||================================================================================||");
     System.out.println("|| Task List");
-    System.out.println("||================================================================================||");
+    System.out.println("||================================================================================||\n");
     for (Task task : tasks) {
       System.out.printf("|| %s (%s) || %s \n", task.getName(), task.getId(), task.getStatus().getStatus());
     }
@@ -73,7 +74,7 @@ public class TaskService extends MainService {
   }
 
   @Override
-  public void displayMenu() {
+  void displayOptions() {
     System.out.println("1. Add New Task");
     System.out.println("2. Update Task Status");
     System.out.println("3. Remove Task");
