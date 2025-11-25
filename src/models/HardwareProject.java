@@ -8,9 +8,13 @@ public class HardwareProject extends Project {
   }
 
   @Override
-  String getProjectDetails() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getProjectDetails'");
+  public String getProjectDetails() {
+    return "Hardware Project";
+  }
+
+  @Override
+  public String getProjectType() {
+    return "Hardware";
   }
 
 }

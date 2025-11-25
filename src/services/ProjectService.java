@@ -2,9 +2,12 @@
 package services;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
+import models.HardwareProject;
 import models.Project;
+import models.SoftwareProject;
+import utils.ConsoleMenu;
 
 public class ProjectService extends MainService {
   private ArrayList<Project> projects;
@@ -13,7 +16,7 @@ public class ProjectService extends MainService {
     this.projects = projects;
   }
 
-  public String listProjects() {
+  private String listProjects(List<Project> projects) {
     StringBuilder sb = new StringBuilder();
     sb.append("Projects List\n");
     sb.append("Id\tName\t\t\t|Type\t\t|Description\t\t|Team Size\t\t|Budget\n");
@@ -23,6 +26,27 @@ public class ProjectService extends MainService {
     }
     sb.append("\n");
     return sb.toString();
+  }
+
+  private String listProjects() {
+    return listProjects(projects);
+  }
+
+  private String listSoftwareProjects() {
+    return listProjects(projects.stream().filter(project -> project instanceof SoftwareProject).toList());
+  }
+
+  private String listHardwareProjects() {
+    return listProjects(projects.stream().filter(project -> project instanceof HardwareProject).toList());
+  }
+
+  private String searchByBudgetRange() {
+    System.out.print("Enter Minimum Budget: ");
+    double min = ConsoleMenu.scanner.nextDouble();
+    System.out.print("Enter Maximum Budget: ");
+    double max = ConsoleMenu.scanner.nextDouble();
+    return listProjects(
+        projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList());
   }
 
   @Override
@@ -40,16 +64,16 @@ public class ProjectService extends MainService {
         System.out.println(listProjects());
         break;
       case 2:
-        System.out.println("Software Projects Only");
+        System.out.println(listSoftwareProjects());
         break;
       case 3:
-        System.out.println("Hardware Projects Only");
+        System.out.println(listHardwareProjects());
         break;
       case 4:
-        System.out.println("Search by Budget Range");
+        System.out.println(searchByBudgetRange());
         break;
       default:
-        System.out.println("Invalid Choice");
+        return choice;
     }
     return -1;
   }

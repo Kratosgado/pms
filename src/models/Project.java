@@ -40,7 +40,21 @@ public abstract class Project {
     return budget;
   }
 
-  abstract String getProjectDetails();
+  public ArrayList<Task> getTasks() {
+    return tasks;
+  }
+
+  public void addTask(Task task) {
+    tasks.add(task);
+  }
+
+  public void removeTask(String id) {
+    tasks.removeIf(task -> task.getId().equals(id));
+  }
+
+  public abstract String getProjectType();
+
+  public abstract String getProjectDetails();
 
   public String displayProject() {
     return String.format("%s\t|%s\t\t\t|%s\t\t|%s\t\t|%s\t\t|%s\n", id, name,

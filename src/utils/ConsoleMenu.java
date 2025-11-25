@@ -9,7 +9,7 @@ import services.ProjectService;
 
 public class ConsoleMenu {
   int choice;
-  Scanner scanner = new Scanner(System.in);
+  public static Scanner scanner = new Scanner(System.in);
   HashMap<String, User> users = Seed.seedUsers();
   ProjectService projectService = new ProjectService(Seed.seedProjects());
   public static MainService runningService = new MainService();
@@ -23,7 +23,7 @@ public class ConsoleMenu {
   public void run() {
     while (running) {
       runningService.displayMenu();
-      System.out.print("0. Go Back");
+      System.out.println("0. Go Back");
       int choice = getChoice();
       int result = runningService.handleChoice(choice);
       if (result == -1)

@@ -8,8 +8,13 @@ public class SoftwareProject extends Project {
   }
 
   @Override
-  String getProjectDetails() {
-    throw new UnsupportedOperationException("Unimplemented method 'getProjectDetails'");
+  public String getProjectDetails() {
+    return "Software Project";
+  }
+
+  @Override
+  public String getProjectType() {
+    return "Software";
   }
 
 }
