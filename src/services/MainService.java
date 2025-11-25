@@ -1,4 +1,3 @@
-
 package services;
 
 import models.User;
@@ -30,7 +29,7 @@ public class MainService {
   }
 
   private void printCurrentUser() {
-    System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getType());
+    System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getRole());
   }
 
   public int handleChoice(int choice) {

@@ -6,12 +6,18 @@ public abstract class User {
   private String name;
   private String email;
   private String password;
+  private Role role;
+
+  protected enum Role {
+    ADMIN, REGULAR
+  }
 
   public User(String id, String name, String email) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = "user123";
+    this.role = Role.REGULAR;
   }
 
   public User(String id, String name, String email, String password) {
@@ -19,6 +25,15 @@ public abstract class User {
     this.name = name;
     this.email = email;
     this.password = password;
+    this.role = Role.REGULAR;
+  }
+
+  public User(String id, String name, String email, String password, Role role) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.role = role;
   }
 
   public String getId() {
@@ -45,13 +60,13 @@ public abstract class User {
     return false;
   }
 
-  public String getType() {
-    return this.getClass().getSimpleName();
+  public String getRole() {
+    return role.toString();
   }
 
   public String toString() {
     return System.out
-        .format("\nUser [name: %s, email: %s, isAdmin: %s]", this.name, this.email, this.canDeleteProject())
+        .format("\nUser [name: %s, email: %s, role: %s]", getName(), getEmail(), getRole())
         .toString();
   }
 }

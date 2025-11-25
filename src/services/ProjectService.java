@@ -11,6 +11,7 @@ import utils.ConsoleMenu;
 
 public class ProjectService extends MainService {
   private ArrayList<Project> projects;
+  private Project selectedProject;
 
   public ProjectService(ArrayList<Project> projects) {
     this.projects = projects;
@@ -26,6 +27,15 @@ public class ProjectService extends MainService {
     }
     sb.append("\n");
     return sb.toString();
+  }
+
+  private Project getProjectById(String id) {
+    for (Project project : projects) {
+      if (project.getId().equals(id)) {
+        return project;
+      }
+    }
+    throw new IllegalArgumentException("Project not found");
   }
 
   private String listProjects() {
@@ -49,6 +59,16 @@ public class ProjectService extends MainService {
         projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList());
   }
 
+  private void askForProject() {
+    System.out.println("Enter project Id to view details (or 0 to return): ");
+    String id = ConsoleMenu.scanner.nextLine();
+    if (id.equals("0"))
+      return;
+    selectedProject = getProjectById(id);
+    System.out.println(selectedProject.getProjectDetails());
+    ConsoleMenu.runningService = new TaskService(selectedProject.getTasks());
+  }
+
   @Override
   public void displayMenu() {
     System.out.printf(
@@ -59,21 +79,26 @@ public class ProjectService extends MainService {
 
   @Override
   public int handleChoice(int choice) {
-    switch (choice) {
-      case 1:
-        System.out.println(listProjects());
-        break;
-      case 2:
-        System.out.println(listSoftwareProjects());
-        break;
-      case 3:
-        System.out.println(listHardwareProjects());
-        break;
-      case 4:
-        System.out.println(searchByBudgetRange());
-        break;
-      default:
-        return choice;
+    try {
+      switch (choice) {
+        case 1:
+          System.out.println(listProjects());
+          break;
+        case 2:
+          System.out.println(listSoftwareProjects());
+          break;
+        case 3:
+          System.out.println(listHardwareProjects());
+          break;
+        case 4:
+          System.out.println(searchByBudgetRange());
+          break;
+        default:
+          return choice;
+      }
+      askForProject();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
     return -1;
   }

@@ -16,16 +16,16 @@ public class Seed {
 
   public static HashMap<String, User> seedUsers() {
     HashMap<String, User> users = new HashMap<>();
-    String id = CustomUtils.generateId("U", users.size());
+    String id = CustomUtils.getNextId("U", users.size());
     User newUser = new AdminUser(id, "Kratos", "kratos@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
-    id = CustomUtils.generateId("P", users.size());
+    id = CustomUtils.getNextId("P", users.size());
     newUser = new RegularUser(id, "Mbeah", "mbeah@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
-    id = CustomUtils.generateId("P", users.size());
+    id = CustomUtils.getNextId("P", users.size());
     newUser = new RegularUser(id, "Prince", "prince@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
-    id = CustomUtils.generateId("P", users.size());
+    id = CustomUtils.getNextId("P", users.size());
     newUser = new RegularUser(id, "Gado", "gado@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
 
@@ -34,17 +34,17 @@ public class Seed {
 
   public static ArrayList<Project> seedProjects() {
     ArrayList<Project> projects = new ArrayList<>();
-    String id = CustomUtils.generateId("P", projects.size());
+    String id = CustomUtils.getNextId("P", projects.size());
     Project project = new SoftwareProject(id, "PMS", "Project management system", 4, 1000.00);
     projects.add(project);
 
-    id = CustomUtils.generateId("P", projects.size());
+    id = CustomUtils.getNextId("P", projects.size());
     project = new HardwareProject(id, "Psuedo Interpreter", "Project management system", 4, 2000.00);
     projects.add(project);
-    id = CustomUtils.generateId("P", projects.size());
+    id = CustomUtils.getNextId("P", projects.size());
     project = new SoftwareProject(id, "Psuedo Runner", "Project management system", 4, 4000.00);
     projects.add(project);
-    id = CustomUtils.generateId("P", projects.size());
+    id = CustomUtils.getNextId("P", projects.size());
     project = new SoftwareProject(id, "Console", "Project management system", 4, 2000.00);
     projects.add(project);
     return projects;
@@ -52,16 +52,16 @@ public class Seed {
 
   public static ArrayList<Task> seedTasks() {
     ArrayList<Task> tasks = new ArrayList<>();
-    String id = CustomUtils.generateId("T", tasks.size());
+    String id = CustomUtils.getNextId("T", tasks.size());
     Task task = new Task(id, "Task 1");
     tasks.add(task);
-    id = CustomUtils.generateId("T", tasks.size());
+    id = CustomUtils.getNextId("T", tasks.size());
     task = new Task(id, "Task 2");
     tasks.add(task);
-    id = CustomUtils.generateId("T", tasks.size());
+    id = CustomUtils.getNextId("T", tasks.size());
     task = new Task(id, "Task 3", TaskStatus.IN_PROGRESS);
     tasks.add(task);
-    id = CustomUtils.generateId("T", tasks.size());
+    id = CustomUtils.getNextId("T", tasks.size());
     task = new Task(id, "Task 4", TaskStatus.COMPLETED);
     tasks.add(task);
     return tasks;

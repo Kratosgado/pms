@@ -35,7 +35,7 @@ public class CustomUtils {
 
   }
 
-  public final static String generateId(String prefix, int length) {
+  public final static String getNextId(String prefix, int length) {
     // 3 should be 003
     return prefix + String.format("%03d", length);
   }
