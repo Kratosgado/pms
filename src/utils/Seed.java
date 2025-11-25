@@ -19,13 +19,13 @@ public class Seed {
     String id = CustomUtils.getNextId("U", users.size());
     User newUser = new AdminUser(id, "Kratos", "kratos@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
-    id = CustomUtils.getNextId("P", users.size());
+    id = CustomUtils.getNextId("U", users.size());
     newUser = new RegularUser(id, "Mbeah", "mbeah@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
-    id = CustomUtils.getNextId("P", users.size());
+    id = CustomUtils.getNextId("U", users.size());
     newUser = new RegularUser(id, "Prince", "prince@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
-    id = CustomUtils.getNextId("P", users.size());
+    id = CustomUtils.getNextId("U", users.size());
     newUser = new RegularUser(id, "Gado", "gado@gmail.com", "password");
     users.put(newUser.getEmail(), newUser);
 

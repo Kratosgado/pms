@@ -47,7 +47,7 @@ public class ConsoleMenu {
         System.out.println("ERROR: Input must be an integer");
         choice = -1;
       }
-    } while (choice < 0 || choice > 5);
+    } while (choice < 0);
     return choice;
   }
 
