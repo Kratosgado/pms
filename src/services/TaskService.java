@@ -3,6 +3,7 @@ package services;
 import java.util.ArrayList;
 
 import models.Task;
+import utils.Console;
 import utils.ConsoleMenu;
 import utils.CustomUtils;
 import utils.TaskStatus;
@@ -27,12 +28,13 @@ public class TaskService extends MainService {
 
   public void addTask() {
     System.out.println("Add Task");
-    System.out.print("Enter Task Name: ");
-    String name = ConsoleMenu.scanner.nextLine();
-    System.out.print("Enter Initial Status (Pending, In Progress, Completed): ");
-    String status = ConsoleMenu.scanner.nextLine();
-    TaskStatus taskStatus = ValidationUtils.validateTaskStatus(status);
-    Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, taskStatus);
+    String name;
+    TaskStatus status;
+    name = Console.getString("Enter Task Name: ");
+    status = ConsoleMenu.getInput("Enter Initial Status (Pending, In Progress, Completed): ", input -> {
+      return ValidationUtils.validateTaskStatus(input);
+    });
+    Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, status);
     tasks.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
@@ -42,13 +44,11 @@ public class TaskService extends MainService {
     System.out.println("|| Update Task Status");
     System.out.println("||================================================================================||");
 
-    System.out.print("Enter Task ID: ");
-    String id = ConsoleMenu.scanner.nextLine();
+    String id = Console.getString("Enter Task ID: ");
     Task task = getTaskById(id);
-    System.out.println("Update Task Status");
-    System.out.print("Enter New Status (Pending, In Progress, Completed): ");
-    String status = ConsoleMenu.scanner.nextLine();
-    TaskStatus taskStatus = ValidationUtils.validateTaskStatus(status);
+    TaskStatus taskStatus = ConsoleMenu.getInput("Enter New Status (Pending, In Progress, Completed): ", input -> {
+      return ValidationUtils.validateTaskStatus(input);
+    });
     task.setStatus(taskStatus);
     tasks.set(tasks.indexOf(task), task);
     System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
@@ -56,11 +56,10 @@ public class TaskService extends MainService {
 
   public void removeTask() {
     System.out.println("Remove Task");
-    System.out.print("Enter Task ID: ");
-    String id = ConsoleMenu.scanner.nextLine();
+    String id = Console.getString("Enter Task ID: ");
     Task task = getTaskById(id);
     tasks.remove(task);
-    System.out.println("Task Removed");
+    System.out.println("✅Task Removed successfully");
   }
 
   public void displayTasks() {

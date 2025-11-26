@@ -7,6 +7,7 @@ import java.util.List;
 import models.HardwareProject;
 import models.Project;
 import models.SoftwareProject;
+import utils.Console;
 import utils.ConsoleMenu;
 import utils.ValidationUtils;
 
@@ -53,17 +54,17 @@ public class ProjectService extends MainService {
   }
 
   private String searchByBudgetRange() {
-    System.out.print("Enter Minimum Budget: ");
-    double min = ValidationUtils.isDouble(ConsoleMenu.scanner.nextLine());
-    System.out.print("Enter Maximum Budget: ");
-    double max = ValidationUtils.isDouble(ConsoleMenu.scanner.nextLine());
+    double min, max;
+    min = Console.getDoubleInput("Enter Minimum Budget: ");
+    max = Console.getDoubleInput("Enter Maximum Budget: ");
     return listProjects(
         projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList());
   }
 
   private void askForProject() {
-    System.out.print("Enter project Id to view details (or 0 to return): ");
-    String id = ConsoleMenu.scanner.nextLine();
+    String id = ConsoleMenu.getInput("Enter project Id to view details (or 0 to return): ", input -> {
+      return input;
+    });
     if (id.equals("0"))
       return;
     selectedProject = getProjectById(id);

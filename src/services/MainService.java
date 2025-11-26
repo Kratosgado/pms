@@ -11,6 +11,7 @@ public class MainService {
   public void displayMenu() {
     ConsoleMenu.displayHeader(title);
     displayOptions();
+    System.out.println("0. Go Back");
   }
 
   void displayOptions() {

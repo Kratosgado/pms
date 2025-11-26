@@ -3,6 +3,7 @@ package utils;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.function.Function;
 
 import models.User;
 import services.MainService;
@@ -21,8 +22,7 @@ public class ConsoleMenu {
   public void run() {
     while (running) {
       runningServices.peek().displayMenu();
-      System.out.println("0. Go Back");
-      int choice = getChoice();
+      int choice = Console.getPositiveIntInput("Enter your choice: ");
       int result = runningServices.peek().handleChoice(choice);
       if (result == -1)
         continue;
@@ -48,19 +48,19 @@ public class ConsoleMenu {
     runningServices.removeLast();
   }
 
-  private int getChoice() {
-    int choice;
+  public static <T> T getInput(String prompt, Function<String, T> function) {
+    T input;
     do {
-      System.out.print("Enter your choice: ");
-      String choiceStr = scanner.nextLine();
+      System.out.print(prompt);
+      String choiceStr = scanner.nextLine().trim();
       try {
-        choice = Integer.parseInt(choiceStr);
+        input = function.apply(choiceStr);
       } catch (Exception e) {
-        System.out.println("\n❌ ERROR: Input must be an integer");
-        choice = -1;
+        System.out.println("\n❌ ERROR: " + e.getMessage());
+        input = null;
       }
-    } while (choice < 0);
-    return choice;
+    } while (input == null);
+    return input;
   }
 
   private void confirmExit() {
