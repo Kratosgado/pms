@@ -1,5 +1,8 @@
 package services;
 
+import java.util.ArrayList;
+
+import models.Project;
 import models.User;
 import utils.ConsoleMenu;
 import utils.Seed;
@@ -7,6 +10,7 @@ import utils.Seed;
 public class MainService {
   String title = "MAIN MENU";
   User currentUser;
+  ArrayList<Project> projects = Seed.seedProjects();
 
   public void displayMenu() {
     ConsoleMenu.displayHeader(title);
@@ -38,12 +42,13 @@ public class MainService {
   public int handleChoice(int choice) {
     switch (choice) {
       case 1:
-        ConsoleMenu.runningServices.add(new ProjectService(Seed.seedProjects()));
+        ConsoleMenu.runningServices.add(new ProjectService(projects));
         break;
       case 2:
         return 2;
       case 3:
-        return 3;
+        ReportService.displayReport(projects);
+        break;
       case 4:
         return 4;
       default:

@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 
+import utils.TaskStatus;
+
 public abstract class Project {
   private String id;
   private String name;
@@ -44,12 +46,14 @@ public abstract class Project {
     return tasks;
   }
 
-  public void addTask(Task task) {
-    tasks.add(task);
+  public int getCompletedTasks() {
+    return (int) tasks.stream().filter(task -> task.getStatus() == TaskStatus.COMPLETED).count();
   }
 
-  public void removeTask(String id) {
-    tasks.removeIf(task -> task.getId().equals(id));
+  public double getProgress() {
+    if (getTasks().size() == 0)
+      return 0;
+    return ((double) getCompletedTasks() / getTasks().size() * 100);
   }
 
   public abstract String getProjectType();

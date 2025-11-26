@@ -3,9 +3,10 @@ package services;
 
 import java.util.ArrayList;
 
+import models.AdminUser;
 import models.RegularUser;
 import models.User;
-import utils.ConsoleMenu;
+import utils.Console;
 import utils.CustomUtils;
 
 public class UserService extends MainService {
@@ -27,25 +28,28 @@ public class UserService extends MainService {
 
   public void addUser() {
     System.out.println("Add User");
-    System.out.print("Enter User Name: ");
-    String name = ConsoleMenu.scanner.nextLine();
-    System.out.print("Enter User Email: ");
-    String email = ConsoleMenu.scanner.nextLine();
-    System.out.print("Enter User Role: ");
-    String role = ConsoleMenu.scanner.nextLine();
+    String name = Console.getString("Enter User Name: ");
+    String email = Console.getEmailInput();
+    String password = Console.getPasswordInput("Enter User Password: ");
+    String role = Console.getString("Enter User Role(admin/user): ");
     String id = CustomUtils.getNextId("U", users.size());
-    User user = new RegularUser(id, name, email, role);
+    User user;
+    if (role == "admin")
+      user = new AdminUser(id, name, email, password);
+    else if (role == "user")
+      user = new RegularUser(id, name, email, password);
+    else
+      throw new IllegalArgumentException("Invalid User Role");
     users.add(user);
     System.out.printf("✅User '%s\' added successfully\n", user.getName());
   }
 
   public void removeUser() {
     System.out.println("Remove User");
-    System.out.print("Enter User ID: ");
-    String id = ConsoleMenu.scanner.nextLine();
+    String id = Console.getString("Enter User ID: ");
     User user = getUserById(id);
     users.remove(user);
-    System.out.println("User Removed");
+    System.out.println("✅User Removed successfully");
   }
 
   public void displayUsers() {
@@ -64,13 +68,31 @@ public class UserService extends MainService {
     System.out.println("2. Add User");
     System.out.println("3. Remove User");
     System.out.println("4. View User Details");
-    System.out.println("5. Exit");
   }
 
   @Override
   public int handleChoice(int choice) {
-    // TODO Auto-generated method stub
-    return super.handleChoice(choice);
+    try {
+      switch (choice) {
+        case 1:
+          displayUsers();
+          break;
+        case 2:
+          addUser();
+          break;
+        case 3:
+          removeUser();
+          break;
+        case 4:
+          System.out.println("User Details");
+          break;
+        default:
+          return choice;
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return -1;
   }
 
 }

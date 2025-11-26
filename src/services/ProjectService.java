@@ -9,7 +9,6 @@ import models.Project;
 import models.SoftwareProject;
 import utils.Console;
 import utils.ConsoleMenu;
-import utils.ValidationUtils;
 
 public class ProjectService extends MainService {
   private ArrayList<Project> projects;

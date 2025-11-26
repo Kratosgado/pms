@@ -8,7 +8,6 @@ public class Task implements Completable {
   private String id;
   private String name;
   private TaskStatus status;
-  private int progress;
   private String userID;
 
   public Task(String id, String name) {
