@@ -46,7 +46,7 @@ public class Task implements Completable {
   }
 
   public String toString() {
-    return String.format("%s | %s | %s", id, name, status);
+    return String.format("%s\t\t|%s\t\t|%s", id, name, status);
   }
 
   @Override

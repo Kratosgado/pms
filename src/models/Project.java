@@ -57,18 +57,28 @@ public abstract class Project {
   public abstract String getProjectDetails();
 
   public String displayProject() {
-    return String.format("%s\t|%s\t\t\t|%s\t\t|%s\t\t|%s\t\t|%s\n", id, name,
-        this.getClass().getSimpleName(),
-        description,
-        teamSize, budget);
+    StringBuilder sb = new StringBuilder();
+    sb.append("\tName: ").append(name).append("\n");
+    sb.append("\tType: ").append(getProjectType()).append("\n");
+    sb.append("\tDescription: ").append(description).append("\n");
+    sb.append("\tTeam Size: ").append(teamSize).append("\n");
+    sb.append("\tBudget: ").append(budget).append("\n");
+
+    sb.append("\tAssociated Tasks: ").append(tasks.size()).append("\n");
+    sb.append("--------------------------------------------------------------------------------\n");
+    sb.append("ID\t\t|NAME\t\t|STATUS\n");
+    sb.append("--------------------------------------------------------------------------------\n");
+    for (Task task : tasks) {
+      sb.append(task.toString());
+      sb.append("\n");
+    }
+    return sb.toString();
   }
 
   public String toString() {
-    return System.out
-        .format("%s\t\t|%s\t\t|%s\t\t|%s\t\t|%s\t\t|%s\n", id, name,
-            this.getClass().getSimpleName(),
-            description,
-            teamSize, budget)
-        .toString();
+    return String.format("%s\t|%s\t\t\t|%s\t\t|%s\t\t|%s\t\t|%s\n", id, name,
+        getProjectType(),
+        description,
+        teamSize, budget);
   }
 }

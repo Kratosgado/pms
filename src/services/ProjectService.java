@@ -25,7 +25,7 @@ public class ProjectService extends MainService {
     sb.append("Id\tName\t\t\t|Type\t\t|Description\t\t|Team Size\t\t|Budget\n");
     sb.append("--------------------------------------------------------------------------------\n");
     for (Project project : projects) {
-      sb.append(project.displayProject());
+      sb.append(project.toString());
     }
     sb.append("\n");
     return sb.toString();

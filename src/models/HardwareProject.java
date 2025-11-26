@@ -9,7 +9,7 @@ public class HardwareProject extends Project {
 
   @Override
   public String getProjectDetails() {
-    return "Hardware Project";
+    return displayProject();
   }
 
   @Override

@@ -31,12 +31,10 @@ public class ConsoleMenu {
           goBack();
           break;
         case 5:
-          System.out.println("Exiting...");
           confirmExit();
-          running = false;
           break;
         default:
-          System.out.println("Invalid Choice");
+          System.out.println("\n❌ Invalid Choice");
       }
     }
   }
@@ -58,7 +56,7 @@ public class ConsoleMenu {
       try {
         choice = Integer.parseInt(choiceStr);
       } catch (Exception e) {
-        System.out.println("ERROR: Input must be an integer");
+        System.out.println("\n❌ ERROR: Input must be an integer");
         choice = -1;
       }
     } while (choice < 0);
@@ -71,6 +69,14 @@ public class ConsoleMenu {
     if (choice.equals("y")) {
       running = false;
     }
+  }
+
+  public final static void displayHeader(String title) {
+    int halfLength = title.length() / 2;
+    System.out.println("\n||=====================================================================================");
+    System.out.printf("|| %s %s %s||\n", " ".repeat(40 - halfLength), title,
+        " ".repeat(40 - halfLength));
+    System.out.println("||=====================================================================================\n");
   }
 
 }

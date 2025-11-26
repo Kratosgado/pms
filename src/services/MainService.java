@@ -9,7 +9,7 @@ public class MainService {
   User currentUser;
 
   public void displayMenu() {
-    printTitle();
+    ConsoleMenu.displayHeader(title);
     displayOptions();
   }
 
@@ -28,12 +28,6 @@ public class MainService {
 
   public void setCurrentUser(User user) {
     currentUser = user;
-  }
-
-  private void printTitle() {
-    System.out.println("\n||================================================================================||");
-    System.out.printf("|| Project Management System:  %s %s||\n", title, " ".repeat(50 - title.length()));
-    System.out.println("||================================================================================||\n");
   }
 
   private void printCurrentUser() {
