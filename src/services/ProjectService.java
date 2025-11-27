@@ -9,6 +9,7 @@ import models.Project;
 import models.SoftwareProject;
 import utils.Console;
 import utils.ConsoleMenu;
+import utils.CustomUtils;
 
 public class ProjectService extends MainService {
   private ArrayList<Project> projects;
@@ -40,7 +41,34 @@ public class ProjectService extends MainService {
     throw new IllegalArgumentException("Project not found");
   }
 
-  private String listProjects() {
+  private void addProject() {
+    ConsoleMenu.displayHeader("ADD PROJECT");
+    String name = Console.getString("Enter Project Name: ");
+    String description = Console.getString("Enter Project Description: ");
+    int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
+    double budget = Console.getDoubleInput("Enter Budget: ");
+    String type = Console.getString("Enter Project Type (s for Software, h for Hardware): ");
+    Project project;
+    String id = CustomUtils.getNextId("P", projects.size());
+    if (type.equals("s"))
+      project = new SoftwareProject(id, name, description, teamSize, budget);
+    else if (type.equals("h"))
+      project = new HardwareProject(id, name, description, teamSize, budget);
+    else
+      throw new IllegalArgumentException("Invalid Project type");
+    projects.add(project);
+    System.out.printf("✅Project '%s\' added successfully\n", project.getName());
+  }
+
+  private void removeProject() {
+    ConsoleMenu.displayHeader("REMOVE PROJECT");
+    String id = Console.getString("Enter Project ID: ");
+    Project project = getProjectById(id);
+    projects.remove(project);
+    System.out.println("✅Project Removed successfully");
+  }
+
+  protected String listProjects() {
     return listProjects(projects);
   }
 
@@ -60,7 +88,7 @@ public class ProjectService extends MainService {
         projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList());
   }
 
-  private void askForProject() {
+  protected void askForProject() {
     String id = ConsoleMenu.getInput("Enter project Id to view details (or 0 to return): ", input -> {
       return input;
     });
@@ -74,7 +102,7 @@ public class ProjectService extends MainService {
   @Override
   void displayOptions() {
     System.out.printf(
-        "1. View  All Projects (%s)\n2. Software Projects Only\n3. Hardware Projects Only\n4. Search by Budget Range\n\n",
+        " 1. Add Project\n 2. View  All Projects (%s)\n3. Software Projects Only\n4. Hardware Projects Only\n5. Search by Budget Range\n 6. Remove Project\n\n",
         projects.size());
 
   }
@@ -84,16 +112,22 @@ public class ProjectService extends MainService {
     try {
       switch (choice) {
         case 1:
-          System.out.println(listProjects());
+          addProject();
           break;
         case 2:
+          System.out.println(listProjects());
+          break;
+        case 3: // Software Projects Only
           System.out.println(listSoftwareProjects());
           break;
-        case 3:
+        case 4: // Hardware Projects Only
           System.out.println(listHardwareProjects());
           break;
-        case 4:
+        case 5: // Search by Budget Range
           System.out.println(searchByBudgetRange());
+          break;
+        case 6: // Remove Project
+          removeProject();
           break;
         default:
           return choice;

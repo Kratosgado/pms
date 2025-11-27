@@ -30,7 +30,7 @@ public class ConsoleMenu {
         case 0:
           goBack();
           break;
-        case 5:
+        case 9:
           confirmExit();
           break;
         default:

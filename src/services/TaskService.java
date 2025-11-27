@@ -27,7 +27,7 @@ public class TaskService extends MainService {
   }
 
   public void addTask() {
-    System.out.println("Add Task");
+    ConsoleMenu.displayHeader("ADD TASK");
     String name;
     TaskStatus status;
     name = Console.getString("Enter Task Name: ");
@@ -40,9 +40,7 @@ public class TaskService extends MainService {
   }
 
   public void updateTaskStatus() {
-    System.out.println("||================================================================================||");
-    System.out.println("|| Update Task Status");
-    System.out.println("||================================================================================||");
+    ConsoleMenu.displayHeader("UDATE TASK STATUS");
 
     String id = Console.getString("Enter Task ID: ");
     Task task = getTaskById(id);
@@ -55,7 +53,7 @@ public class TaskService extends MainService {
   }
 
   public void removeTask() {
-    System.out.println("Remove Task");
+    ConsoleMenu.displayHeader("REMOVE TASK");
     String id = Console.getString("Enter Task ID: ");
     Task task = getTaskById(id);
     tasks.remove(task);
@@ -63,9 +61,7 @@ public class TaskService extends MainService {
   }
 
   public void displayTasks() {
-    System.out.println("||================================================================================||");
-    System.out.println("|| Task List");
-    System.out.println("||================================================================================||\n");
+    ConsoleMenu.displayHeader("TASK LIST");
     for (Task task : tasks) {
       System.out.printf("|| %s (%s) || %s \n", task.getName(), task.getId(), task.getStatus().getStatus());
     }

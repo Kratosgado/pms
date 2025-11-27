@@ -12,6 +12,11 @@ public class MainService {
   User currentUser;
   ArrayList<Project> projects = Seed.seedProjects();
 
+  public MainService() {
+    // TODO: Add logic to log in
+
+  }
+
   public void displayMenu() {
     ConsoleMenu.displayHeader(title);
     displayOptions();
@@ -24,7 +29,7 @@ public class MainService {
     System.out.println("2. Manage Tasks");
     System.out.println("3. View Status Reports");
     System.out.println("4. Switch User");
-    System.out.println("5. Exit");
+    System.out.println("9. Exit");
   }
 
   public void setTitle(String title) {
@@ -45,7 +50,10 @@ public class MainService {
         ConsoleMenu.runningServices.add(new ProjectService(projects));
         break;
       case 2:
-        return 2;
+        ProjectService projectService = new ProjectService(projects);
+        System.out.println(projectService.listProjects());
+        projectService.askForProject();
+        break;
       case 3:
         ReportService.displayReport(projects);
         break;

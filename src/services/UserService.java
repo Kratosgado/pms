@@ -7,6 +7,7 @@ import models.AdminUser;
 import models.RegularUser;
 import models.User;
 import utils.Console;
+import utils.ConsoleMenu;
 import utils.CustomUtils;
 
 public class UserService extends MainService {
@@ -27,7 +28,7 @@ public class UserService extends MainService {
   }
 
   public void addUser() {
-    System.out.println("Add User");
+    ConsoleMenu.displayHeader("ADD USER");
     String name = Console.getString("Enter User Name: ");
     String email = Console.getEmailInput();
     String password = Console.getPasswordInput("Enter User Password: ");
@@ -45,7 +46,7 @@ public class UserService extends MainService {
   }
 
   public void removeUser() {
-    System.out.println("Remove User");
+    ConsoleMenu.displayHeader("REMOVE USER");
     String id = Console.getString("Enter User ID: ");
     User user = getUserById(id);
     users.remove(user);
@@ -53,9 +54,7 @@ public class UserService extends MainService {
   }
 
   public void displayUsers() {
-    System.out.println("||================================================================================||");
-    System.out.println("|| User List");
-    System.out.println("||================================================================================||\n");
+    ConsoleMenu.displayHeader("USER LIST");
     for (User user : users) {
       System.out.printf("|| %s (%s) || %s \n", user.getName(), user.getId(), user.getRole());
     }
