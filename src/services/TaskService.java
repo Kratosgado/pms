@@ -26,7 +26,8 @@ public class TaskService extends MainService {
     throw new IllegalArgumentException("Task not found");
   }
 
-  public void addTask() {
+  private void addTask() {
+    ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("ADD TASK");
     String name;
     TaskStatus status;
@@ -39,7 +40,8 @@ public class TaskService extends MainService {
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
 
-  public void updateTaskStatus() {
+  private void updateTaskStatus() {
+    ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("UDATE TASK STATUS");
 
     String id = Console.getString("Enter Task ID: ");
@@ -52,7 +54,8 @@ public class TaskService extends MainService {
     System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
   }
 
-  public void removeTask() {
+  private void removeTask() {
+    ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE TASK");
     String id = Console.getString("Enter Task ID: ");
     Task task = getTaskById(id);
@@ -60,7 +63,7 @@ public class TaskService extends MainService {
     System.out.println("✅Task Removed successfully");
   }
 
-  public void displayTasks() {
+  private void displayTasks() {
     ConsoleMenu.displayHeader("TASK LIST");
     for (Task task : tasks) {
       System.out.printf("|| %s (%s) || %s \n", task.getName(), task.getId(), task.getStatus().getStatus());
@@ -96,7 +99,7 @@ public class TaskService extends MainService {
           return choice;
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      ConsoleMenu.displayError(e.getMessage());
     }
     return -1;
   }

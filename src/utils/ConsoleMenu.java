@@ -12,7 +12,9 @@ public class ConsoleMenu {
   boolean running = true;
 
   public ConsoleMenu() {
-    runningServices.add(new MainService());
+    MainService mainService = new MainService();
+    runningServices.add(mainService);
+    mainService.authenticateUser();
   }
 
   public void run() {
@@ -30,7 +32,7 @@ public class ConsoleMenu {
           confirmExit();
           break;
         default:
-          System.out.println("\n❌ Invalid Choice");
+          displayError("Invalid Choice");
       }
     }
   }
@@ -52,7 +54,7 @@ public class ConsoleMenu {
       try {
         input = function.apply(choiceStr);
       } catch (Exception e) {
-        System.out.println("\n❌ ERROR: " + e.getMessage());
+        displayError(e.getMessage());
         input = null;
       }
     } while (input == null);
@@ -67,12 +69,26 @@ public class ConsoleMenu {
     }
   }
 
+  public final static void displayError(String error) {
+    System.out.println("\n❌ ERROR: " + error);
+  }
+
+  public final static void displaySuccess(String success) {
+    System.out.println("\n✅ " + success);
+  }
+
   public final static void displayHeader(String title) {
     int halfLength = title.length() / 2;
     System.out.println("\n||=====================================================================================");
     System.out.printf("|| %s %s %s||\n", " ".repeat(40 - halfLength), title,
         " ".repeat(40 - halfLength));
     System.out.println("||=====================================================================================\n");
+  }
+
+  public final static void requireAdmin() {
+    if (!MainService.getCurrentUser().isAdmin()) {
+      throw new IllegalArgumentException("Only Admin Users can perform this action");
+    }
   }
 
 }

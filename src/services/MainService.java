@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import models.Project;
 import models.User;
+import utils.Console;
 import utils.ConsoleMenu;
 import utils.Seed;
 
@@ -12,10 +13,6 @@ public class MainService {
   private static User currentUser;
   ArrayList<Project> projects = Seed.seedProjects();
   ArrayList<User> users = Seed.seedUsers();
-
-  public MainService() {
-    currentUser = users.get(0);
-  }
 
   public final void displayMenu() {
     ConsoleMenu.displayHeader(title);
@@ -36,8 +33,39 @@ public class MainService {
     currentUser = user;
   }
 
+  public static User getCurrentUser() {
+    return currentUser;
+  }
+
   private final void printCurrentUser() {
     System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getRole());
+  }
+
+  private User getUserByEmail(String email) {
+    for (User user : users) {
+      if (user.getEmail().equals(email)) {
+        return user;
+      }
+    }
+    throw new IllegalArgumentException("User not found");
+  }
+
+  public final void authenticateUser() {
+    do {
+      try {
+        ConsoleMenu.displayHeader("AUTHENTICATION");
+        String email = Console.getEmailInput();
+        User user = getUserByEmail(email);
+        String password = Console.getPasswordInput("Enter User Password: ");
+        if (!user.getPassword().equals(password)) {
+          throw new IllegalArgumentException("Invalid Password");
+        }
+        System.out.println("✅User switched successfully");
+        setCurrentUser(user);
+      } catch (Exception e) {
+        ConsoleMenu.displayError(e.getMessage());
+      }
+    } while (currentUser == null);
   }
 
   public int handleChoice(int choice) {

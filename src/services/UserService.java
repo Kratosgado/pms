@@ -37,6 +37,7 @@ public class UserService extends MainService {
   }
 
   private void addUser() {
+    ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("ADD USER");
     String name = Console.getString("Enter User Name: ");
     String email = Console.getEmailInput();
@@ -55,6 +56,7 @@ public class UserService extends MainService {
   }
 
   private void removeUser() {
+    ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE USER");
     String id = Console.getString("Enter User ID: ");
     User user = getUserById(id);
@@ -114,7 +116,7 @@ public class UserService extends MainService {
           return choice;
       }
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      ConsoleMenu.displayError(e.getMessage());
     }
     return -1;
   }

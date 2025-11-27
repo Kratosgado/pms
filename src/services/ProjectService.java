@@ -42,25 +42,27 @@ public class ProjectService extends MainService {
   }
 
   private void addProject() {
+    ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("ADD PROJECT");
     String name = Console.getString("Enter Project Name: ");
     String description = Console.getString("Enter Project Description: ");
     int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
     double budget = Console.getDoubleInput("Enter Budget: ");
-    String type = Console.getString("Enter Project Type (s for Software, h for Hardware): ");
+    String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
     Project project;
     String id = CustomUtils.getNextId("P", projects.size());
-    if (type.equals("s"))
+    if (type.equals("soft"))
       project = new SoftwareProject(id, name, description, teamSize, budget);
-    else if (type.equals("h"))
+    else if (type.equals("hard"))
       project = new HardwareProject(id, name, description, teamSize, budget);
     else
       throw new IllegalArgumentException("Invalid Project type");
     projects.add(project);
-    System.out.printf("✅Project '%s\' added successfully\n", project.getName());
+    System.out.printf("✅Project '%s\' added successfully with id '%s'\n", project.getName(), project.getId());
   }
 
   private void removeProject() {
+    ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE PROJECT");
     String id = Console.getString("Enter Project ID: ");
     Project project = getProjectById(id);
@@ -101,9 +103,12 @@ public class ProjectService extends MainService {
 
   @Override
   protected void displayOptions() {
-    System.out.printf(
-        " 1. Add Project\n 2. View  All Projects (%s)\n3. Software Projects Only\n4. Hardware Projects Only\n5. Search by Budget Range\n 6. Remove Project\n\n",
-        projects.size());
+    System.out.println("1. Add Project");
+    System.out.println("2. View  All Projects (" + projects.size() + ")");
+    System.out.println("3. Software Projects Only");
+    System.out.println("4. Hardware Projects Only");
+    System.out.println("5. Search by Budget Range");
+    System.out.println("6. Remove Project");
 
   }
 
@@ -117,16 +122,16 @@ public class ProjectService extends MainService {
         case 2:
           System.out.println(listProjects());
           break;
-        case 3: // Software Projects Only
+        case 3:
           System.out.println(listSoftwareProjects());
           break;
-        case 4: // Hardware Projects Only
+        case 4:
           System.out.println(listHardwareProjects());
           break;
-        case 5: // Search by Budget Range
+        case 5:
           System.out.println(searchByBudgetRange());
           break;
-        case 6: // Remove Project
+        case 6:
           removeProject();
           break;
         default:
@@ -134,7 +139,7 @@ public class ProjectService extends MainService {
       }
       askForProject();
     } catch (Exception e) {
-      System.out.println(e.getMessage());
+      ConsoleMenu.displayError(e.getMessage());
     }
     return -1;
   }

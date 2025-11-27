@@ -52,12 +52,8 @@ public abstract class User {
     return password;
   }
 
-  public boolean canUpdateProject() {
-    return false;
-  }
-
-  public boolean canDeleteProject() {
-    return false;
+  public boolean isAdmin() {
+    return role == Role.ADMIN;
   }
 
   public String getRole() {
