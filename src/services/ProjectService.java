@@ -21,8 +21,8 @@ public class ProjectService extends MainService {
   }
 
   private String listProjects(List<Project> projects) {
+    ConsoleMenu.displayHeader("PROJECT LIST");
     StringBuilder sb = new StringBuilder();
-    sb.append("Projects List\n");
     sb.append("Id\tName\t\t\t|Type\t\t|Description\t\t|Team Size\t\t|Budget\n");
     sb.append("--------------------------------------------------------------------------------\n");
     for (Project project : projects) {
