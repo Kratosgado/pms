@@ -69,7 +69,7 @@ public class TaskService extends MainService {
   }
 
   @Override
-  void displayOptions() {
+  protected void displayOptions() {
     System.out.println("1. Add New Task");
     System.out.println("2. Update Task Status");
     System.out.println("3. Remove Task");

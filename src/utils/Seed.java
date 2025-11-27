@@ -2,7 +2,6 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import models.AdminUser;
 import models.HardwareProject;
@@ -14,20 +13,20 @@ import models.User;
 
 public class Seed {
 
-  public static HashMap<String, User> seedUsers() {
-    HashMap<String, User> users = new HashMap<>();
+  public static ArrayList<User> seedUsers() {
+    ArrayList<User> users = new ArrayList<>();
     String id = CustomUtils.getNextId("U", users.size());
     User newUser = new AdminUser(id, "Kratos", "kratos@gmail.com", "password");
-    users.put(newUser.getEmail(), newUser);
+    users.add(newUser);
     id = CustomUtils.getNextId("U", users.size());
     newUser = new RegularUser(id, "Mbeah", "mbeah@gmail.com", "password");
-    users.put(newUser.getEmail(), newUser);
+    users.add(newUser);
     id = CustomUtils.getNextId("U", users.size());
     newUser = new RegularUser(id, "Prince", "prince@gmail.com", "password");
-    users.put(newUser.getEmail(), newUser);
+    users.add(newUser);
     id = CustomUtils.getNextId("U", users.size());
     newUser = new RegularUser(id, "Gado", "gado@gmail.com", "password");
-    users.put(newUser.getEmail(), newUser);
+    users.add(newUser);
 
     return users;
   }
@@ -36,19 +35,25 @@ public class Seed {
     ArrayList<Project> projects = new ArrayList<>();
     String id = CustomUtils.getNextId("P", projects.size());
     Project project = new SoftwareProject(id, "PMS", "Project management system", 4, 1000.00);
+    project.addTasks(Seed.seedTasks());
     projects.add(project);
 
     id = CustomUtils.getNextId("P", projects.size());
     project = new HardwareProject(id, "Psuedo Interpreter", "Project management system", 4, 2000.00);
+    project.addTasks(Seed.seedTasks());
     projects.add(project);
     id = CustomUtils.getNextId("P", projects.size());
-    project = new SoftwareProject(id, "Psuedo Runner", "Project management system", 4, 4000.00);
+    project = new HardwareProject(id, "Psuedo Runner", "Project management system", 4, 4000.00);
+    project.addTasks(Seed.seedTasks());
     projects.add(project);
     id = CustomUtils.getNextId("P", projects.size());
     project = new SoftwareProject(id, "Console", "Project management system", 4, 2000.00);
+
+    project.addTasks(Seed.seedTasks());
     projects.add(project);
     id = CustomUtils.getNextId("P", projects.size());
     project = new SoftwareProject(id, "TSM", "Task management system", 4, 2000.00);
+    project.addTasks(Seed.seedTasks());
     projects.add(project);
     return projects;
   }

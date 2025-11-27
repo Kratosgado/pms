@@ -64,6 +64,10 @@ public abstract class User {
     return role.toString();
   }
 
+  public String displayUser() {
+    return String.format("%s\t|%s\t\t\t|%s\t\t|%s\n", id, name, email, role);
+  }
+
   public String toString() {
     return System.out
         .format("\nUser [name: %s, email: %s, role: %s]", getName(), getEmail(), getRole())

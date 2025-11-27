@@ -100,7 +100,7 @@ public class ProjectService extends MainService {
   }
 
   @Override
-  void displayOptions() {
+  protected void displayOptions() {
     System.out.printf(
         " 1. Add Project\n 2. View  All Projects (%s)\n3. Software Projects Only\n4. Hardware Projects Only\n5. Search by Budget Range\n 6. Remove Project\n\n",
         projects.size());

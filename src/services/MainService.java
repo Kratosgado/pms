@@ -9,38 +9,34 @@ import utils.Seed;
 
 public class MainService {
   String title = "MAIN MENU";
-  User currentUser;
+  private static User currentUser;
   ArrayList<Project> projects = Seed.seedProjects();
+  ArrayList<User> users = Seed.seedUsers();
 
   public MainService() {
-    // TODO: Add logic to log in
-
+    currentUser = users.get(0);
   }
 
-  public void displayMenu() {
+  public final void displayMenu() {
     ConsoleMenu.displayHeader(title);
     displayOptions();
+    System.out.println("9. Exit");
     System.out.println("0. Go Back");
   }
 
-  void displayOptions() {
+  protected void displayOptions() {
     printCurrentUser();
     System.out.println("1. Manage Projects");
     System.out.println("2. Manage Tasks");
     System.out.println("3. View Status Reports");
-    System.out.println("4. Switch User");
-    System.out.println("9. Exit");
+    System.out.println("4. Manage Users");
   }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public void setCurrentUser(User user) {
+  protected static void setCurrentUser(User user) {
     currentUser = user;
   }
 
-  private void printCurrentUser() {
+  private final void printCurrentUser() {
     System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getRole());
   }
 
@@ -58,7 +54,8 @@ public class MainService {
         ReportService.displayReport(projects);
         break;
       case 4:
-        return 4;
+        ConsoleMenu.runningServices.add(new UserService(Seed.seedUsers()));
+        break;
       default:
         return choice;
     }

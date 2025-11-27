@@ -18,6 +18,15 @@ public class UserService extends MainService {
     title = "USER MENU";
   }
 
+  private User getUserByEmail(String email) {
+    for (User user : users) {
+      if (user.getEmail().equals(email)) {
+        return user;
+      }
+    }
+    throw new IllegalArgumentException("User not found");
+  }
+
   private User getUserById(String id) {
     for (User user : users) {
       if (user.getId().equals(id)) {
@@ -27,7 +36,7 @@ public class UserService extends MainService {
     throw new IllegalArgumentException("User not found");
   }
 
-  public void addUser() {
+  private void addUser() {
     ConsoleMenu.displayHeader("ADD USER");
     String name = Console.getString("Enter User Name: ");
     String email = Console.getEmailInput();
@@ -45,7 +54,7 @@ public class UserService extends MainService {
     System.out.printf("✅User '%s\' added successfully\n", user.getName());
   }
 
-  public void removeUser() {
+  private void removeUser() {
     ConsoleMenu.displayHeader("REMOVE USER");
     String id = Console.getString("Enter User ID: ");
     User user = getUserById(id);
@@ -53,20 +62,33 @@ public class UserService extends MainService {
     System.out.println("✅User Removed successfully");
   }
 
-  public void displayUsers() {
+  private void displayUsers() {
     ConsoleMenu.displayHeader("USER LIST");
     for (User user : users) {
-      System.out.printf("|| %s (%s) || %s \n", user.getName(), user.getId(), user.getRole());
+      System.out.print(user.displayUser());
     }
-    System.out.println("||================================================================================||");
+    System.out.println("||===================================================================================||");
+  }
+
+  public void switchUser() {
+    ConsoleMenu.displayHeader("SWITCH USER");
+    String email = Console.getEmailInput();
+    User user = getUserByEmail(email);
+    String password = Console.getPasswordInput("Enter User Password: ");
+    if (!user.getPassword().equals(password)) {
+      throw new IllegalArgumentException("Invalid Password");
+    }
+    System.out.println("✅User switched successfully");
+    MainService.setCurrentUser(user);
   }
 
   @Override
-  public void displayMenu() {
+  protected void displayOptions() {
     System.out.println("1. View Users");
     System.out.println("2. Add User");
     System.out.println("3. Remove User");
     System.out.println("4. View User Details");
+    System.out.println("5. Switch User");
   }
 
   @Override
@@ -84,6 +106,9 @@ public class UserService extends MainService {
           break;
         case 4:
           System.out.println("User Details");
+          break;
+        case 5:
+          switchUser();
           break;
         default:
           return choice;

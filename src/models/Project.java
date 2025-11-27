@@ -46,6 +46,14 @@ public abstract class Project {
     return tasks;
   }
 
+  public void addedTask(Task task) {
+    tasks.add(task);
+  }
+
+  public void addTasks(ArrayList<Task> tasks) {
+    this.tasks.addAll(tasks);
+  }
+
   public int getCompletedTasks() {
     return (int) tasks.stream().filter(task -> task.getStatus() == TaskStatus.COMPLETED).count();
   }

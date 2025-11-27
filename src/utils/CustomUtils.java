@@ -6,7 +6,6 @@ public class CustomUtils {
   private final static int LENGTH = alphaNumeric.length();
 
   public final static String generateID() {
-    int length = alphaNumeric.length();
     StringBuilder id = new StringBuilder();
 
     for (int i = 0; i < 6; i++) {

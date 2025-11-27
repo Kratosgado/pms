@@ -1,22 +1,18 @@
 package utils;
 
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.function.Function;
 
-import models.User;
 import services.MainService;
 
 public class ConsoleMenu {
   public static Scanner scanner = new Scanner(System.in);
-  HashMap<String, User> users = Seed.seedUsers();
   public static Stack<MainService> runningServices = new Stack<>();
   boolean running = true;
 
   public ConsoleMenu() {
     runningServices.add(new MainService());
-    runningServices.peek().setCurrentUser(users.get("kratos@gmail.com"));
   }
 
   public void run() {
