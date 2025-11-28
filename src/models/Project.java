@@ -79,9 +79,9 @@ public abstract class Project {
 
     sb.append("\tAssociated Tasks: ").append(tasks.size()).append("\n");
 
-    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s", "ID", "NAME", "STATUS"));
+    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
     for (Task task : tasks) {
-      sb.append(task.toString());
+      sb.append(task);
       sb.append("\n");
     }
 
@@ -89,6 +89,7 @@ public abstract class Project {
     return sb.toString();
   }
 
+  @Override
   public String toString() {
     return String.format("%-20s|%-20s|%-20s|%-20s|%-20s\n", id, name,
         getProjectType(),

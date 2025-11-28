@@ -64,7 +64,7 @@ public class UserService extends MainService {
     System.out.println("✅User Removed successfully");
   }
 
-  private void displayUsers() {
+  private void listUsers() {
     ConsoleMenu.displayHeader("USER LIST");
     StringBuilder sb = new StringBuilder();
     ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
@@ -101,7 +101,7 @@ public class UserService extends MainService {
     try {
       switch (choice) {
         case 1:
-          displayUsers();
+          listUsers();
           break;
         case 2:
           addUser();

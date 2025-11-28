@@ -8,7 +8,7 @@ public class Task implements Completable {
   private String id;
   private String name;
   private TaskStatus status;
-  private String userID;
+  private int hours;
 
   public Task(String id, String name) {
     this(id, name, TaskStatus.PENDING);
@@ -18,6 +18,7 @@ public class Task implements Completable {
     this.id = id;
     this.name = name;
     this.status = status;
+    this.hours = 0;
   }
 
   public String getId() {
@@ -36,16 +37,17 @@ public class Task implements Completable {
     this.status = status;
   }
 
-  public String getUserID() {
-    return userID;
+  public int getHours() {
+    return hours;
   }
 
-  public void setUserID(String userID) {
-    this.userID = userID;
+  public void setHours(int hours) {
+    this.hours = hours;
   }
 
+  @Override
   public String toString() {
-    return String.format("%-20s|%-20s|%-20s\n", id, name, status.getStatus());
+    return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, status.getStatus(), getHours());
   }
 
   @Override

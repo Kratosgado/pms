@@ -36,6 +36,7 @@ public class TaskService extends MainService {
       return ValidationUtils.validateTaskStatus(input);
     });
     Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, status);
+    task.setHours(Console.getPositiveIntInput("Enter Hours: "));
     tasks.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
@@ -63,10 +64,10 @@ public class TaskService extends MainService {
     System.out.println("✅Task Removed successfully");
   }
 
-  private void displayTasks() {
+  private void listTasks() {
     ConsoleMenu.displayHeader("TASK LIST");
     StringBuilder sb = new StringBuilder();
-    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s", "ID", "NAME", "STATUS"));
+    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
     for (Task task : tasks) {
       sb.append(task);
     }
@@ -96,7 +97,7 @@ public class TaskService extends MainService {
           removeTask();
           break;
         case 4:
-          displayTasks();
+          listTasks();
           break;
         default:
           return choice;

@@ -64,6 +64,7 @@ public abstract class User {
     return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, email, role);
   }
 
+  @Override
   public String toString() {
     return System.out
         .format("\nUser [name: %s, email: %s, role: %s]", getName(), getEmail(), getRole())

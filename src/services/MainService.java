@@ -82,7 +82,7 @@ public class MainService {
         ReportService.displayReport(projects);
         break;
       case 4:
-        ConsoleMenu.runningServices.add(new UserService(Seed.seedUsers()));
+        ConsoleMenu.runningServices.add(new UserService(users));
         break;
       default:
         return choice;
