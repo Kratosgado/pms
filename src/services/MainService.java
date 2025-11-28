@@ -29,7 +29,7 @@ public class MainService {
     System.out.println("4. Manage Users");
   }
 
-  protected static void setCurrentUser(User user) {
+  protected static void setCurrentUser(final User user) {
     currentUser = user;
   }
 
@@ -41,8 +41,8 @@ public class MainService {
     System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getRole());
   }
 
-  private User getUserByEmail(String email) {
-    for (User user : users) {
+  private User getUserByEmail(final String email) {
+    for (final User user : users) {
       if (user.getEmail().equals(email)) {
         return user;
       }
@@ -54,27 +54,27 @@ public class MainService {
     do {
       try {
         ConsoleMenu.displayHeader("AUTHENTICATION");
-        String email = Console.getEmailInput();
-        User user = getUserByEmail(email);
-        String password = Console.getPasswordInput("Enter User Password: ");
+        final String email = Console.getEmailInput();
+        final User user = getUserByEmail(email);
+        final String password = Console.getPasswordInput("Enter User Password: ");
         if (!user.getPassword().equals(password)) {
           throw new IllegalArgumentException("Invalid Password");
         }
         System.out.println("✅User switched successfully");
         setCurrentUser(user);
-      } catch (Exception e) {
+      } catch (final Exception e) {
         ConsoleMenu.displayError(e.getMessage());
       }
     } while (currentUser == null);
   }
 
-  public int handleChoice(int choice) {
+  public int handleChoice(final int choice) {
     switch (choice) {
       case 1:
         ConsoleMenu.runningServices.add(new ProjectService(projects));
         break;
       case 2:
-        ProjectService projectService = new ProjectService(projects);
+        final ProjectService projectService = new ProjectService(projects);
         projectService.listProjects();
         projectService.askForProject();
         break;

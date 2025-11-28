@@ -5,16 +5,16 @@ import interfaces.Completable;
 import utils.TaskStatus;
 
 public class Task implements Completable {
-  private String id;
-  private String name;
+  private final String id;
+  private final String name;
   private TaskStatus status;
   private int hours;
 
-  public Task(String id, String name) {
+  public Task(final String id, final String name) {
     this(id, name, TaskStatus.PENDING);
   }
 
-  public Task(String id, String name, TaskStatus status) {
+  public Task(final String id, final String name, final TaskStatus status) {
     this.id = id;
     this.name = name;
     this.status = status;
@@ -33,7 +33,7 @@ public class Task implements Completable {
     return status;
   }
 
-  public void setStatus(TaskStatus status) {
+  public void setStatus(final TaskStatus status) {
     this.status = status;
   }
 
@@ -41,7 +41,7 @@ public class Task implements Completable {
     return hours;
   }
 
-  public void setHours(int hours) {
+  public void setHours(final int hours) {
     this.hours = hours;
   }
 

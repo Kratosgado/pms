@@ -10,15 +10,15 @@ import utils.TaskStatus;
 import utils.ValidationUtils;
 
 public class TaskService extends MainService {
-  private ArrayList<Task> tasks;
+  private final ArrayList<Task> tasks;
 
-  TaskService(ArrayList<Task> tasks) {
+  TaskService(final ArrayList<Task> tasks) {
     this.tasks = tasks;
     title = "TASK CATALOG";
   }
 
-  private Task getTaskById(String id) throws IllegalArgumentException {
-    for (Task task : tasks) {
+  private Task getTaskById(final String id) throws IllegalArgumentException {
+    for (final Task task : tasks) {
       if (task.getId().equals(id)) {
         return task;
       }
@@ -35,7 +35,7 @@ public class TaskService extends MainService {
     status = ConsoleMenu.getInput("Enter Initial Status (Pending, In Progress, Completed): ", input -> {
       return ValidationUtils.validateTaskStatus(input);
     });
-    Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, status);
+    final Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, status);
     task.setHours(Console.getPositiveIntInput("Enter Hours: "));
     tasks.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
@@ -45,11 +45,12 @@ public class TaskService extends MainService {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("UDATE TASK STATUS");
 
-    String id = Console.getString("Enter Task ID: ");
-    Task task = getTaskById(id);
-    TaskStatus taskStatus = ConsoleMenu.getInput("Enter New Status (Pending, In Progress, Completed): ", input -> {
-      return ValidationUtils.validateTaskStatus(input);
-    });
+    final String id = Console.getString("Enter Task ID: ");
+    final Task task = getTaskById(id);
+    final TaskStatus taskStatus = ConsoleMenu.getInput("Enter New Status (Pending, In Progress, Completed): ",
+        input -> {
+          return ValidationUtils.validateTaskStatus(input);
+        });
     task.setStatus(taskStatus);
     tasks.set(tasks.indexOf(task), task);
     System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
@@ -58,17 +59,17 @@ public class TaskService extends MainService {
   private void removeTask() {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE TASK");
-    String id = Console.getString("Enter Task ID: ");
-    Task task = getTaskById(id);
+    final String id = Console.getString("Enter Task ID: ");
+    final Task task = getTaskById(id);
     tasks.remove(task);
     System.out.println("✅Task Removed successfully");
   }
 
   private void listTasks() {
     ConsoleMenu.displayHeader("TASK LIST");
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
-    for (Task task : tasks) {
+    for (final Task task : tasks) {
       sb.append(task);
     }
     sb.append("\n");
@@ -84,7 +85,7 @@ public class TaskService extends MainService {
   }
 
   @Override
-  public int handleChoice(int choice) {
+  public int handleChoice(final int choice) {
     try {
       switch (choice) {
         case 1:
@@ -102,7 +103,7 @@ public class TaskService extends MainService {
         default:
           return choice;
       }
-    } catch (Exception e) {
+    } catch (final Exception e) {
       ConsoleMenu.displayError(e.getMessage());
     }
     return -1;

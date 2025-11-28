@@ -14,8 +14,8 @@ import models.User;
 public class Seed {
 
   public static ArrayList<User> seedUsers() {
-    ArrayList<User> users = new ArrayList<>();
-    String prefix = "US";
+    final ArrayList<User> users = new ArrayList<>();
+    final String prefix = "US";
     String id = CustomUtils.getNextId(prefix, users.size());
     User newUser = new AdminUser(id, "Kratos", "kratos@gmail.com", "password");
     users.add(newUser);
@@ -33,8 +33,8 @@ public class Seed {
   }
 
   public static ArrayList<Project> seedProjects() {
-    ArrayList<Project> projects = new ArrayList<>();
-    String prefix = "PJ";
+    final ArrayList<Project> projects = new ArrayList<>();
+    final String prefix = "PJ";
     String id = CustomUtils.getNextId(prefix, projects.size());
     Project project = new SoftwareProject(id, "PMS", "Project management system", 4, 1000.00);
     project.addTasks(Seed.seedTasks());
@@ -61,8 +61,8 @@ public class Seed {
   }
 
   public static ArrayList<Task> seedTasks() {
-    ArrayList<Task> tasks = new ArrayList<>();
-    String prefix = "TS";
+    final ArrayList<Task> tasks = new ArrayList<>();
+    final String prefix = "TS";
     String id = CustomUtils.getNextId(prefix, tasks.size());
     Task task = new Task(id, "Task 1");
     tasks.add(task);

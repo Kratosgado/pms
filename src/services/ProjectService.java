@@ -12,28 +12,28 @@ import utils.ConsoleMenu;
 import utils.CustomUtils;
 
 public class ProjectService extends MainService {
-  private ArrayList<Project> projects;
+  private final ArrayList<Project> projects;
   private Project selectedProject;
 
-  public ProjectService(ArrayList<Project> projects) {
+  public ProjectService(final ArrayList<Project> projects) {
     this.projects = projects;
     this.title = "PROJECT CATALOG";
   }
 
-  private String listProjects(List<Project> projects) {
+  private String listProjects(final List<Project> projects) {
     ConsoleMenu.displayHeader("PROJECT LIST");
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     ConsoleMenu.appendTableHeader(sb,
         String.format("%-20s|%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "TYPE", "TEAM SIZE", "BUDGET"));
-    for (Project project : projects) {
+    for (final Project project : projects) {
       sb.append(project);
     }
     sb.append("\n");
     return sb.toString();
   }
 
-  private Project getProjectById(String id) {
-    for (Project project : projects) {
+  private Project getProjectById(final String id) {
+    for (final Project project : projects) {
       if (project.getId().equals(id)) {
         return project;
       }
@@ -44,13 +44,13 @@ public class ProjectService extends MainService {
   private void addProject() {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("ADD PROJECT");
-    String name = Console.getString("Enter Project Name: ");
-    String description = Console.getString("Enter Project Description: ");
-    int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
-    double budget = Console.getDoubleInput("Enter Budget: ");
-    String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
+    final String name = Console.getString("Enter Project Name: ");
+    final String description = Console.getString("Enter Project Description: ");
+    final int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
+    final double budget = Console.getDoubleInput("Enter Budget: ");
+    final String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
     Project project;
-    String id = CustomUtils.getNextId("P", projects.size());
+    final String id = CustomUtils.getNextId("P", projects.size());
     if (type.equals("soft"))
       project = new SoftwareProject(id, name, description, teamSize, budget);
     else if (type.equals("hard"))
@@ -64,8 +64,8 @@ public class ProjectService extends MainService {
   private void removeProject() {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE PROJECT");
-    String id = Console.getString("Enter Project ID: ");
-    Project project = getProjectById(id);
+    final String id = Console.getString("Enter Project ID: ");
+    final Project project = getProjectById(id);
     projects.remove(project);
     System.out.println("✅Project Removed successfully");
   }
@@ -75,23 +75,23 @@ public class ProjectService extends MainService {
   }
 
   private void listSoftwareProjects() {
-    listProjects(projects.stream().filter(project -> project instanceof SoftwareProject).toList());
+    System.out.println(listProjects(projects.stream().filter(project -> project instanceof SoftwareProject).toList()));
   }
 
   private void listHardwareProjects() {
-    listProjects(projects.stream().filter(project -> project instanceof HardwareProject).toList());
+    System.out.println(listProjects(projects.stream().filter(project -> project instanceof HardwareProject).toList()));
   }
 
   private void searchByBudgetRange() {
     double min, max;
     min = Console.getDoubleInput("Enter Minimum Budget: ");
     max = Console.getDoubleInput("Enter Maximum Budget: ");
-    listProjects(
-        projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList());
+    System.out.println(listProjects(
+        projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList()));
   }
 
   protected void askForProject() {
-    String id = ConsoleMenu.getInput("Enter project Id to view details (or 0 to return): ", input -> {
+    final String id = ConsoleMenu.getInput("Enter project Id to view details (or 0 to return): ", input -> {
       return input;
     });
     if (id.equals("0"))
@@ -103,9 +103,9 @@ public class ProjectService extends MainService {
 
   private void calculateProjectCompletion() {
     ConsoleMenu.displayHeader("CALCULATE PROJECT COMPLETION");
-    String id = Console.getString("Enter Project ID: ");
-    Project project = getProjectById(id);
-    double progress = project.getProgress();
+    final String id = Console.getString("Enter Project ID: ");
+    final Project project = getProjectById(id);
+    final double progress = project.getProgress();
     System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
   }
 
@@ -122,7 +122,7 @@ public class ProjectService extends MainService {
   }
 
   @Override
-  public int handleChoice(int choice) {
+  public int handleChoice(final int choice) {
     try {
       switch (choice) {
         case 1:
@@ -150,7 +150,7 @@ public class ProjectService extends MainService {
           return choice;
       }
       askForProject();
-    } catch (Exception e) {
+    } catch (final Exception e) {
       ConsoleMenu.displayError(e.getMessage());
     }
     return -1;

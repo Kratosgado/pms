@@ -11,15 +11,15 @@ import utils.ConsoleMenu;
 import utils.CustomUtils;
 
 public class UserService extends MainService {
-  private ArrayList<User> users;
+  private final ArrayList<User> users;
 
-  public UserService(ArrayList<User> users) {
+  public UserService(final ArrayList<User> users) {
     this.users = users;
     title = "USER MENU";
   }
 
-  private User getUserByEmail(String email) {
-    for (User user : users) {
+  private User getUserByEmail(final String email) {
+    for (final User user : users) {
       if (user.getEmail().equals(email)) {
         return user;
       }
@@ -27,8 +27,8 @@ public class UserService extends MainService {
     throw new IllegalArgumentException("User not found");
   }
 
-  private User getUserById(String id) {
-    for (User user : users) {
+  private User getUserById(final String id) {
+    for (final User user : users) {
       if (user.getId().equals(id)) {
         return user;
       }
@@ -39,11 +39,11 @@ public class UserService extends MainService {
   private void addUser() {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("ADD USER");
-    String name = Console.getString("Enter User Name: ");
-    String email = Console.getEmailInput();
-    String password = Console.getPasswordInput("Enter User Password: ");
-    String role = Console.getString("Enter User Role(admin/user): ");
-    String id = CustomUtils.getNextId("U", users.size());
+    final String name = Console.getString("Enter User Name: ");
+    final String email = Console.getEmailInput();
+    final String password = Console.getPasswordInput("Enter User Password: ");
+    final String role = Console.getString("Enter User Role(admin/user): ");
+    final String id = CustomUtils.getNextId("U", users.size());
     User user;
     if (role == "admin")
       user = new AdminUser(id, name, email, password);
@@ -58,17 +58,17 @@ public class UserService extends MainService {
   private void removeUser() {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE USER");
-    String id = Console.getString("Enter User ID: ");
-    User user = getUserById(id);
+    final String id = Console.getString("Enter User ID: ");
+    final User user = getUserById(id);
     users.remove(user);
     System.out.println("✅User Removed successfully");
   }
 
   private void listUsers() {
     ConsoleMenu.displayHeader("USER LIST");
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
-    for (User user : users) {
+    for (final User user : users) {
       sb.append(user.displayUser());
     }
     sb.append("\n");
@@ -77,9 +77,9 @@ public class UserService extends MainService {
 
   public void switchUser() {
     ConsoleMenu.displayHeader("SWITCH USER");
-    String email = Console.getEmailInput();
-    User user = getUserByEmail(email);
-    String password = Console.getPasswordInput("Enter User Password: ");
+    final String email = Console.getEmailInput();
+    final User user = getUserByEmail(email);
+    final String password = Console.getPasswordInput("Enter User Password: ");
     if (!user.getPassword().equals(password)) {
       throw new IllegalArgumentException("Invalid Password");
     }
@@ -97,7 +97,7 @@ public class UserService extends MainService {
   }
 
   @Override
-  public int handleChoice(int choice) {
+  public int handleChoice(final int choice) {
     try {
       switch (choice) {
         case 1:
@@ -118,7 +118,7 @@ public class UserService extends MainService {
         default:
           return choice;
       }
-    } catch (Exception e) {
+    } catch (final Exception e) {
       ConsoleMenu.displayError(e.getMessage());
     }
     return -1;

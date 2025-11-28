@@ -9,33 +9,33 @@ public class Console {
     });
   }
 
-  public static String getPasswordInput(String prompt) throws IllegalArgumentException {
+  public static String getPasswordInput(final String prompt) throws IllegalArgumentException {
     return ConsoleMenu.getInput(prompt, e -> {
       return ValidationUtils.isValidPassword(e);
     });
   }
 
-  public static String getString(String prompt) throws IllegalArgumentException {
+  public static String getString(final String prompt) throws IllegalArgumentException {
     return ConsoleMenu.getInput(prompt, e -> {
       return ValidationUtils.isValidName(e);
     });
   }
 
-  public static int getPositiveIntInput(String prompt) throws IllegalArgumentException {
+  public static int getPositiveIntInput(final String prompt) throws IllegalArgumentException {
     return ConsoleMenu.getInput(prompt, input -> {
       return ValidationUtils.isPositive(input);
     });
   }
 
-  public static int getIntInput(String prompt) throws IllegalArgumentException {
-    int number = ConsoleMenu.getInput(prompt, input -> {
+  public static int getIntInput(final String prompt) throws IllegalArgumentException {
+    final int number = ConsoleMenu.getInput(prompt, input -> {
       return ValidationUtils.isInt(input);
     });
     return number;
   }
 
-  public static double getDoubleInput(String prompt) throws IllegalArgumentException {
-    double number = ConsoleMenu.getInput(prompt, input -> {
+  public static double getDoubleInput(final String prompt) throws IllegalArgumentException {
+    final double number = ConsoleMenu.getInput(prompt, input -> {
       return ValidationUtils.isDouble(input);
     });
     return number;
