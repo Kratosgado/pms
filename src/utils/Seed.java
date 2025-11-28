@@ -34,25 +34,25 @@ public class Seed {
   public static ArrayList<Project> seedProjects() {
     ArrayList<Project> projects = new ArrayList<>();
     String id = CustomUtils.getNextId("P", projects.size());
-    Project project = new SoftwareProject(id, "PMS", "Project management system", 4, 1000.00);
+    Project project = new SoftwareProject(id, "PMS", 4, 1000.00);
     project.addTasks(Seed.seedTasks());
     projects.add(project);
 
     id = CustomUtils.getNextId("P", projects.size());
-    project = new HardwareProject(id, "Psuedo Interpreter", "Project management system", 4, 2000.00);
+    project = new HardwareProject(id, "Psuedo Interpreter", 4, 2000.00);
     project.addTasks(Seed.seedTasks());
     projects.add(project);
     id = CustomUtils.getNextId("P", projects.size());
-    project = new HardwareProject(id, "Psuedo Runner", "Project management system", 4, 4000.00);
+    project = new HardwareProject(id, "Psuedo Runner", 4, 4000.00);
     project.addTasks(Seed.seedTasks());
     projects.add(project);
     id = CustomUtils.getNextId("P", projects.size());
-    project = new SoftwareProject(id, "Console", "Project management system", 4, 2000.00);
+    project = new SoftwareProject(id, "Console", 4, 2000.00);
 
     project.addTasks(Seed.seedTasks());
     projects.add(project);
     id = CustomUtils.getNextId("P", projects.size());
-    project = new SoftwareProject(id, "TSM", "Task management system", 4, 2000.00);
+    project = new SoftwareProject(id, "TSM", 4, 2000.00);
     project.addTasks(Seed.seedTasks());
     projects.add(project);
     return projects;

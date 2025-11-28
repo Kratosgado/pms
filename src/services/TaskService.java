@@ -65,10 +65,13 @@ public class TaskService extends MainService {
 
   private void displayTasks() {
     ConsoleMenu.displayHeader("TASK LIST");
+    StringBuilder sb = new StringBuilder();
+    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s", "ID", "NAME", "STATUS"));
     for (Task task : tasks) {
-      System.out.printf("|| %s (%s) || %s \n", task.getName(), task.getId(), task.getStatus().getStatus());
+      sb.append(task);
     }
-    System.out.println("||================================================================================||");
+    sb.append("\n");
+    System.out.println(sb);
   }
 
   @Override

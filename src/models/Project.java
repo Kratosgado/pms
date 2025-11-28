@@ -7,16 +7,14 @@ import utils.TaskStatus;
 public abstract class Project {
   private String id;
   private String name;
-  private String description;
   private int teamSize;
   private double budget;
 
   private ArrayList<Task> tasks;
 
-  public Project(String id, String name, String description, int teamSize, double budget) {
+  public Project(String id, String name, int teamSize, double budget) {
     this.id = id;
     this.name = name;
-    this.description = description;
     this.teamSize = teamSize;
     this.budget = budget;
     this.tasks = new ArrayList<>();
@@ -28,10 +26,6 @@ public abstract class Project {
 
   public String getName() {
     return name;
-  }
-
-  public String getDescription() {
-    return description;
   }
 
   public int getTeamSize() {
@@ -72,7 +66,6 @@ public abstract class Project {
     StringBuilder sb = new StringBuilder();
     sb.append("\tName: ").append(name).append("\n");
     sb.append("\tType: ").append(getProjectType()).append("\n");
-    sb.append("\tDescription: ").append(description).append("\n");
     sb.append("\tTeam Size: ").append(teamSize).append("\n");
     sb.append("\tBudget: ").append(budget).append("\n");
 
@@ -88,9 +81,8 @@ public abstract class Project {
   }
 
   public String toString() {
-    return String.format("%s\t|%s\t\t\t|%s\t\t|%s\t\t|%s\t\t|%s\n", id, name,
+    return String.format("%-20s|%-20s|%-20s|%-20s|%-20s\n", id, name,
         getProjectType(),
-        description,
         teamSize, budget);
   }
 }

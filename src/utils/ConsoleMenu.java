@@ -77,12 +77,18 @@ public class ConsoleMenu {
     System.out.println("\n✅ " + success);
   }
 
+  public final static void appendTableHeader(StringBuilder stringBuilder, String title) {
+    stringBuilder.append("||").append("-".repeat(CustomUtils.UI_MAX_WIDTH)).append("||").append("\n");
+    stringBuilder.append(title).append("\n");
+    stringBuilder.append("||").append("-".repeat(CustomUtils.UI_MAX_WIDTH)).append("||").append("\n");
+  }
+
   public final static void displayHeader(String title) {
-    int halfLength = title.length() / 2;
-    System.out.println("\n||=====================================================================================");
-    System.out.printf("|| %s %s %s||\n", " ".repeat(40 - halfLength), title,
-        " ".repeat(40 - halfLength));
-    System.out.println("||=====================================================================================\n");
+    int halfLength = title.length() % 2 == 0 ? title.length() / 2 : title.length() / 2 + 1;
+    System.out.println("\n" + "=".repeat(CustomUtils.UI_MAX_WIDTH));
+    System.out.printf("|| %s %s %s||\n", " ".repeat(45 - halfLength), title,
+        " ".repeat(48 - halfLength));
+    System.out.println("=".repeat(CustomUtils.UI_MAX_WIDTH));
   }
 
   public final static void requireAdmin() {

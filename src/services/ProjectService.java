@@ -23,10 +23,10 @@ public class ProjectService extends MainService {
   private String listProjects(List<Project> projects) {
     ConsoleMenu.displayHeader("PROJECT LIST");
     StringBuilder sb = new StringBuilder();
-    sb.append("Id\tName\t\t\t|Type\t\t|Description\t\t|Team Size\t\t|Budget\n");
-    sb.append("--------------------------------------------------------------------------------\n");
+    ConsoleMenu.appendTableHeader(sb,
+        String.format("%-20s|%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "TYPE", "TEAM SIZE", "BUDGET"));
     for (Project project : projects) {
-      sb.append(project.toString());
+      sb.append(project);
     }
     sb.append("\n");
     return sb.toString();
@@ -45,16 +45,15 @@ public class ProjectService extends MainService {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("ADD PROJECT");
     String name = Console.getString("Enter Project Name: ");
-    String description = Console.getString("Enter Project Description: ");
     int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
     double budget = Console.getDoubleInput("Enter Budget: ");
     String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
     Project project;
     String id = CustomUtils.getNextId("P", projects.size());
     if (type.equals("soft"))
-      project = new SoftwareProject(id, name, description, teamSize, budget);
+      project = new SoftwareProject(id, name, teamSize, budget);
     else if (type.equals("hard"))
-      project = new HardwareProject(id, name, description, teamSize, budget);
+      project = new HardwareProject(id, name, teamSize, budget);
     else
       throw new IllegalArgumentException("Invalid Project type");
     projects.add(project);

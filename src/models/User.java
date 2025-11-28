@@ -61,7 +61,7 @@ public abstract class User {
   }
 
   public String displayUser() {
-    return String.format("%s\t|%s\t\t\t|%s\t\t|%s\n", id, name, email, role);
+    return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, email, role);
   }
 
   public String toString() {

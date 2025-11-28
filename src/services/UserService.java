@@ -66,10 +66,13 @@ public class UserService extends MainService {
 
   private void displayUsers() {
     ConsoleMenu.displayHeader("USER LIST");
+    StringBuilder sb = new StringBuilder();
+    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
     for (User user : users) {
-      System.out.print(user.displayUser());
+      sb.append(user.displayUser());
     }
-    System.out.println("||===================================================================================||");
+    sb.append("\n");
+    System.out.println(sb);
   }
 
   public void switchUser() {
