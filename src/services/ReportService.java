@@ -13,27 +13,19 @@ public class ReportService {
     StringBuilder sb = new StringBuilder();
     double progressSum = 0;
 
-    sb.append("\n------------------------------------------------------------------------------------\n");
-    sb.append("PROJECT ID | PROJECT NAME | TASKS | COMPLETED | PROGRESS (%)\n");
-    sb.append("------------------------------------------------------------------------------------\n");
+    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s|%-20s", "PROJECT ID", "PROJECT NAME",
+        "TASKS", "COMPLETED", "PROGRESS (%)"));
     for (Project project : projects) {
-      sb.append(project.getId());
-      sb.append(" | ");
-      sb.append(project.getName());
-      sb.append(" | ");
-      sb.append(project.getTasks().size());
-      sb.append(" | ");
-      sb.append(project.getCompletedTasks());
-      sb.append(" | ");
+      sb.append(String.format("%-20s", project.getId()));
+
+      sb.append(String.format("|%-20s", project.getName()));
+      sb.append(String.format("|%-20s", project.getTasks().size()));
+      sb.append(String.format("|%-20s", project.getCompletedTasks()));
       double progress = project.getProgress();
       progressSum += progress;
-      sb.append(progress);
-      sb.append("\n");
+      sb.append(String.format("|%-20s\n", progress));
     }
-    sb.append("\n------------------------------------------------------------------------------------\n");
-    sb.append("AVERAGE COMPLETION: ")
-        .append(progressSum / projects.size()).append("%\n");
-    sb.append("\n------------------------------------------------------------------------------------\n");
+    ConsoleMenu.appendTableHeader(sb, "AVERAGE COMPLETION: " + (progressSum / projects.size()) + "%");
     System.out.println(sb.toString());
   }
 

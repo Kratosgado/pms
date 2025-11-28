@@ -45,15 +45,16 @@ public class ProjectService extends MainService {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("ADD PROJECT");
     String name = Console.getString("Enter Project Name: ");
+    String description = Console.getString("Enter Project Description: ");
     int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
     double budget = Console.getDoubleInput("Enter Budget: ");
     String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
     Project project;
     String id = CustomUtils.getNextId("P", projects.size());
     if (type.equals("soft"))
-      project = new SoftwareProject(id, name, teamSize, budget);
+      project = new SoftwareProject(id, name, description, teamSize, budget);
     else if (type.equals("hard"))
-      project = new HardwareProject(id, name, teamSize, budget);
+      project = new HardwareProject(id, name, description, teamSize, budget);
     else
       throw new IllegalArgumentException("Invalid Project type");
     projects.add(project);
