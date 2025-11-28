@@ -75,7 +75,7 @@ public class MainService {
         break;
       case 2:
         ProjectService projectService = new ProjectService(projects);
-        System.out.println(projectService.listProjects());
+        projectService.listProjects();
         projectService.askForProject();
         break;
       case 3:

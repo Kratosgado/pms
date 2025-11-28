@@ -70,23 +70,23 @@ public class ProjectService extends MainService {
     System.out.println("✅Project Removed successfully");
   }
 
-  protected String listProjects() {
-    return listProjects(projects);
+  protected void listProjects() {
+    System.out.println(listProjects(projects));
   }
 
-  private String listSoftwareProjects() {
-    return listProjects(projects.stream().filter(project -> project instanceof SoftwareProject).toList());
+  private void listSoftwareProjects() {
+    listProjects(projects.stream().filter(project -> project instanceof SoftwareProject).toList());
   }
 
-  private String listHardwareProjects() {
-    return listProjects(projects.stream().filter(project -> project instanceof HardwareProject).toList());
+  private void listHardwareProjects() {
+    listProjects(projects.stream().filter(project -> project instanceof HardwareProject).toList());
   }
 
-  private String searchByBudgetRange() {
+  private void searchByBudgetRange() {
     double min, max;
     min = Console.getDoubleInput("Enter Minimum Budget: ");
     max = Console.getDoubleInput("Enter Maximum Budget: ");
-    return listProjects(
+    listProjects(
         projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList());
   }
 
@@ -101,6 +101,14 @@ public class ProjectService extends MainService {
     ConsoleMenu.runningServices.add(new TaskService(selectedProject.getTasks()));
   }
 
+  private void calculateProjectCompletion() {
+    ConsoleMenu.displayHeader("CALCULATE PROJECT COMPLETION");
+    String id = Console.getString("Enter Project ID: ");
+    Project project = getProjectById(id);
+    double progress = project.getProgress();
+    System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
+  }
+
   @Override
   protected void displayOptions() {
     System.out.println("1. Add Project");
@@ -108,7 +116,8 @@ public class ProjectService extends MainService {
     System.out.println("3. Software Projects Only");
     System.out.println("4. Hardware Projects Only");
     System.out.println("5. Search by Budget Range");
-    System.out.println("6. Remove Project");
+    System.out.println("6. Calculate Project Completion");
+    System.out.println("7. Remove Project");
 
   }
 
@@ -120,18 +129,21 @@ public class ProjectService extends MainService {
           addProject();
           break;
         case 2:
-          System.out.println(listProjects());
+          listProjects();
           break;
         case 3:
-          System.out.println(listSoftwareProjects());
+          listSoftwareProjects();
           break;
         case 4:
-          System.out.println(listHardwareProjects());
+          listHardwareProjects();
           break;
         case 5:
-          System.out.println(searchByBudgetRange());
+          searchByBudgetRange();
           break;
         case 6:
+          calculateProjectCompletion();
+          break;
+        case 7:
           removeProject();
           break;
         default:

@@ -46,7 +46,7 @@ A comprehensive Java-based project management system for managing projects, task
 
 ## Prerequisites
 
-> - **Java Development Kit (JDK)** version 8 or higher
+> - \*\*Java Development Kit (JDK) 21 or higher
 > - **Terminal/Command Prompt** for running commands
 
 ## Setup
@@ -80,6 +80,11 @@ The application will start with an authentication menu.
 
 1. Run the application using the command above
 2. You will be prompted to authenticate with an email and password
+3. There are default users with the following credentials:
+   > - <kratos@gmail.com>/password (Admin)
+   > - <mbeah@gmail.com>/password (Regular)
+   > - <prince@gmail.com>/password (Regular)
+   > - <gado@gmail.com>/password (Regular)
 
 ### Main Menu Options
 
@@ -186,7 +191,7 @@ The system validates all user inputs:
 **Compilation errors:**
 
 > - Ensure all Java files are in the correct directory structure
-> - Verify JDK version is 8 or higher
+> - Verify JDK version is 21 or higher
 
 **Runtime errors:**
 
