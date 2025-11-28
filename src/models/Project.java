@@ -1,9 +1,7 @@
 package models;
 
 import java.util.ArrayList;
-
 import utils.ConsoleMenu;
-import utils.TaskStatus;
 
 public abstract class Project {
 
@@ -57,7 +55,7 @@ public abstract class Project {
   }
 
   public int getCompletedTasks() {
-    return (int) tasks.stream().filter(task -> task.getStatus() == TaskStatus.COMPLETED).count();
+    return (int) tasks.stream().filter(task -> task.isCompleted()).count();
   }
 
   public double getProgress() {
@@ -87,7 +85,7 @@ public abstract class Project {
       sb.append("\n");
     }
 
-    sb.append("Completion Rate (%): ").append(getProgress()).append("\n");
+    sb.append(String.format("Completion Rate (%): %.2f\n", getProgress()));
     return sb.toString();
   }
 

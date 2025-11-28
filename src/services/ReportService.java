@@ -23,9 +23,10 @@ public class ReportService {
       sb.append(String.format("|%-20s", project.getCompletedTasks()));
       double progress = project.getProgress();
       progressSum += progress;
-      sb.append(String.format("|%-20s\n", progress));
+      sb.append(String.format("|%-20.2f\n", progress));
     }
-    ConsoleMenu.appendTableHeader(sb, "AVERAGE COMPLETION: " + (progressSum / projects.size()) + "%");
+    ConsoleMenu.appendTableHeader(sb,
+        "AVERAGE COMPLETION: " + String.format("%.2f%%", (progressSum / projects.size())));
     System.out.println(sb.toString());
   }
 

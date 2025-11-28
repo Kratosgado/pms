@@ -18,13 +18,14 @@ public class ConsoleMenu {
   }
 
   public void run() {
-    while (running) {
+    do {
       runningServices.peek().displayMenu();
       int choice = Console.getPositiveIntInput("Enter your choice: ");
       int result = runningServices.peek().handleChoice(choice);
-      if (result == -1)
-        continue;
+
       switch (result) {
+        case -1:
+          break;
         case 0:
           goBack();
           break;
@@ -34,7 +35,8 @@ public class ConsoleMenu {
         default:
           displayError("Invalid Choice");
       }
-    }
+    } while (running);
+
   }
 
   private void goBack() {
