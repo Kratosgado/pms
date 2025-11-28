@@ -1,4 +1,3 @@
-
 package models;
 
 public abstract class User {
@@ -10,14 +9,6 @@ public abstract class User {
 
   protected enum Role {
     ADMIN, REGULAR
-  }
-
-  public User(String id, String name, String email) {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = "user123";
-    this.role = Role.REGULAR;
   }
 
   public User(String id, String name, String email, String password) {

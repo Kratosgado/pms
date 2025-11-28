@@ -37,6 +37,7 @@ public class TaskService extends MainService {
     });
     final Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, status);
     task.setHours(Console.getPositiveIntInput("Enter Hours: "));
+    task.setUser(Console.getString("Enter id of user to be assigned: "));
     tasks.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }

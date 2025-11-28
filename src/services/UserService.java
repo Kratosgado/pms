@@ -1,8 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
-
 import models.AdminUser;
 import models.RegularUser;
 import models.User;
@@ -11,15 +9,13 @@ import utils.ConsoleMenu;
 import utils.CustomUtils;
 
 public class UserService extends MainService {
-  private final ArrayList<User> users;
 
-  public UserService(final ArrayList<User> users) {
-    this.users = users;
+  public UserService() {
     title = "USER MENU";
   }
 
-  private User getUserByEmail(final String email) {
-    for (final User user : users) {
+  static User getUserByEmail(final String email) {
+    for (final User user : MainService.users) {
       if (user.getEmail().equals(email)) {
         return user;
       }
@@ -27,8 +23,8 @@ public class UserService extends MainService {
     throw new IllegalArgumentException("User not found");
   }
 
-  private User getUserById(final String id) {
-    for (final User user : users) {
+  public static User getUserById(final String id) {
+    for (final User user : MainService.users) {
       if (user.getId().equals(id)) {
         return user;
       }
@@ -51,7 +47,7 @@ public class UserService extends MainService {
       user = new RegularUser(id, name, email, password);
     else
       throw new IllegalArgumentException("Invalid User Role");
-    users.add(user);
+    MainService.users.add(user);
     System.out.printf("✅User '%s\' added successfully\n", user.getName());
   }
 
@@ -60,7 +56,7 @@ public class UserService extends MainService {
     ConsoleMenu.displayHeader("REMOVE USER");
     final String id = Console.getString("Enter User ID: ");
     final User user = getUserById(id);
-    users.remove(user);
+    MainService.users.remove(user);
     System.out.println("✅User Removed successfully");
   }
 
@@ -68,7 +64,7 @@ public class UserService extends MainService {
     ConsoleMenu.displayHeader("USER LIST");
     final StringBuilder sb = new StringBuilder();
     ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
-    for (final User user : users) {
+    for (final User user : MainService.users) {
       sb.append(user.displayUser());
     }
     sb.append("\n");

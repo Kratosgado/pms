@@ -12,7 +12,7 @@ public class MainService {
   String title = "MAIN MENU";
   private static User currentUser;
   ArrayList<Project> projects = Seed.seedProjects();
-  ArrayList<User> users = Seed.seedUsers();
+  static ArrayList<User> users = Seed.seedUsers();
 
   public final void displayMenu() {
     ConsoleMenu.displayHeader(title);
@@ -41,26 +41,17 @@ public class MainService {
     System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getRole());
   }
 
-  private User getUserByEmail(final String email) {
-    for (final User user : users) {
-      if (user.getEmail().equals(email)) {
-        return user;
-      }
-    }
-    throw new IllegalArgumentException("User not found");
-  }
-
   public final void authenticateUser() {
     do {
       try {
         ConsoleMenu.displayHeader("AUTHENTICATION");
         final String email = Console.getEmailInput();
-        final User user = getUserByEmail(email);
+        final User user = UserService.getUserByEmail(email);
         final String password = Console.getPasswordInput("Enter User Password: ");
         if (!user.getPassword().equals(password)) {
           throw new IllegalArgumentException("Invalid Password");
         }
-        System.out.println("✅User switched successfully");
+        ConsoleMenu.displaySuccess("User logged in");
         setCurrentUser(user);
       } catch (final Exception e) {
         ConsoleMenu.displayError(e.getMessage());
@@ -82,7 +73,7 @@ public class MainService {
         ReportService.displayReport(projects);
         break;
       case 4:
-        ConsoleMenu.runningServices.add(new UserService(users));
+        ConsoleMenu.runningServices.add(new UserService());
         break;
       default:
         return choice;

@@ -2,6 +2,7 @@
 package models;
 
 import interfaces.Completable;
+import services.UserService;
 import utils.TaskStatus;
 
 public class Task implements Completable {
@@ -9,6 +10,7 @@ public class Task implements Completable {
   private final String name;
   private TaskStatus status;
   private int hours;
+  private String userId;
 
   public Task(final String id, final String name) {
     this(id, name, TaskStatus.PENDING);
@@ -43,6 +45,15 @@ public class Task implements Completable {
 
   public void setHours(final int hours) {
     this.hours = hours;
+  }
+
+  public User getUser() {
+    return UserService.getUserById(userId);
+  }
+
+  public void setUser(String id) {
+    UserService.getUserById(id);
+    this.userId = id;
   }
 
   @Override
