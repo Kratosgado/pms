@@ -27,12 +27,12 @@ public class ConsoleMenu {
       final int result = runningServices.peek().handleChoice(choice);
 
       switch (result) {
-        case -1:
+        case -1: // Global value for handled choice
           break;
-        case 0:
+        case 0: // Global choice for going back
           goBack();
           break;
-        case 9:
+        case 9: // Global choice for exiting the application
           confirmExit();
           break;
         default:
