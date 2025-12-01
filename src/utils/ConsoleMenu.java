@@ -30,7 +30,7 @@ public class ConsoleMenu {
         case -1: // Global value for handled choice
           break;
         case 0: // Global choice for going back
-          goBack();
+          navigateBack();
           break;
         case 9: // Global choice for exiting the application
           confirmExit();
@@ -46,7 +46,7 @@ public class ConsoleMenu {
    * Navigate back to the previous menu If there is only one menu, exit the
    * application
    */
-  private void goBack() {
+  private void navigateBack() {
     if (runningServices.size() == 1) {
       System.out.println("You can't go back anymore");
       confirmExit();
