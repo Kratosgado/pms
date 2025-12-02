@@ -81,18 +81,18 @@ public abstract class Project {
 
     ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
     for (Task task : tasks) {
-      sb.append(task);
+      sb.append(task.toString());
       sb.append("\n");
     }
 
-    sb.append(String.format("Completion Rate (%): %.2f\n", getProgress()));
+    sb.append(String.format("Completion Rate: %.2f%%\n", getProgress()));
     return sb.toString();
   }
 
-  @Override
   public String toString() {
     return String.format("%-20s|%-20s|%-20s|%-20s|%-20s\n", id, name,
         getProjectType(),
         teamSize, budget);
   }
+
 }

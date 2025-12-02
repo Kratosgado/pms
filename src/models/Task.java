@@ -58,7 +58,7 @@ public class Task implements Completable {
 
   @Override
   public String toString() {
-    return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, status.getStatus(), getHours());
+    return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, getStatus(), getHours());
   }
 
   @Override
