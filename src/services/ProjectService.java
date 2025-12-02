@@ -20,6 +20,10 @@ public class ProjectService extends MainService {
     this.title = "PROJECT CATALOG";
   }
 
+  protected void listProjects() {
+    System.out.println(listProjects(projects));
+  }
+
   private String listProjects(final List<Project> projects) {
     ConsoleMenu.displayHeader("PROJECT LIST");
     final StringBuilder sb = new StringBuilder();
@@ -50,7 +54,7 @@ public class ProjectService extends MainService {
     final double budget = Console.getDoubleInput("Enter Budget: ");
     final String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
     Project project;
-    final String id = CustomUtils.getNextId("P", projects.size());
+    final String id = CustomUtils.getNextId("PJ", projects.size());
     if (type.equals("soft"))
       project = new SoftwareProject(id, name, description, teamSize, budget);
     else if (type.equals("hard"))
@@ -68,10 +72,6 @@ public class ProjectService extends MainService {
     final Project project = getProjectById(id);
     projects.remove(project);
     System.out.println("✅Project Removed successfully");
-  }
-
-  protected void listProjects() {
-    System.out.println(listProjects(projects));
   }
 
   private void listSoftwareProjects() {

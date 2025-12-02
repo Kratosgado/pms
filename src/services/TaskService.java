@@ -35,7 +35,7 @@ public class TaskService extends MainService {
     status = ConsoleMenu.getInput("Enter Initial Status (Pending, In Progress, Completed): ", input -> {
       return ValidationUtils.validateTaskStatus(input);
     });
-    final Task task = new Task(CustomUtils.getNextId("T", tasks.size()), name, status);
+    final Task task = new Task(CustomUtils.getNextId("TS", tasks.size()), name, status);
     task.setHours(Console.getPositiveIntInput("Enter Hours: "));
     task.setUser(Console.getString("Enter id of user to be assigned: "));
     tasks.add(task);

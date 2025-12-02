@@ -39,7 +39,7 @@ public class UserService extends MainService {
     final String email = Console.getEmailInput();
     final String password = Console.getPasswordInput("Enter User Password: ");
     final String role = Console.getString("Enter User Role(admin/user): ");
-    final String id = CustomUtils.getNextId("U", users.size());
+    final String id = CustomUtils.getNextId("US", users.size());
     User user;
     if (role == "admin")
       user = new AdminUser(id, name, email, password);
