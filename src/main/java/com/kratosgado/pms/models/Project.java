@@ -59,7 +59,7 @@ public abstract class Project {
     return (int) tasks.stream().filter(task -> task.isCompleted()).count();
   }
 
-  public double getProgress() {
+  public double calculateCompletionPercentage() {
     if (getTasks().size() == 0)
       return 0;
     return ((double) getCompletedTasks() / getTasks().size() * 100);
@@ -86,7 +86,7 @@ public abstract class Project {
       sb.append("\n");
     }
 
-    sb.append(String.format("Completion Rate: %.2f%%\n", getProgress()));
+    sb.append(String.format("Completion Rate: %.2f%%\n", calculateCompletionPercentage()));
     return sb.toString();
   }
 

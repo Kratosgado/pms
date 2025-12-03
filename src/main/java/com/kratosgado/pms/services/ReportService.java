@@ -8,6 +8,15 @@ import com.kratosgado.pms.utils.ConsoleMenu;
 
 public class ReportService {
 
+  public int calculateAverageCompletionPercentage(final ArrayList<Project> projects) {
+    double progressSum = 0;
+    for (final Project project : projects) {
+      final double progress = project.calculateCompletionPercentage();
+      progressSum += progress;
+    }
+    return (int) (progressSum / projects.size());
+  }
+
   public static void displayReport(final ArrayList<Project> projects) {
     ConsoleMenu.displayHeader("REPORT STATUS REPORT");
     final StringBuilder sb = new StringBuilder();
@@ -21,7 +30,7 @@ public class ReportService {
       sb.append(String.format("|%-20s", project.getName()));
       sb.append(String.format("|%-20s", project.getTasks().size()));
       sb.append(String.format("|%-20s", project.getCompletedTasks()));
-      final double progress = project.getProgress();
+      final double progress = project.calculateCompletionPercentage();
       progressSum += progress;
       sb.append(String.format("|%-20.2f\n", progress));
     }

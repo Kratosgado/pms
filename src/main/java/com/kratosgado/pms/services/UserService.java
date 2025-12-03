@@ -1,6 +1,7 @@
 
 package com.kratosgado.pms.services;
 
+import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.AdminUser;
 import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.User;
@@ -9,27 +10,11 @@ import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.CustomUtils;
 
 public class UserService extends MainService {
+  private UserInMemoryDatabase usersDb;
 
-  public UserService() {
+  public UserService(UserInMemoryDatabase userInMemoryDatabase) {
+    this.usersDb = userInMemoryDatabase;
     title = "USER MENU";
-  }
-
-  static User getUserByEmail(final String email) {
-    for (final User user : MainService.users) {
-      if (user.getEmail().equals(email)) {
-        return user;
-      }
-    }
-    throw new IllegalArgumentException("User not found");
-  }
-
-  public static User getUserById(final String id) {
-    for (final User user : MainService.users) {
-      if (user.getId().equals(id)) {
-        return user;
-      }
-    }
-    throw new IllegalArgumentException("User not found");
   }
 
   private void addUser() {
@@ -39,15 +24,15 @@ public class UserService extends MainService {
     final String email = Console.getEmailInput();
     final String password = Console.getPasswordInput("Enter User Password: ");
     final String role = Console.getString("Enter User Role(admin/user): ");
-    final String id = CustomUtils.getNextId("US", users.size());
+    final String id = CustomUtils.getNextId("US", usersDb.count());
     User user;
-    if (role == "admin")
+    if (role.equals("admin"))
       user = new AdminUser(id, name, email, password);
-    else if (role == "user")
+    else if (role.equals("user"))
       user = new RegularUser(id, name, email, password);
     else
       throw new IllegalArgumentException("Invalid User Role");
-    MainService.users.add(user);
+    usersDb.add(user);
     System.out.printf("✅User '%s\' added successfully\n", user.getName());
   }
 
@@ -55,8 +40,7 @@ public class UserService extends MainService {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE USER");
     final String id = Console.getString("Enter User ID: ");
-    final User user = getUserById(id);
-    MainService.users.remove(user);
+    usersDb.removeById(id);
     System.out.println("✅User Removed successfully");
   }
 
@@ -64,7 +48,7 @@ public class UserService extends MainService {
     ConsoleMenu.displayHeader("USER LIST");
     final StringBuilder sb = new StringBuilder();
     ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
-    for (final User user : MainService.users) {
+    for (final User user : usersDb.getAll()) {
       sb.append(user.displayUser());
     }
     sb.append("\n");
@@ -74,7 +58,7 @@ public class UserService extends MainService {
   public void switchUser() {
     ConsoleMenu.displayHeader("SWITCH USER");
     final String email = Console.getEmailInput();
-    final User user = getUserByEmail(email);
+    final User user = usersDb.getByEmail(email);
     final String password = Console.getPasswordInput("Enter User Password: ");
     if (!user.getPassword().equals(password)) {
       throw new IllegalArgumentException("Invalid Password");

@@ -4,6 +4,7 @@ package com.kratosgado.pms.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.models.HardwareProject;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.SoftwareProject;
@@ -12,16 +13,16 @@ import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.CustomUtils;
 
 public class ProjectService extends MainService {
-  private final ArrayList<Project> projects;
+  private final ProjectInMemoryDatabase projectsDb;
   private Project selectedProject;
 
-  public ProjectService(final ArrayList<Project> projects) {
-    this.projects = projects;
+  public ProjectService(final ProjectInMemoryDatabase projectsDb) {
+    this.projectsDb = projectsDb;
     this.title = "PROJECT CATALOG";
   }
 
   protected void listProjects() {
-    System.out.println(listProjects(projects));
+    System.out.println(listProjects(projectsDb.getAll()));
   }
 
   private String listProjects(final List<Project> projects) {
@@ -37,7 +38,7 @@ public class ProjectService extends MainService {
   }
 
   private Project getProjectById(final String id) {
-    for (final Project project : projects) {
+    for (final Project project : projectsDb.getAll()) {
       if (project.getId().equals(id)) {
         return project;
       }
@@ -54,14 +55,14 @@ public class ProjectService extends MainService {
     final double budget = Console.getDoubleInput("Enter Budget: ");
     final String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
     Project project;
-    final String id = CustomUtils.getNextId("PJ", projects.size());
+    final String id = CustomUtils.getNextId("PJ", projectsDb.count());
     if (type.equals("soft"))
       project = new SoftwareProject(id, name, description, teamSize, budget);
     else if (type.equals("hard"))
       project = new HardwareProject(id, name, description, teamSize, budget);
     else
       throw new IllegalArgumentException("Invalid Project type");
-    projects.add(project);
+    projectsDb.add(project);
     System.out.printf("✅Project '%s\' added successfully with id '%s'\n", project.getName(), project.getId());
   }
 
@@ -69,17 +70,18 @@ public class ProjectService extends MainService {
     ConsoleMenu.requireAdmin();
     ConsoleMenu.displayHeader("REMOVE PROJECT");
     final String id = Console.getString("Enter Project ID: ");
-    final Project project = getProjectById(id);
-    projects.remove(project);
+    projectsDb.removeById(id);
     System.out.println("✅Project Removed successfully");
   }
 
   private void listSoftwareProjects() {
-    System.out.println(listProjects(projects.stream().filter(project -> project instanceof SoftwareProject).toList()));
+    System.out.println(
+        listProjects(projectsDb.getAll().stream().filter(project -> project instanceof SoftwareProject).toList()));
   }
 
   private void listHardwareProjects() {
-    System.out.println(listProjects(projects.stream().filter(project -> project instanceof HardwareProject).toList()));
+    System.out.println(
+        listProjects(projectsDb.getAll().stream().filter(project -> project instanceof HardwareProject).toList()));
   }
 
   private void searchByBudgetRange() {
@@ -87,7 +89,8 @@ public class ProjectService extends MainService {
     min = Console.getDoubleInput("Enter Minimum Budget: ");
     max = Console.getDoubleInput("Enter Maximum Budget: ");
     System.out.println(listProjects(
-        projects.stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max).toList()));
+        projectsDb.getAll().stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max)
+            .toList()));
   }
 
   protected void askForProject() {
@@ -105,14 +108,14 @@ public class ProjectService extends MainService {
     ConsoleMenu.displayHeader("CALCULATE PROJECT COMPLETION");
     final String id = Console.getString("Enter Project ID: ");
     final Project project = getProjectById(id);
-    final double progress = project.getProgress();
+    final double progress = project.calculateCompletionPercentage();
     System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
   }
 
   @Override
   protected void displayOptions() {
     System.out.println("1. Add Project");
-    System.out.println("2. View  All Projects (" + projects.size() + ")");
+    System.out.println("2. View  All Projects (" + projectsDb.count() + ")");
     System.out.println("3. Software Projects Only");
     System.out.println("4. Hardware Projects Only");
     System.out.println("5. Search by Budget Range");

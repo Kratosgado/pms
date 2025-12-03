@@ -1,18 +1,16 @@
 package com.kratosgado.pms.services;
 
-import java.util.ArrayList;
-
-import com.kratosgado.pms.models.Project;
+import com.kratosgado.pms.data.ProjectInMemoryDatabase;
+import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.User;
-import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.Console;
-import com.kratosgado.pms.utils.Seed;
+import com.kratosgado.pms.utils.ConsoleMenu;
 
 public class MainService {
   String title = "MAIN MENU";
   private static User currentUser;
-  ArrayList<Project> projects = Seed.seedProjects();
-  static ArrayList<User> users = Seed.seedUsers();
+  final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase();
+  final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
 
   public final void displayMenu() {
     ConsoleMenu.displayHeader(title);
@@ -46,7 +44,7 @@ public class MainService {
       try {
         ConsoleMenu.displayHeader("AUTHENTICATION");
         final String email = Console.getEmailInput();
-        final User user = UserService.getUserByEmail(email);
+        final User user = usersDb.getByEmail(email);
         final String password = Console.getPasswordInput("Enter User Password: ");
         if (!user.getPassword().equals(password)) {
           throw new IllegalArgumentException("Invalid Password");
@@ -62,18 +60,18 @@ public class MainService {
   public int handleChoice(final int choice) {
     switch (choice) {
       case 1:
-        ConsoleMenu.runningServices.add(new ProjectService(projects));
+        ConsoleMenu.runningServices.add(new ProjectService(projectsDb));
         break;
       case 2:
-        final ProjectService projectService = new ProjectService(projects);
+        final ProjectService projectService = new ProjectService(projectsDb);
         projectService.listProjects();
         projectService.askForProject();
         break;
       case 3:
-        ReportService.displayReport(projects);
+        ReportService.displayReport(projectsDb.getAll());
         break;
       case 4:
-        ConsoleMenu.runningServices.add(new UserService());
+        ConsoleMenu.runningServices.add(new UserService(usersDb));
         break;
       default:
         return choice;
