@@ -26,9 +26,9 @@ public class ProjectService extends MainService {
   }
 
   private String listProjects(final List<Project> projects) {
-    ConsoleMenu.displayHeader("PROJECT LIST");
+    CustomUtils.displayHeader("PROJECT LIST");
     final StringBuilder sb = new StringBuilder();
-    ConsoleMenu.appendTableHeader(sb,
+    CustomUtils.appendTableHeader(sb,
         String.format("%-20s|%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "TYPE", "TEAM SIZE", "BUDGET"));
     for (final Project project : projects) {
       sb.append(project);
@@ -37,18 +37,9 @@ public class ProjectService extends MainService {
     return sb.toString();
   }
 
-  private Project getProjectById(final String id) {
-    for (final Project project : projectsDb.getAll()) {
-      if (project.getId().equals(id)) {
-        return project;
-      }
-    }
-    throw new IllegalArgumentException("Project not found");
-  }
-
   private void addProject() {
     ConsoleMenu.requireAdmin();
-    ConsoleMenu.displayHeader("ADD PROJECT");
+    CustomUtils.displayHeader("ADD PROJECT");
     final String name = Console.getString("Enter Project Name: ");
     final String description = Console.getString("Enter Project Description: ");
     final int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
@@ -68,7 +59,7 @@ public class ProjectService extends MainService {
 
   private void removeProject() {
     ConsoleMenu.requireAdmin();
-    ConsoleMenu.displayHeader("REMOVE PROJECT");
+    CustomUtils.displayHeader("REMOVE PROJECT");
     final String id = Console.getString("Enter Project ID: ");
     projectsDb.removeById(id);
     System.out.println("✅Project Removed successfully");
@@ -93,21 +84,28 @@ public class ProjectService extends MainService {
             .toList()));
   }
 
+  private void displayProjectDetails(final String id) {
+    final Project project = projectsDb.getById(id);
+    CustomUtils.displayHeader("PROJECT DETAILS: " + id);
+
+    System.out.println(project.getProjectDetails());
+  }
+
   protected void askForProject() {
     final String id = ConsoleMenu.getInput("Enter project Id to view details (or 0 to return): ", input -> {
       return input;
     });
     if (id.equals("0"))
       return;
-    selectedProject = getProjectById(id);
+    selectedProject = projectsDb.getById(id);
     System.out.println(selectedProject.getProjectDetails());
     ConsoleMenu.runningServices.add(new TaskService(selectedProject.getTasks()));
   }
 
   private void calculateProjectCompletion() {
-    ConsoleMenu.displayHeader("CALCULATE PROJECT COMPLETION");
+    CustomUtils.displayHeader("CALCULATE PROJECT COMPLETION");
     final String id = Console.getString("Enter Project ID: ");
-    final Project project = getProjectById(id);
+    final Project project = projectsDb.getById(id);
     final double progress = project.calculateCompletionPercentage();
     System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
   }

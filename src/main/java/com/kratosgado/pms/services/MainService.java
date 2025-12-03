@@ -5,6 +5,7 @@ import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
+import com.kratosgado.pms.utils.CustomUtils;
 
 public class MainService {
   String title = "MAIN MENU";
@@ -13,7 +14,7 @@ public class MainService {
   final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
 
   public final void displayMenu() {
-    ConsoleMenu.displayHeader(title);
+    CustomUtils.displayHeader(title);
     displayOptions();
     System.out.println("9. Exit");
     System.out.println("0. Go Back");
@@ -42,7 +43,7 @@ public class MainService {
   public final void authenticateUser() {
     do {
       try {
-        ConsoleMenu.displayHeader("AUTHENTICATION");
+        CustomUtils.displayHeader("AUTHENTICATION");
         final String email = Console.getEmailInput();
         final User user = usersDb.getByEmail(email);
         final String password = Console.getPasswordInput("Enter User Password: ");
@@ -54,7 +55,7 @@ public class MainService {
       } catch (final Exception e) {
         ConsoleMenu.displayError(e.getMessage());
       }
-    } while (currentUser == null);
+    } while (currentUser.equals(null));
   }
 
   public int handleChoice(final int choice) {

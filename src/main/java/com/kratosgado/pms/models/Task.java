@@ -2,7 +2,6 @@
 package com.kratosgado.pms.models;
 
 import com.kratosgado.pms.interfaces.Completable;
-import com.kratosgado.pms.services.UserService;
 import com.kratosgado.pms.utils.TaskStatus;
 
 public class Task implements Completable {
@@ -47,12 +46,11 @@ public class Task implements Completable {
     this.hours = hours;
   }
 
-  public User getUser() {
-    return UserService.getUserById(userId);
+  public String getUserId() {
+    return userId;
   }
 
-  public void setUser(String id) {
-    UserService.getUserById(id);
+  public void setUserId(String id) {
     this.userId = id;
   }
 
@@ -63,6 +61,6 @@ public class Task implements Completable {
 
   @Override
   public boolean isCompleted() {
-    return status == TaskStatus.COMPLETED;
+    return status.equals(TaskStatus.COMPLETED);
   }
 }

@@ -2,7 +2,7 @@ package com.kratosgado.pms.models;
 
 import java.util.ArrayList;
 
-import com.kratosgado.pms.utils.ConsoleMenu;
+import com.kratosgado.pms.utils.CustomUtils;
 
 public abstract class Project {
 
@@ -70,7 +70,6 @@ public abstract class Project {
   public abstract String getProjectDetails();
 
   public String displayProject() {
-    ConsoleMenu.displayHeader("PROJECT DETAILS: " + getId());
     StringBuilder sb = new StringBuilder();
     sb.append("\tName: ").append(name).append("\n");
     sb.append("\tDescription: ").append(description).append("\n");
@@ -80,7 +79,7 @@ public abstract class Project {
 
     sb.append("\tAssociated Tasks: ").append(tasks.size()).append("\n");
 
-    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
+    CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
     for (Task task : tasks) {
       sb.append(task.toString());
       sb.append("\n");
