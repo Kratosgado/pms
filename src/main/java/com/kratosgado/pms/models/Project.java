@@ -1,7 +1,8 @@
-package models;
+package com.kratosgado.pms.models;
 
 import java.util.ArrayList;
-import utils.ConsoleMenu;
+
+import com.kratosgado.pms.utils.ConsoleMenu;
 
 public abstract class Project {
 

@@ -1,4 +1,6 @@
-import utils.ConsoleMenu;
+package com.kratosgado.pms;
+
+import com.kratosgado.pms.utils.ConsoleMenu;
 
 public class Main {
 

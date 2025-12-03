@@ -1,5 +1,4 @@
-
-package models;
+package com.kratosgado.pms.models;
 
 public class HardwareProject extends Project {
 

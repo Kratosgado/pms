@@ -1,5 +1,4 @@
-
-package utils;
+package com.kratosgado.pms.utils;
 
 public class Console {
 

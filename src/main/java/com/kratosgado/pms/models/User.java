@@ -1,4 +1,4 @@
-package models;
+package com.kratosgado.pms.models;
 
 public abstract class User {
   private String id;

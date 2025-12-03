@@ -1,5 +1,4 @@
-
-package utils;
+package com.kratosgado.pms.utils;
 
 public class CustomUtils {
   public static final int UI_MAX_WIDTH = 100;

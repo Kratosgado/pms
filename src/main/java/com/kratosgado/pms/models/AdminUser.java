@@ -1,5 +1,5 @@
 
-package models;
+package com.kratosgado.pms.models;
 
 public class AdminUser extends User {
 

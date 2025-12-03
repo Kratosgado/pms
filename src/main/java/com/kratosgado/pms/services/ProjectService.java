@@ -1,15 +1,15 @@
 
-package services;
+package com.kratosgado.pms.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import models.HardwareProject;
-import models.Project;
-import models.SoftwareProject;
-import utils.Console;
-import utils.ConsoleMenu;
-import utils.CustomUtils;
+import com.kratosgado.pms.models.HardwareProject;
+import com.kratosgado.pms.models.Project;
+import com.kratosgado.pms.models.SoftwareProject;
+import com.kratosgado.pms.utils.ConsoleMenu;
+import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.CustomUtils;
 
 public class ProjectService extends MainService {
   private final ArrayList<Project> projects;

@@ -1,2 +1,6 @@
 bin/
 ./docs/design-decisions.md
+target/
+.classpath
+.project
+.settings/

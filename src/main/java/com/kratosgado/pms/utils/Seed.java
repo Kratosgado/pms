@@ -1,15 +1,15 @@
 
-package utils;
+package com.kratosgado.pms.utils;
 
 import java.util.ArrayList;
 
-import models.AdminUser;
-import models.HardwareProject;
-import models.Project;
-import models.RegularUser;
-import models.SoftwareProject;
-import models.Task;
-import models.User;
+import com.kratosgado.pms.models.AdminUser;
+import com.kratosgado.pms.models.HardwareProject;
+import com.kratosgado.pms.models.Project;
+import com.kratosgado.pms.models.RegularUser;
+import com.kratosgado.pms.models.SoftwareProject;
+import com.kratosgado.pms.models.Task;
+import com.kratosgado.pms.models.User;
 
 public class Seed {
 

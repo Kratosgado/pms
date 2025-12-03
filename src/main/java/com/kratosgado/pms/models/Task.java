@@ -1,9 +1,9 @@
 
-package models;
+package com.kratosgado.pms.models;
 
-import interfaces.Completable;
-import services.UserService;
-import utils.TaskStatus;
+import com.kratosgado.pms.interfaces.Completable;
+import com.kratosgado.pms.services.UserService;
+import com.kratosgado.pms.utils.TaskStatus;
 
 public class Task implements Completable {
   private final String id;

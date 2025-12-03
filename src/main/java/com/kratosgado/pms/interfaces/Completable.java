@@ -1,5 +1,5 @@
 
-package interfaces;
+package com.kratosgado.pms.interfaces;
 
 public interface Completable {
 

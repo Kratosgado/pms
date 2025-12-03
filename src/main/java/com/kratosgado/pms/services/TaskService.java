@@ -1,13 +1,13 @@
-package services;
+package com.kratosgado.pms.services;
 
 import java.util.ArrayList;
 
-import models.Task;
-import utils.Console;
-import utils.ConsoleMenu;
-import utils.CustomUtils;
-import utils.TaskStatus;
-import utils.ValidationUtils;
+import com.kratosgado.pms.models.Task;
+import com.kratosgado.pms.utils.ConsoleMenu;
+import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.TaskStatus;
+import com.kratosgado.pms.utils.ValidationUtils;
 
 public class TaskService extends MainService {
   private final ArrayList<Task> tasks;

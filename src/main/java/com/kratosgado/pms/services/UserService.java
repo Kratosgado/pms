@@ -1,12 +1,12 @@
 
-package services;
+package com.kratosgado.pms.services;
 
-import models.AdminUser;
-import models.RegularUser;
-import models.User;
-import utils.Console;
-import utils.ConsoleMenu;
-import utils.CustomUtils;
+import com.kratosgado.pms.models.AdminUser;
+import com.kratosgado.pms.models.RegularUser;
+import com.kratosgado.pms.models.User;
+import com.kratosgado.pms.utils.ConsoleMenu;
+import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.CustomUtils;
 
 public class UserService extends MainService {
 

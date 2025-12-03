@@ -1,12 +1,12 @@
-package services;
+package com.kratosgado.pms.services;
 
 import java.util.ArrayList;
 
-import models.Project;
-import models.User;
-import utils.Console;
-import utils.ConsoleMenu;
-import utils.Seed;
+import com.kratosgado.pms.models.Project;
+import com.kratosgado.pms.models.User;
+import com.kratosgado.pms.utils.ConsoleMenu;
+import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.Seed;
 
 public class MainService {
   String title = "MAIN MENU";

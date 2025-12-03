@@ -1,5 +1,5 @@
 
-package models;
+package com.kratosgado.pms.models;
 
 public class RegularUser extends User {
 

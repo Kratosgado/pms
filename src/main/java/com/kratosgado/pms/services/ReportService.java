@@ -1,10 +1,10 @@
 
-package services;
+package com.kratosgado.pms.services;
 
 import java.util.ArrayList;
 
-import models.Project;
-import utils.ConsoleMenu;
+import com.kratosgado.pms.models.Project;
+import com.kratosgado.pms.utils.ConsoleMenu;
 
 public class ReportService {
 

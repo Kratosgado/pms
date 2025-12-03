@@ -1,5 +1,5 @@
 
-package utils;
+package com.kratosgado.pms.utils;
 
 public enum TaskStatus {
   PENDING("Pending"),
