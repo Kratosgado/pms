@@ -17,8 +17,8 @@ public class TaskService extends ConsoleService {
   private final UserInMemoryDatabase usersDb;
   private final AuthManager authManager;
 
-  public TaskService(final TaskInMemoryDatabase tasksDb, final UserInMemoryDatabase usersDb,
-      AuthManager authManager, NavigationManager navigationManager) {
+  public TaskService(TaskInMemoryDatabase tasksDb, UserInMemoryDatabase usersDb, AuthManager authManager,
+      NavigationManager navigationManager) {
     this.usersDb = usersDb;
     this.tasksDb = tasksDb;
     this.authManager = authManager;

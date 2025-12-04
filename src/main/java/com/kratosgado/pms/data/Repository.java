@@ -12,12 +12,12 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
   protected int capacity;
 
   public Repository() {
-    this.capacity = 10;
+    this.capacity = 50;
   }
 
   public T innerAdd(T entity) {
     if (entities.length == capacity) {
-      ensureCapacity((int) (entities.length * 1.5));
+      ensureCapacity();
     }
     entities[entities.length - 1] = entity;
     return entity;
@@ -63,14 +63,12 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
     return entities.length;
   }
 
-  private void ensureCapacity(int minCapacity) {
-    if (minCapacity > capacity) {
-      int newCapacity = Math.max(minCapacity, capacity * 2);
-      T[] newEntities = (T[]) new Object[newCapacity];
-      System.arraycopy(entities, 0, newEntities, 0, entities.length);
-      entities = newEntities;
-      capacity = newCapacity;
-    }
+  private void ensureCapacity() {
+    int newCapacity = capacity * 2;
+    T[] newEntities = (T[]) new Object[newCapacity];
+    System.arraycopy(entities, 0, newEntities, 0, entities.length);
+    entities = newEntities;
+    capacity = newCapacity;
   }
 
 }

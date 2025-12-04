@@ -3,8 +3,6 @@ package com.kratosgado.pms.utils;
 import java.util.Scanner;
 import java.util.function.Function;
 
-import com.kratosgado.pms.interfaces.ServiceFactory;
-import com.kratosgado.pms.services.MainService;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 
@@ -14,9 +12,8 @@ public class ConsoleMenu {
   private static Scanner scanner = new Scanner(System.in);
   boolean running = true;
 
-  public ConsoleMenu(ServiceFactory serviceFactory, NavigationManager navigationManager, AuthManager authManager) {
-    final MainService mainService = serviceFactory.createMainService();
-    navigationManager.pushService(mainService);
+  public ConsoleMenu(NavigationManager navigationManager, AuthManager authManager) {
+    this.navigationManager = navigationManager;
     authManager.authenticateUser();
   }
 

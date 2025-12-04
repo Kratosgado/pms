@@ -1,6 +1,9 @@
 
-package com.kratosgado.pms.data;
+package com.kratosgado.pms.utils.factories;
 
+import com.kratosgado.pms.data.ProjectInMemoryDatabase;
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
+import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.services.MainService;
 import com.kratosgado.pms.services.ProjectService;
 import com.kratosgado.pms.services.ReportService;
@@ -49,24 +52,4 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
   public MainService createMainService() {
     return new MainService(navigationManager, projectsDb, authManager, this);
   }
-  //
-  // public AuthManager getAuthManager() {
-  // return authManager;
-  // }
-  //
-  // public NavigationManager getNavigationManager() {
-  // return navigationManager;
-  // }
-  //
-  // public TaskInMemoryDatabase getTasksDb() {
-  // return tasksDb;
-  // }
-  //
-  // public ProjectInMemoryDatabase getProjectsDb() {
-  // return projectsDb;
-  // }
-  //
-  // public UserInMemoryDatabase getUsersDb() {
-  // return usersDb;
-  // }
 }

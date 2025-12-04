@@ -14,8 +14,8 @@ public class UserService extends ConsoleService {
   private UserInMemoryDatabase usersDb;
   private final AuthManager authManager;
 
-  public UserService(UserInMemoryDatabase userInMemoryDatabase, AuthManager authManager) {
-    this.usersDb = userInMemoryDatabase;
+  public UserService(UserInMemoryDatabase userDb, AuthManager authManager) {
+    this.usersDb = userDb;
     title = "USER MENU";
     this.authManager = authManager;
   }

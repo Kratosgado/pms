@@ -17,14 +17,4 @@ public interface ServiceFactory {
   ReportService createReportService();
 
   MainService createMainService();
-  //
-  // AuthManager getAuthManager();
-  //
-  // NavigationManager getNavigationManager();
-  //
-  // TaskInMemoryDatabase getTasksDb();
-  //
-  // ProjectInMemoryDatabase getProjectsDb();
-  //
-  // UserInMemoryDatabase getUsersDb();
 }
