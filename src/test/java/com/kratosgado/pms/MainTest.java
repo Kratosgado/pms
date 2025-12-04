@@ -45,7 +45,8 @@ public class MainTest {
     project.addTask(new Task("PJ5", "task1", TaskStatus.COMPLETED));
     project.addTask(new Task("PJ8", "task1", TaskStatus.COMPLETED));
     projects.add(project);
-    ReportService.displayReport(projects.toArray(new Project[0]));
+    // ReportService reportService = new ReportService(projects);
+    // double percentege = reportService.getAverageCompletionPercentage();
     // assertEquals(50.0, percentege);
   }
 

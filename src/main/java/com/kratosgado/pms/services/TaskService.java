@@ -15,10 +15,10 @@ public class TaskService extends ConsoleService {
   private final UserInMemoryDatabase usersDb;
   private final ApplicationContext applicationContext;
 
-  TaskService(final TaskInMemoryDatabase tasks, final UserInMemoryDatabase usersDb,
+  public TaskService(final TaskInMemoryDatabase tasksDb, final UserInMemoryDatabase usersDb,
       ApplicationContext applicationContext) {
     this.usersDb = usersDb;
-    this.tasksDb = tasks;
+    this.tasksDb = tasksDb;
     this.applicationContext = applicationContext;
     title = "TASK CATALOG";
   }

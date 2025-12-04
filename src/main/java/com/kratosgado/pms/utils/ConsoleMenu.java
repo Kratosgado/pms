@@ -4,26 +4,18 @@ import java.util.Scanner;
 import java.util.function.Function;
 
 import com.kratosgado.pms.ApplicationContext;
-import com.kratosgado.pms.data.ProjectInMemoryDatabase;
-import com.kratosgado.pms.data.TaskInMemoryDatabase;
-import com.kratosgado.pms.data.UserInMemoryDatabase;
+import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.services.MainService;
 
 public class ConsoleMenu {
   private ApplicationContext applicationContext;
-  private final ProjectInMemoryDatabase projectsDb;
-  private final UserInMemoryDatabase usersDb;
-  private final TaskInMemoryDatabase tasksDb;
 
   public static Scanner scanner = new Scanner(System.in);
   boolean running = true;
 
-  public ConsoleMenu() {
-    this.projectsDb = new ProjectInMemoryDatabase();
-    this.usersDb = new UserInMemoryDatabase();
-    this.tasksDb = new TaskInMemoryDatabase();
-    this.applicationContext = new ApplicationContext(usersDb);
-    final MainService mainService = new MainService(applicationContext, projectsDb, usersDb, tasksDb);
+  public ConsoleMenu(ServiceFactory serviceFactory, ApplicationContext applicationContext) {
+    this.applicationContext = applicationContext;
+    final MainService mainService = serviceFactory.createMainService();
     applicationContext.getNavigationStack().add(mainService);
     applicationContext.authenticateUser();
   }

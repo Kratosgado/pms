@@ -1,10 +1,16 @@
 
 package com.kratosgado.pms.services;
 
+import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
 
 public class ReportService {
+  private final ProjectInMemoryDatabase projectsDb;
+
+  public ReportService(ProjectInMemoryDatabase projectsDb) {
+    this.projectsDb = projectsDb;
+  }
 
   public int calculateAverageCompletionPercentage(final Project[] projects) {
     double progressSum = 0;
@@ -15,14 +21,14 @@ public class ReportService {
     return (int) (progressSum / projects.length);
   }
 
-  public static void displayReport(final Project[] projects) {
+  public void displayReport() {
     CustomUtils.displayHeader("REPORT STATUS REPORT");
     final StringBuilder sb = new StringBuilder();
     double progressSum = 0;
 
     CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s|%-20s", "PROJECT ID", "PROJECT NAME",
         "TASKS", "COMPLETED", "PROGRESS (%)"));
-    for (final Project project : projects) {
+    for (final Project project : projectsDb.getAll()) {
       sb.append(String.format("%-20s", project.getId()));
 
       sb.append(String.format("|%-20s", project.getName()));
@@ -33,7 +39,7 @@ public class ReportService {
       sb.append(String.format("|%-20.2f\n", progress));
     }
     CustomUtils.appendTableHeader(sb,
-        "AVERAGE COMPLETION: " + String.format("%.2f%%", (progressSum / projects.length)));
+        "AVERAGE COMPLETION: " + String.format("%.2f%%", (progressSum / projectsDb.count())));
     System.out.println(sb.toString());
   }
 

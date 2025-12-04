@@ -5,6 +5,7 @@ import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
+import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
@@ -18,16 +19,16 @@ public class ProjectService extends ConsoleService {
   private final UserInMemoryDatabase usersDb;
   private final ApplicationContext applicationContext;
   private final ProjectFactory projectFactory;
+  private final ServiceFactory serviceFactory;
 
   public ProjectService(ProjectInMemoryDatabase projectsDb, TaskInMemoryDatabase tasksDb,
-      UserInMemoryDatabase usersDb, ApplicationContext applicationContext) {
+      UserInMemoryDatabase usersDb, ApplicationContext applicationContext, ServiceFactory serviceFactory) {
     this.projectsDb = projectsDb;
-
     this.tasksDb = tasksDb;
-    // this.title = "PROJECT CATALOG";
     this.usersDb = usersDb;
     this.applicationContext = applicationContext;
     this.title = "PROJECT CATALOG";
+    this.serviceFactory = serviceFactory;
     this.projectFactory = new ProjectFactory();
   }
 
@@ -102,7 +103,7 @@ public class ProjectService extends ConsoleService {
       return;
     this.displayProjectDetails(id);
     tasksDb.setProjectId(id);
-    TaskService taskService = new TaskService(tasksDb, usersDb, applicationContext);
+    TaskService taskService = serviceFactory.createTaskService(id);
     applicationContext.pushService(taskService);
   }
 

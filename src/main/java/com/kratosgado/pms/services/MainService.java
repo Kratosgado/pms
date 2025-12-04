@@ -2,23 +2,18 @@ package com.kratosgado.pms.services;
 
 import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
-import com.kratosgado.pms.data.TaskInMemoryDatabase;
-import com.kratosgado.pms.data.UserInMemoryDatabase;
+import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.models.User;
 
 public class MainService extends ConsoleService {
-  private final ProjectInMemoryDatabase projectsDb;
-  private final UserInMemoryDatabase usersDb;
-  private final TaskInMemoryDatabase tasksDb;
   private final ApplicationContext applicationContext;
+  private final ServiceFactory serviceFactory;
 
   public MainService(ApplicationContext applicationContext, ProjectInMemoryDatabase projectsDb,
-      UserInMemoryDatabase usersDb, TaskInMemoryDatabase tasksDb) {
+      ServiceFactory serviceFactory) {
     this.applicationContext = applicationContext;
-    this.projectsDb = projectsDb;
-    this.usersDb = usersDb;
-    this.tasksDb = tasksDb;
     this.title = "MAIN MENU";
+    this.serviceFactory = serviceFactory;
   }
 
   @Override
@@ -39,18 +34,19 @@ public class MainService extends ConsoleService {
   public int handleChoice(final int choice) {
     switch (choice) {
       case 1:
-        applicationContext.pushService(new ProjectService(projectsDb, tasksDb, usersDb, applicationContext));
+        applicationContext.pushService(serviceFactory.createProjectService());
         break;
       case 2:
-        final ProjectService projectService = new ProjectService(projectsDb, tasksDb, usersDb, applicationContext);
+        final ProjectService projectService = serviceFactory.createProjectService();
         projectService.listProjects();
         projectService.askForProject();
         break;
       case 3:
-        ReportService.displayReport(projectsDb.getAll());
+        final ReportService reportService = serviceFactory.createReportService();
+        reportService.displayReport();
         break;
       case 4:
-        applicationContext.pushService(new UserService(usersDb, applicationContext));
+        applicationContext.pushService(serviceFactory.createUserService());
         break;
       default:
         return choice;
