@@ -1,23 +1,21 @@
 
 package com.kratosgado.pms.services;
 
-import java.util.ArrayList;
-
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
 
 public class ReportService {
 
-  public int calculateAverageCompletionPercentage(final ArrayList<Project> projects) {
+  public int calculateAverageCompletionPercentage(final Project[] projects) {
     double progressSum = 0;
     for (final Project project : projects) {
       final double progress = project.calculateCompletionPercentage();
       progressSum += progress;
     }
-    return (int) (progressSum / projects.size());
+    return (int) (progressSum / projects.length);
   }
 
-  public static void displayReport(final ArrayList<Project> projects) {
+  public static void displayReport(final Project[] projects) {
     CustomUtils.displayHeader("REPORT STATUS REPORT");
     final StringBuilder sb = new StringBuilder();
     double progressSum = 0;
@@ -35,7 +33,7 @@ public class ReportService {
       sb.append(String.format("|%-20.2f\n", progress));
     }
     CustomUtils.appendTableHeader(sb,
-        "AVERAGE COMPLETION: " + String.format("%.2f%%", (progressSum / projects.size())));
+        "AVERAGE COMPLETION: " + String.format("%.2f%%", (progressSum / projects.length)));
     System.out.println(sb.toString());
   }
 

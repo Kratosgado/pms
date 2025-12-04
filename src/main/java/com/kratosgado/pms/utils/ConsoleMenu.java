@@ -11,14 +11,17 @@ import com.kratosgado.pms.services.MainService;
 
 public class ConsoleMenu {
   private ApplicationContext applicationContext;
-  private final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase();
-  private final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
-  private final TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
+  private final ProjectInMemoryDatabase projectsDb;
+  private final UserInMemoryDatabase usersDb;
+  private final TaskInMemoryDatabase tasksDb;
 
   public static Scanner scanner = new Scanner(System.in);
   boolean running = true;
 
   public ConsoleMenu() {
+    this.projectsDb = new ProjectInMemoryDatabase();
+    this.usersDb = new UserInMemoryDatabase();
+    this.tasksDb = new TaskInMemoryDatabase();
     this.applicationContext = new ApplicationContext(usersDb);
     final MainService mainService = new MainService(applicationContext, projectsDb, usersDb, tasksDb);
     applicationContext.getNavigationStack().add(mainService);
@@ -26,7 +29,10 @@ public class ConsoleMenu {
   }
 
   /**
-   * Starts the main loop of the application
+   * # Starts the main loop of the application
+   * 1 - Global value for handled choice
+   * 0 - Global choice for going back
+   * 9 - Global choice for exiting the application
    */
   public void run() {
     do {
@@ -35,12 +41,12 @@ public class ConsoleMenu {
       final int result = applicationContext.peekService().handleChoice(choice);
 
       switch (result) {
-        case -1: // Global value for handled choice
+        case -1:
           break;
-        case 0: // Global choice for going back
+        case 0:
           navigateBack();
           break;
-        case 9: // Global choice for exiting the application
+        case 9:
           confirmExit();
           break;
         default:

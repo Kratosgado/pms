@@ -1,8 +1,11 @@
 package com.kratosgado.pms.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public abstract class Project {
+import com.kratosgado.pms.interfaces.HasId;
+
+public abstract class Project implements HasId {
 
   private String id;
   private String name;
@@ -23,6 +26,10 @@ public abstract class Project {
 
   public String getId() {
     return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -57,8 +64,8 @@ public abstract class Project {
     this.budget = budget;
   }
 
-  public ArrayList<Task> getTasks() {
-    return tasks;
+  public java.util.List<Task> getTasks() {
+    return Collections.unmodifiableList(tasks);
   }
 
   public void addTask(Task task) {

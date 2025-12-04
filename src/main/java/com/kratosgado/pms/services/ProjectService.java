@@ -1,25 +1,23 @@
 
 package com.kratosgado.pms.services;
 
-import java.util.List;
-
 import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
-import com.kratosgado.pms.models.HardwareProject;
 import com.kratosgado.pms.models.Project;
-import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.enums.ProjectType;
+import com.kratosgado.pms.utils.factories.ProjectFactory;
 
 public class ProjectService extends ConsoleService {
   private final ProjectInMemoryDatabase projectsDb;
   private final TaskInMemoryDatabase tasksDb;
   private final UserInMemoryDatabase usersDb;
   private final ApplicationContext applicationContext;
+  private final ProjectFactory projectFactory;
 
   public ProjectService(ProjectInMemoryDatabase projectsDb, TaskInMemoryDatabase tasksDb,
       UserInMemoryDatabase usersDb, ApplicationContext applicationContext) {
@@ -30,13 +28,14 @@ public class ProjectService extends ConsoleService {
     this.usersDb = usersDb;
     this.applicationContext = applicationContext;
     this.title = "PROJECT CATALOG";
+    this.projectFactory = new ProjectFactory();
   }
 
   protected void listProjects() {
     System.out.println(listProjects(projectsDb.getAll()));
   }
 
-  private String listProjects(final List<Project> projects) {
+  private String listProjects(final Project[] projects) {
     CustomUtils.displayHeader("PROJECT LIST");
     final StringBuilder sb = new StringBuilder();
     CustomUtils.appendTableHeader(sb,
@@ -56,14 +55,9 @@ public class ProjectService extends ConsoleService {
     final int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
     final double budget = Console.getDoubleInput("Enter Budget: ");
     final String type = Console.getString("Enter Project Type (Software/Hardware): ");
-    Project project;
     final String id = CustomUtils.getNextId("PJ", projectsDb.count());
-    if (type.equals(ProjectType.SOFTWARE.getType()))
-      project = new SoftwareProject(id, name, description, teamSize, budget);
-    else if (type.equals(ProjectType.HARDWARE.getType()))
-      project = new HardwareProject(id, name, description, teamSize, budget);
-    else
-      throw new IllegalArgumentException("Invalid Project type");
+    Project project = projectFactory.createProject(id, name, description, teamSize, budget, ProjectType.valueOf(type));
+    ;
     projectsDb.add(project);
     System.out.printf("✅Project '%s\' added successfully with id '%s'\n", project.getName(), project.getId());
   }
@@ -78,23 +72,19 @@ public class ProjectService extends ConsoleService {
 
   private void listSoftwareProjects() {
     System.out.println(
-        listProjects(
-            projectsDb.getAll().stream().filter(project -> project.getProjectType().equals("Software")).toList()));
+        listProjects(projectsDb.getSoftwareProjects()));
   }
 
   private void listHardwareProjects() {
     System.out.println(
-        listProjects(
-            projectsDb.getAll().stream().filter(project -> project.getProjectType().equals("Hardware")).toList()));
+        listProjects(projectsDb.getHardwareProjects()));
   }
 
   private void searchByBudgetRange() {
     double min, max;
     min = Console.getDoubleInput("Enter Minimum Budget: ");
     max = Console.getDoubleInput("Enter Maximum Budget: ");
-    System.out.println(listProjects(
-        projectsDb.getAll().stream().filter(project -> project.getBudget() >= min && project.getBudget() <= max)
-            .toList()));
+    System.out.println(listProjects(projectsDb.getBudgetRangeProjects(min, max)));
   }
 
   private void displayProjectDetails(final String id) {

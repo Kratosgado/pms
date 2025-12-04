@@ -1,19 +1,15 @@
 
 package com.kratosgado.pms.interfaces;
 
-import java.util.ArrayList;
+public interface InMemoryDatabase<T> {
 
-public interface InMemoryDatabase<Model> {
+  public T add(T model);
 
-  public Model add(Model model);
+  public T update(T model);
 
-  public Model update(Model model);
+  public T[] getAll();
 
-  public ArrayList<Model> getAll();
-
-  public Model getById(String id);
-
-  public Model getWhere(String field, String value);
+  public T getById(String id);
 
   public void removeById(String id);
 

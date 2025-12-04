@@ -45,7 +45,7 @@ public class MainTest {
     project.addTask(new Task("PJ5", "task1", TaskStatus.COMPLETED));
     project.addTask(new Task("PJ8", "task1", TaskStatus.COMPLETED));
     projects.add(project);
-    ReportService.displayReport(projects);
+    ReportService.displayReport(projects.toArray(new Project[0]));
     // assertEquals(50.0, percentege);
   }
 

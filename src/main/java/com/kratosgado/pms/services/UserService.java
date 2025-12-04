@@ -53,7 +53,7 @@ public class UserService extends ConsoleService {
     final StringBuilder sb = new StringBuilder();
     CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
     for (final User user : usersDb.getAll()) {
-      sb.append(user.displayUser());
+      sb.append(user.toString());
     }
     sb.append("\n");
     System.out.println(sb);

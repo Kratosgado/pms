@@ -1,8 +1,9 @@
 package com.kratosgado.pms.models;
 
+import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.utils.enums.UserRole;
 
-public abstract class User {
+public abstract class User implements HasId {
   private String id;
   private String name;
   private String email;
@@ -29,6 +30,10 @@ public abstract class User {
     return id;
   }
 
+  public void setId(String id) {
+    this.id = id;
+  }
+
   public String getName() {
     return name;
   }
@@ -53,13 +58,8 @@ public abstract class User {
     return role.toString();
   }
 
-  public String displayUser() {
-    return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, email, role);
-  }
-
   @Override
   public String toString() {
-    return String.format("\nUser [name: %s, email: %s, role: %s]", getName(), getEmail(), getRole())
-        .toString();
+    return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, email, role);
   }
 }

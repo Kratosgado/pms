@@ -2,9 +2,10 @@
 package com.kratosgado.pms.models;
 
 import com.kratosgado.pms.interfaces.Completable;
+import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.utils.enums.TaskStatus;
 
-public class Task implements Completable {
+public class Task implements HasId, Completable {
   private final String id;
   private String name;
   private TaskStatus status;
@@ -81,5 +82,10 @@ public class Task implements Completable {
   @Override
   public boolean isCompleted() {
     return status.equals(TaskStatus.COMPLETED);
+  }
+
+  @Override
+  public void setId(String id) {
+    throw new UnsupportedOperationException("Unimplemented method 'setId'");
   }
 }
