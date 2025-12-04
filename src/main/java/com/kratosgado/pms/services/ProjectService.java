@@ -13,6 +13,7 @@ import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.enums.ProjectType;
 
 public class ProjectService extends ConsoleService {
   private final ProjectInMemoryDatabase projectsDb;
@@ -54,12 +55,12 @@ public class ProjectService extends ConsoleService {
     final String description = Console.getString("Enter Project Description: ");
     final int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
     final double budget = Console.getDoubleInput("Enter Budget: ");
-    final String type = Console.getString("Enter Project Type (soft for Software, hard for Hardware): ");
+    final String type = Console.getString("Enter Project Type (Software/Hardware): ");
     Project project;
     final String id = CustomUtils.getNextId("PJ", projectsDb.count());
-    if (type.equals("soft"))
+    if (type.equals(ProjectType.SOFTWARE.getType()))
       project = new SoftwareProject(id, name, description, teamSize, budget);
-    else if (type.equals("hard"))
+    else if (type.equals(ProjectType.HARDWARE.getType()))
       project = new HardwareProject(id, name, description, teamSize, budget);
     else
       throw new IllegalArgumentException("Invalid Project type");
@@ -165,7 +166,7 @@ public class ProjectService extends ConsoleService {
       }
       askForProject();
     } catch (final Exception e) {
-      ConsoleMenu.displayError(e.getMessage());
+      ConsoleMenu.displayError(e.getClass().getSimpleName(), e.getMessage());
     }
     return -1;
   }

@@ -2,7 +2,7 @@
 package com.kratosgado.pms.models;
 
 import com.kratosgado.pms.interfaces.Completable;
-import com.kratosgado.pms.utils.TaskStatus;
+import com.kratosgado.pms.utils.enums.TaskStatus;
 
 public class Task implements Completable {
   private final String id;

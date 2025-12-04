@@ -44,7 +44,7 @@ public class ConsoleMenu {
           confirmExit();
           break;
         default:
-          displayError("Invalid Choice");
+          displayError("INPUT ERROR", "Invalid choice");
       }
     } while (running);
 
@@ -77,7 +77,7 @@ public class ConsoleMenu {
       try {
         input = function.apply(choiceStr);
       } catch (final Exception e) {
-        displayError(e.getMessage());
+        displayError(e.getClass().getSimpleName(), e.getMessage());
         input = null;
       }
     } while (input == null);
@@ -100,8 +100,8 @@ public class ConsoleMenu {
    * 
    * @param error the error message to display to the user
    */
-  public final static void displayError(final String error) {
-    System.out.println("\n❌ ERROR: " + error);
+  public final static void displayError(String name, final String error) {
+    System.out.println("\n❌ " + name + ": " + error);
   }
 
   /**

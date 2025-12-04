@@ -10,6 +10,7 @@ import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.models.Task;
 import com.kratosgado.pms.models.User;
+import com.kratosgado.pms.utils.enums.TaskStatus;
 
 public class Seed {
 

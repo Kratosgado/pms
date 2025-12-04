@@ -7,8 +7,8 @@ import com.kratosgado.pms.models.Task;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
-import com.kratosgado.pms.utils.TaskStatus;
 import com.kratosgado.pms.utils.ValidationUtils;
+import com.kratosgado.pms.utils.enums.TaskStatus;
 
 public class TaskService extends ConsoleService {
   private final TaskInMemoryDatabase tasksDb;
@@ -34,7 +34,12 @@ public class TaskService extends ConsoleService {
     });
     final Task task = new Task(CustomUtils.getNextId("TS", tasksDb.count()), name, status);
     task.setHours(Console.getPositiveIntInput("Enter Hours: "));
-    task.setUserId(Console.getString("Enter id of user to be assigned: "));
+    String userId = Console.getString("Enter id of user to be assigned (0 for no user): ");
+    usersDb.exists(userId);
+    if (userId.equals("0"))
+      task.setUserId(null);
+    else
+      task.setUserId(userId);
     tasksDb.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
@@ -101,7 +106,7 @@ public class TaskService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      ConsoleMenu.displayError(e.getMessage());
+      ConsoleMenu.displayError(e.getClass().getSimpleName(), e.getMessage());
     }
     return -1;
   }

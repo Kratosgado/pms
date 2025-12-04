@@ -7,6 +7,7 @@ import com.kratosgado.pms.interfaces.InMemoryDatabase;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.Seed;
+import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 
 public class UserInMemoryDatabase implements InMemoryDatabase<User> {
   private ArrayList<User> users;
@@ -45,7 +46,7 @@ public class UserInMemoryDatabase implements InMemoryDatabase<User> {
         return user;
       }
     }
-    throw new IllegalArgumentException("User not found");
+    throw new UserNotFoundException();
   }
 
   public User getByEmail(String email) {
@@ -54,7 +55,7 @@ public class UserInMemoryDatabase implements InMemoryDatabase<User> {
         return user;
       }
     }
-    throw new IllegalArgumentException("User not found");
+    throw new UserNotFoundException();
   }
 
   @Override
@@ -72,6 +73,11 @@ public class UserInMemoryDatabase implements InMemoryDatabase<User> {
   @Override
   public int count() {
     return users.size();
+  }
+
+  @Override
+  public boolean exists(String id) {
+    return users.stream().anyMatch(user -> user.getId().equals(id));
   }
 
 }

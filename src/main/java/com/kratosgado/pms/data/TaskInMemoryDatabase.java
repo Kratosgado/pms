@@ -68,4 +68,9 @@ public class TaskInMemoryDatabase implements InMemoryDatabase<Task> {
   public int count() {
     return (int) tasks.stream().filter(ts -> ts.getProjectId().equals(projectId)).count();
   }
+
+  @Override
+  public boolean exists(String id) {
+    return tasks.stream().anyMatch(task -> task.getId().equals(id));
+  }
 }

@@ -1,25 +1,23 @@
 package com.kratosgado.pms.models;
 
+import com.kratosgado.pms.utils.enums.UserRole;
+
 public abstract class User {
   private String id;
   private String name;
   private String email;
   private String password;
-  private Role role;
-
-  protected enum Role {
-    ADMIN, REGULAR
-  }
+  private UserRole role;
 
   public User(String id, String name, String email, String password) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
-    this.role = Role.REGULAR;
+    this.role = UserRole.REGULAR;
   }
 
-  public User(String id, String name, String email, String password, Role role) {
+  public User(String id, String name, String email, String password, UserRole role) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -48,7 +46,7 @@ public abstract class User {
   }
 
   public boolean isAdmin() {
-    return role.equals(Role.ADMIN);
+    return role.equals(UserRole.ADMIN);
   }
 
   public String getRole() {
@@ -61,8 +59,7 @@ public abstract class User {
 
   @Override
   public String toString() {
-    return System.out
-        .format("\nUser [name: %s, email: %s, role: %s]", getName(), getEmail(), getRole())
+    return String.format("\nUser [name: %s, email: %s, role: %s]", getName(), getEmail(), getRole())
         .toString();
   }
 }

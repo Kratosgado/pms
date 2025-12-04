@@ -41,7 +41,7 @@ public class ApplicationContext {
         setCurrentUser(user);
         ConsoleMenu.displaySuccess("User logged in");
       } catch (final Exception e) {
-        ConsoleMenu.displayError(e.getMessage());
+        ConsoleMenu.displayError(e.getClass().getSimpleName(), e.getMessage());
       }
     } while (getCurrentUser() == null);
   }

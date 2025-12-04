@@ -70,4 +70,9 @@ public class ProjectInMemoryDatabase implements InMemoryDatabase<Project> {
     return projects.size();
   }
 
+  @Override
+  public boolean exists(String id) {
+    return projects.stream().anyMatch(project -> project.getId().equals(id));
+  }
+
 }

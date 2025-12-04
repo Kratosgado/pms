@@ -17,6 +17,8 @@ public interface InMemoryDatabase<Model> {
 
   public void removeById(String id);
 
+  public boolean exists(String id);
+
   public int count();
 
 }

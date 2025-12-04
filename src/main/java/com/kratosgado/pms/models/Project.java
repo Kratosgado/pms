@@ -61,7 +61,7 @@ public abstract class Project {
     return tasks;
   }
 
-  public void addedTask(Task task) {
+  public void addTask(Task task) {
     tasks.add(task);
   }
 

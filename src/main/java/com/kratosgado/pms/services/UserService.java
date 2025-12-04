@@ -9,6 +9,7 @@ import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.enums.UserRole;
 
 public class UserService extends ConsoleService {
   private UserInMemoryDatabase usersDb;
@@ -26,12 +27,12 @@ public class UserService extends ConsoleService {
     final String name = Console.getString("Enter User Name: ");
     final String email = Console.getEmailInput();
     final String password = Console.getPasswordInput("Enter User Password: ");
-    final String role = Console.getString("Enter User Role(admin/user): ");
+    final String role = Console.getString("Enter User Role(Admin/Regular): ");
     final String id = CustomUtils.getNextId("US", usersDb.count());
     User user;
-    if (role.equals("admin"))
+    if (UserRole.ADMIN.getRole().equals(role))
       user = new AdminUser(id, name, email, password);
-    else if (role.equals("user"))
+    else if (UserRole.REGULAR.getRole().equals(role))
       user = new RegularUser(id, name, email, password);
     else
       throw new IllegalArgumentException("Invalid User Role");
@@ -102,7 +103,7 @@ public class UserService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      ConsoleMenu.displayError(e.getMessage());
+      ConsoleMenu.displayError(e.getClass().getSimpleName(), e.getMessage());
     }
     return -1;
   }
