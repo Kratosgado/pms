@@ -30,6 +30,7 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
 
   @Override
   public TaskService createTaskService(String projectId) {
+    tasksDb.setProjectId(projectId);
     return new TaskService(tasksDb, usersDb, authManager, navigationManager);
   }
 

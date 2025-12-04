@@ -6,18 +6,15 @@ import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.Console;
-import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 import com.kratosgado.pms.utils.enums.ProjectType;
 import com.kratosgado.pms.utils.exceptions.ProjectNotFoundException;
-import com.kratosgado.pms.utils.factories.ProjectFactory;
 
 public class ProjectService extends ConsoleService {
   private final ProjectInMemoryDatabase projectsDb;
   private final TaskInMemoryDatabase tasksDb;
-  private final ProjectFactory projectFactory;
   private final ServiceFactory serviceFactory;
   private final AuthManager authManager;
   private final NavigationManager navigationManager;
@@ -30,7 +27,6 @@ public class ProjectService extends ConsoleService {
     this.serviceFactory = serviceFactory;
     this.authManager = authManager;
     this.navigationManager = navigationManager;
-    this.projectFactory = new ProjectFactory();
   }
 
   protected void listProjects() {
@@ -57,9 +53,7 @@ public class ProjectService extends ConsoleService {
     final int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
     final double budget = Console.getDoubleInput("Enter Budget: ");
     final String type = Console.getString("Enter Project Type (Software/Hardware): ");
-    final String id = CustomUtils.getNextId("PJ", projectsDb.count());
-    Project project = projectFactory.createProject(id, name, description, teamSize, budget, ProjectType.valueOf(type));
-    projectsDb.add(project);
+    final Project project = projectsDb.add(name, description, teamSize, budget, type);
     System.out.printf("✅Project '%s\' added successfully with id '%s'\n", project.getName(), project.getId());
   }
 
@@ -73,12 +67,12 @@ public class ProjectService extends ConsoleService {
 
   private void listSoftwareProjects() {
     System.out.println(
-        listProjects(projectsDb.filter(project -> project.getProjectType().equals("Software"))));
+        listProjects(projectsDb.filter(project -> project.getProjectType().equals(ProjectType.SOFTWARE))));
   }
 
   private void listHardwareProjects() {
     System.out.println(
-        listProjects(projectsDb.filter(project -> project.getProjectType().equals("Hardware"))));
+        listProjects(projectsDb.filter(project -> project.getProjectType().equals(ProjectType.HARDWARE))));
   }
 
   private void searchByBudgetRange() {
@@ -92,18 +86,16 @@ public class ProjectService extends ConsoleService {
   private void displayProjectDetails(final String id) {
     final Project project = projectsDb.getById(id).orElseThrow(ProjectNotFoundException::new);
     CustomUtils.displayHeader("PROJECT DETAILS: " + id);
+    // TODO: display project details
 
     System.out.println(project.getProjectDetails());
   }
 
   protected void askForProject() {
-    final String id = ConsoleMenu.getInput("Enter project Id to view details (or 0 to return): ", input -> {
-      return input;
-    });
+    final String id = Console.getString("Enter project Id to view details (or 0 to return): ");
     if (id.equals("0"))
       return;
     this.displayProjectDetails(id);
-    tasksDb.setProjectId(id);
     TaskService taskService = serviceFactory.createTaskService(id);
     navigationManager.pushService(taskService);
   }

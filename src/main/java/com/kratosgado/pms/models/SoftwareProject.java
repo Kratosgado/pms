@@ -2,6 +2,7 @@
 package com.kratosgado.pms.models;
 
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.enums.ProjectType;
 
 public class SoftwareProject extends Project {
 
@@ -31,8 +32,8 @@ public class SoftwareProject extends Project {
   }
 
   @Override
-  public String getProjectType() {
-    return "Software";
+  public ProjectType getProjectType() {
+    return ProjectType.SOFTWARE;
   }
 
 }

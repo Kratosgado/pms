@@ -18,10 +18,10 @@ public class ConsoleMenu {
   }
 
   /**
-   * # Starts the main loop of the application
-   * 1 - Global value for handled choice
-   * 0 - Global choice for going back
-   * 9 - Global choice for exiting the application
+   * # Starts the main loop of the application <br>
+   * 1 - Global value for handled choice <br>
+   * 0 - Global choice for going back <br>
+   * 9 - Global choice for exiting the application <br>
    */
   public void run() {
     do {
@@ -60,17 +60,17 @@ public class ConsoleMenu {
 
   /**
    * @param <T>
-   * @param prompt   the text to display to the user
-   * @param function the validation function to apply to the user's input
+   * @param prompt    the text to display to the user
+   * @param validator the validation function to apply to the user's input
    * @return
    */
-  public static <T> T getInput(final String prompt, final Function<String, T> function) {
+  public static <T> T getInput(final String prompt, final Function<String, T> validator) {
     T input;
     do {
       System.out.print(prompt);
       final String choiceStr = scanner.nextLine().trim();
       try {
-        input = function.apply(choiceStr);
+        input = validator.apply(choiceStr);
       } catch (final Exception e) {
         CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
         input = null;

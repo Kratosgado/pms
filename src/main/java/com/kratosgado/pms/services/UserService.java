@@ -2,13 +2,10 @@
 package com.kratosgado.pms.services;
 
 import com.kratosgado.pms.data.UserInMemoryDatabase;
-import com.kratosgado.pms.models.AdminUser;
-import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
-import com.kratosgado.pms.utils.enums.UserRole;
 
 public class UserService extends ConsoleService {
   private UserInMemoryDatabase usersDb;
@@ -27,15 +24,7 @@ public class UserService extends ConsoleService {
     final String email = Console.getEmailInput();
     final String password = Console.getPasswordInput("Enter User Password: ");
     final String role = Console.getString("Enter User Role(Admin/Regular): ");
-    final String id = CustomUtils.getNextId("US", usersDb.count());
-    User user;
-    if (UserRole.ADMIN.getRole().equals(role))
-      user = new AdminUser(id, name, email, password);
-    else if (UserRole.REGULAR.getRole().equals(role))
-      user = new RegularUser(id, name, email, password);
-    else
-      throw new IllegalArgumentException("Invalid User Role");
-    usersDb.add(user);
+    User user = usersDb.add(name, email, password, role);
     System.out.printf("✅User '%s\' added successfully\n", user.getName());
   }
 

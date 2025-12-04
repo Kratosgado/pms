@@ -11,6 +11,7 @@ import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 import com.kratosgado.pms.utils.enums.TaskStatus;
 import com.kratosgado.pms.utils.exceptions.TaskNotFoundException;
+import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 
 public class TaskService extends ConsoleService {
   private final TaskInMemoryDatabase tasksDb;
@@ -37,11 +38,12 @@ public class TaskService extends ConsoleService {
     final Task task = new Task(CustomUtils.getNextId("TS", tasksDb.count()), name, status);
     task.setHours(Console.getPositiveIntInput("Enter Hours: "));
     String userId = Console.getString("Enter id of user to be assigned (0 for no user): ");
-    usersDb.exists(userId);
     if (userId.equals("0"))
       task.setUserId(null);
     else
       task.setUserId(userId);
+    if (!usersDb.exists(userId))
+      throw new UserNotFoundException();
     tasksDb.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }

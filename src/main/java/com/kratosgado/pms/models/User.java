@@ -4,7 +4,7 @@ import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.utils.enums.UserRole;
 
 public abstract class User implements HasId {
-  private String id;
+  private final String id;
   private String name;
   private String email;
   private String password;
@@ -28,10 +28,6 @@ public abstract class User implements HasId {
 
   public String getId() {
     return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public String getName() {

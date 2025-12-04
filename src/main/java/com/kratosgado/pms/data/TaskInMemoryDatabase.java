@@ -20,7 +20,7 @@ public class TaskInMemoryDatabase extends Repository<Task> {
   @Override
   public Task add(Task model) {
     model.setProjectId(projectId);
-    return innerAdd(model);
+    return safeAdd(model);
   }
 
   @Override

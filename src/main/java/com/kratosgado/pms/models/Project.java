@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.kratosgado.pms.interfaces.HasId;
+import com.kratosgado.pms.utils.enums.ProjectType;
 
 public abstract class Project implements HasId {
 
-  private String id;
+  private final String id;
   private String name;
   private String description;
   private int teamSize;
@@ -26,10 +27,6 @@ public abstract class Project implements HasId {
 
   public String getId() {
     return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -88,7 +85,7 @@ public abstract class Project implements HasId {
 
   public abstract String getProjectDetails();
 
-  public abstract String getProjectType();
+  public abstract ProjectType getProjectType();
 
   @Override
   public String toString() {

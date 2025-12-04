@@ -8,6 +8,8 @@ import com.kratosgado.pms.interfaces.Filterable;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.Seed;
+import com.kratosgado.pms.utils.enums.ProjectType;
+import com.kratosgado.pms.utils.factories.ModelFactory;
 
 public class ProjectInMemoryDatabase extends Repository<Project> implements Filterable<Project> {
 
@@ -15,15 +17,19 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
     entities = Seed.seedProjects();
   }
 
-  public Project add(Project model) {
+  public Project add(String name, String description, int teamSize, double budget, String type) {
     String id = CustomUtils.getNextId("PJ", count());
-    model.setId(id);
-    return innerAdd(model);
+    return safeAdd(ModelFactory.createProject(id, name, description, teamSize, budget, ProjectType.valueOf(type)));
   }
 
   @Override
   public Project[] filter(Predicate<Project> predicate) {
     return Arrays.stream(entities).filter(predicate).toArray(Project[]::new);
+  }
+
+  @Override
+  public Project add(Project model) {
+    return safeAdd(model);
   }
 
 }

@@ -6,16 +6,17 @@ import java.util.Optional;
 
 import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
+import com.kratosgado.pms.utils.CustomUtils;
 
 public abstract class Repository<T extends HasId> implements InMemoryDatabase<T> {
   protected T[] entities;
   protected int capacity;
 
   public Repository() {
-    this.capacity = 50;
+    this.capacity = CustomUtils.DEFAULT_MEMORY_CAPACITY;
   }
 
-  public T innerAdd(T entity) {
+  protected T safeAdd(T entity) {
     if (entities.length == capacity) {
       ensureCapacity();
     }
