@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
+import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.HardwareProject;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.SoftwareProject;
@@ -14,11 +16,16 @@ import com.kratosgado.pms.utils.CustomUtils;
 
 public class ProjectService extends MainService {
   private final ProjectInMemoryDatabase projectsDb;
+  private final TaskInMemoryDatabase tasksDb;
+  private final UserInMemoryDatabase usersDb;
   private Project selectedProject;
 
-  public ProjectService(final ProjectInMemoryDatabase projectsDb) {
+  public ProjectService(final ProjectInMemoryDatabase projectsDb, final TaskInMemoryDatabase tasksDb,
+      UserInMemoryDatabase usersDb) {
     this.projectsDb = projectsDb;
+    this.tasksDb = tasksDb;
     this.title = "PROJECT CATALOG";
+    this.usersDb = usersDb;
   }
 
   protected void listProjects() {
@@ -67,12 +74,14 @@ public class ProjectService extends MainService {
 
   private void listSoftwareProjects() {
     System.out.println(
-        listProjects(projectsDb.getAll().stream().filter(project -> project instanceof SoftwareProject).toList()));
+        listProjects(
+            projectsDb.getAll().stream().filter(project -> project.getProjectType().equals("Software")).toList()));
   }
 
   private void listHardwareProjects() {
     System.out.println(
-        listProjects(projectsDb.getAll().stream().filter(project -> project instanceof HardwareProject).toList()));
+        listProjects(
+            projectsDb.getAll().stream().filter(project -> project.getProjectType().equals("Hardware")).toList()));
   }
 
   private void searchByBudgetRange() {
@@ -99,7 +108,9 @@ public class ProjectService extends MainService {
       return;
     selectedProject = projectsDb.getById(id);
     System.out.println(selectedProject.getProjectDetails());
-    ConsoleMenu.runningServices.add(new TaskService(selectedProject.getTasks()));
+    tasksDb.setProjectId(id);
+    TaskService taskService = new TaskService(tasksDb, usersDb);
+    ConsoleMenu.runningServices.add(taskService);
   }
 
   private void calculateProjectCompletion() {

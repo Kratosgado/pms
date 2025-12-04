@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
 import com.kratosgado.pms.models.Project;
+import com.kratosgado.pms.utils.CustomUtils;
 
 public class ProjectInMemoryDatabase implements InMemoryDatabase<Project> {
   private ArrayList<Project> projects;
@@ -15,26 +16,40 @@ public class ProjectInMemoryDatabase implements InMemoryDatabase<Project> {
 
   @Override
   public Project add(Project model) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'add'");
+    String id = CustomUtils.getNextId("PJ", count());
+    // TODO: Project project = new Project(id, model.getName(),
+    // model.getDescription(),
+    // model.getTeamSize(), model.getBudget());
+    projects.add(model);
+    return model;
   }
 
   @Override
-  public Project update(String id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'update'");
+  public Project update(Project model) {
+    // TODO: Project project = new Project(id, model.getName(),
+    // model.getDescription(),
+    // model.getTeamSize(), model.getBudget());
+    Project project = getById(model.getId());
+    project.setName(model.getName());
+    project.setDescription(model.getDescription());
+    project.setTeamSize(model.getTeamSize());
+    project.setBudget(model.getBudget());
+    return project;
   }
 
   @Override
   public ArrayList<Project> getAll() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+    return new ArrayList<>(projects);
   }
 
   @Override
   public Project getById(String id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getById'");
+    for (final Project project : projects) {
+      if (project.getId().equals(id)) {
+        return project;
+      }
+    }
+    throw new IllegalArgumentException("Project not found");
   }
 
   @Override
@@ -45,14 +60,13 @@ public class ProjectInMemoryDatabase implements InMemoryDatabase<Project> {
 
   @Override
   public void removeById(String id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'removeById'");
+    Project project = getById(id);
+    projects.remove(project);
   }
 
   @Override
   public int count() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'count'");
+    return projects.size();
   }
 
 }

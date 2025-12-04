@@ -1,76 +1,68 @@
 package com.kratosgado.pms.services;
 
-import java.util.ArrayList;
-
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
+import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.Task;
+import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
-import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.TaskStatus;
 import com.kratosgado.pms.utils.ValidationUtils;
 
 public class TaskService extends MainService {
-  private final ArrayList<Task> tasks;
+  private final TaskInMemoryDatabase tasksDb;
+  private final UserInMemoryDatabase usersDb;
 
-  TaskService(final ArrayList<Task> tasks) {
-    this.tasks = tasks;
+  TaskService(final TaskInMemoryDatabase tasks, final UserInMemoryDatabase usersDb) {
+    this.usersDb = usersDb;
+    this.tasksDb = tasks;
     title = "TASK CATALOG";
-  }
-
-  private Task getTaskById(final String id) throws IllegalArgumentException {
-    for (final Task task : tasks) {
-      if (task.getId().equals(id)) {
-        return task;
-      }
-    }
-    throw new IllegalArgumentException("Task not found");
   }
 
   private void addTask() {
     ConsoleMenu.requireAdmin();
-    ConsoleMenu.displayHeader("ADD TASK");
+    CustomUtils.displayHeader("ADD TASK");
     String name;
     TaskStatus status;
     name = Console.getString("Enter Task Name: ");
     status = ConsoleMenu.getInput("Enter Initial Status (Pending, In Progress, Completed): ", input -> {
       return ValidationUtils.validateTaskStatus(input);
     });
-    final Task task = new Task(CustomUtils.getNextId("TS", tasks.size()), name, status);
+    final Task task = new Task(CustomUtils.getNextId("TS", tasksDb.count()), name, status);
     task.setHours(Console.getPositiveIntInput("Enter Hours: "));
-    task.setUser(Console.getString("Enter id of user to be assigned: "));
-    tasks.add(task);
+    task.setUserId(Console.getString("Enter id of user to be assigned: "));
+    tasksDb.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
 
   private void updateTaskStatus() {
     ConsoleMenu.requireAdmin();
-    ConsoleMenu.displayHeader("UDATE TASK STATUS");
+    CustomUtils.displayHeader("UDATE TASK STATUS");
 
     final String id = Console.getString("Enter Task ID: ");
-    final Task task = getTaskById(id);
+    final Task task = tasksDb.getById(id);
     final TaskStatus taskStatus = ConsoleMenu.getInput("Enter New Status (Pending, In Progress, Completed): ",
         input -> {
           return ValidationUtils.validateTaskStatus(input);
         });
     task.setStatus(taskStatus);
-    tasks.set(tasks.indexOf(task), task);
+    tasksDb.update(task);
     System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
   }
 
   private void removeTask() {
     ConsoleMenu.requireAdmin();
-    ConsoleMenu.displayHeader("REMOVE TASK");
+    CustomUtils.displayHeader("REMOVE TASK");
     final String id = Console.getString("Enter Task ID: ");
-    final Task task = getTaskById(id);
-    tasks.remove(task);
+    tasksDb.removeById(id);
     System.out.println("✅Task Removed successfully");
   }
 
   private void listTasks() {
-    ConsoleMenu.displayHeader("TASK LIST");
+    CustomUtils.displayHeader("TASK LIST");
     final StringBuilder sb = new StringBuilder();
-    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
-    for (final Task task : tasks) {
+    CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
+    for (final Task task : tasksDb.getAll()) {
       sb.append(task);
     }
     sb.append("\n");

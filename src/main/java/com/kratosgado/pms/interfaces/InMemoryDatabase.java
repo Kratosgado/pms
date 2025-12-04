@@ -7,7 +7,7 @@ public interface InMemoryDatabase<Model> {
 
   public Model add(Model model);
 
-  public Model update(String id);
+  public Model update(Model model);
 
   public ArrayList<Model> getAll();
 

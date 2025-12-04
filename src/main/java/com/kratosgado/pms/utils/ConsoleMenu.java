@@ -73,7 +73,7 @@ public class ConsoleMenu {
         displayError(e.getMessage());
         input = null;
       }
-    } while (input.equals(null));
+    } while (input == null);
     return input;
   }
 

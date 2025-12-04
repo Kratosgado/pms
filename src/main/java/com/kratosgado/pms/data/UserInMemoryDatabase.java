@@ -5,9 +5,11 @@ import java.util.ArrayList;
 
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
 import com.kratosgado.pms.models.User;
+import com.kratosgado.pms.utils.CustomUtils;
 
 public class UserInMemoryDatabase implements InMemoryDatabase<User> {
   private ArrayList<User> users;
+  private static final String PREFIX = "US";
 
   public UserInMemoryDatabase() {
     users = new ArrayList<>();
@@ -15,34 +17,42 @@ public class UserInMemoryDatabase implements InMemoryDatabase<User> {
 
   @Override
   public User add(User model) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'add'");
+    String id = CustomUtils.getNextId("USR", count());
+    // TODO: User user = new User(id, model.getName(), model.getEmail(),
+    // model.getPassword(), model.getRole());
+    users.add(model);
+    return model;
   }
 
   @Override
-  public User update(String id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'update'");
+  public User update(User model) {
+    // TODO: User user = new User(model.getId(), model.getName(), model.getEmail(),
+    User user = getById(model.getId());
+    user.setName(model.getName());
+    return user;
   }
 
   @Override
   public ArrayList<User> getAll() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+    return new ArrayList<>(users);
   }
 
   @Override
   public User getById(String id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getById'");
+    for (final User user : users) {
+      if (user.getId().equals(id)) {
+        return user;
+      }
+    }
+    throw new IllegalArgumentException("User not found");
   }
 
   public User getByEmail(String email) {
-    // for (final User user : MainService.users) {
-    // if (user.getEmail().equals(email)) {
-    // return user;
-    // }
-    // }
+    for (final User user : users) {
+      if (user.getEmail().equals(email)) {
+        return user;
+      }
+    }
     throw new IllegalArgumentException("User not found");
   }
 
@@ -54,14 +64,13 @@ public class UserInMemoryDatabase implements InMemoryDatabase<User> {
 
   @Override
   public void removeById(String id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'remove'");
+    User user = getById(id);
+    users.remove(user);
   }
 
   @Override
   public int count() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'count'");
+    return users.size();
   }
 
 }

@@ -1,6 +1,7 @@
 package com.kratosgado.pms.services;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
@@ -10,8 +11,9 @@ import com.kratosgado.pms.utils.CustomUtils;
 public class MainService {
   String title = "MAIN MENU";
   private static User currentUser;
-  final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase();
-  final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
+  private final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase();
+  private final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
+  private final TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
 
   public final void displayMenu() {
     CustomUtils.displayHeader(title);
@@ -61,10 +63,10 @@ public class MainService {
   public int handleChoice(final int choice) {
     switch (choice) {
       case 1:
-        ConsoleMenu.runningServices.add(new ProjectService(projectsDb));
+        ConsoleMenu.runningServices.add(new ProjectService(projectsDb, tasksDb, usersDb));
         break;
       case 2:
-        final ProjectService projectService = new ProjectService(projectsDb);
+        final ProjectService projectService = new ProjectService(projectsDb, tasksDb, usersDb);
         projectService.listProjects();
         projectService.askForProject();
         break;

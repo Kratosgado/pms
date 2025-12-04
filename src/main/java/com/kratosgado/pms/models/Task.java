@@ -6,28 +6,43 @@ import com.kratosgado.pms.utils.TaskStatus;
 
 public class Task implements Completable {
   private final String id;
-  private final String name;
+  private String name;
   private TaskStatus status;
   private int hours;
   private String userId;
-
-  public Task(final String id, final String name) {
-    this(id, name, TaskStatus.PENDING);
-  }
+  private String projectId;
 
   public Task(final String id, final String name, final TaskStatus status) {
+    // TODO: Auto-generated constructor stub
+    this(id, name, status, null);
+  }
+
+  public Task(final String id, final String name, final String projectId) {
+    this(id, name, TaskStatus.PENDING, projectId);
+  }
+
+  public Task(final String id, final String name, final TaskStatus status, final String projectId) {
     this.id = id;
     this.name = name;
     this.status = status;
     this.hours = 0;
+    this.projectId = projectId;
   }
 
   public String getId() {
     return id;
   }
 
+  public String getProjectId() {
+    return projectId;
+  }
+
   public String getName() {
     return name;
+  }
+
+  public void setName(final String name) {
+    this.name = name;
   }
 
   public TaskStatus getStatus() {

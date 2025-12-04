@@ -2,8 +2,6 @@ package com.kratosgado.pms.models;
 
 import java.util.ArrayList;
 
-import com.kratosgado.pms.utils.CustomUtils;
-
 public abstract class Project {
 
   private String id;
@@ -31,16 +29,32 @@ public abstract class Project {
     return name;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public String getDescription() {
     return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public int getTeamSize() {
     return teamSize;
   }
 
+  public void setTeamSize(int teamSize) {
+    this.teamSize = teamSize;
+  }
+
   public double getBudget() {
     return budget;
+  }
+
+  public void setBudget(double budget) {
+    this.budget = budget;
   }
 
   public ArrayList<Task> getTasks() {
@@ -65,34 +79,7 @@ public abstract class Project {
     return ((double) getCompletedTasks() / getTasks().size() * 100);
   }
 
-  public abstract String getProjectType();
-
   public abstract String getProjectDetails();
 
-  public String displayProject() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("\tName: ").append(name).append("\n");
-    sb.append("\tDescription: ").append(description).append("\n");
-    sb.append("\tType: ").append(getProjectType()).append("\n");
-    sb.append("\tTeam Size: ").append(teamSize).append("\n");
-    sb.append("\tBudget: ").append(budget).append("\n");
-
-    sb.append("\tAssociated Tasks: ").append(tasks.size()).append("\n");
-
-    CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
-    for (Task task : tasks) {
-      sb.append(task.toString());
-      sb.append("\n");
-    }
-
-    sb.append(String.format("Completion Rate: %.2f%%\n", calculateCompletionPercentage()));
-    return sb.toString();
-  }
-
-  public String toString() {
-    return String.format("%-20s|%-20s|%-20s|%-20s|%-20s\n", id, name,
-        getProjectType(),
-        teamSize, budget);
-  }
-
+  public abstract String getProjectType();
 }
