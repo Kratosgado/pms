@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.Seed;
 
 public class ProjectInMemoryDatabase implements InMemoryDatabase<Project> {
   private ArrayList<Project> projects;
 
   public ProjectInMemoryDatabase() {
-    projects = new ArrayList<>();
+    projects = Seed.seedProjects();
   }
 
   @Override

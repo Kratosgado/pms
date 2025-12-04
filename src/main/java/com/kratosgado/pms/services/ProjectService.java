@@ -1,31 +1,34 @@
 
 package com.kratosgado.pms.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.HardwareProject;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.SoftwareProject;
-import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
 
-public class ProjectService extends MainService {
+public class ProjectService extends ConsoleService {
   private final ProjectInMemoryDatabase projectsDb;
   private final TaskInMemoryDatabase tasksDb;
   private final UserInMemoryDatabase usersDb;
-  private Project selectedProject;
+  private final ApplicationContext applicationContext;
 
-  public ProjectService(final ProjectInMemoryDatabase projectsDb, final TaskInMemoryDatabase tasksDb,
-      UserInMemoryDatabase usersDb) {
+  public ProjectService(ProjectInMemoryDatabase projectsDb, TaskInMemoryDatabase tasksDb,
+      UserInMemoryDatabase usersDb, ApplicationContext applicationContext) {
     this.projectsDb = projectsDb;
+
     this.tasksDb = tasksDb;
-    this.title = "PROJECT CATALOG";
+    // this.title = "PROJECT CATALOG";
     this.usersDb = usersDb;
+    this.applicationContext = applicationContext;
+    this.title = "PROJECT CATALOG";
   }
 
   protected void listProjects() {
@@ -45,7 +48,7 @@ public class ProjectService extends MainService {
   }
 
   private void addProject() {
-    ConsoleMenu.requireAdmin();
+    applicationContext.requireAdmin();
     CustomUtils.displayHeader("ADD PROJECT");
     final String name = Console.getString("Enter Project Name: ");
     final String description = Console.getString("Enter Project Description: ");
@@ -65,7 +68,7 @@ public class ProjectService extends MainService {
   }
 
   private void removeProject() {
-    ConsoleMenu.requireAdmin();
+    applicationContext.requireAdmin();
     CustomUtils.displayHeader("REMOVE PROJECT");
     final String id = Console.getString("Enter Project ID: ");
     projectsDb.removeById(id);
@@ -106,11 +109,10 @@ public class ProjectService extends MainService {
     });
     if (id.equals("0"))
       return;
-    selectedProject = projectsDb.getById(id);
-    System.out.println(selectedProject.getProjectDetails());
+    this.displayProjectDetails(id);
     tasksDb.setProjectId(id);
-    TaskService taskService = new TaskService(tasksDb, usersDb);
-    ConsoleMenu.runningServices.add(taskService);
+    TaskService taskService = new TaskService(tasksDb, usersDb, applicationContext);
+    applicationContext.pushService(taskService);
   }
 
   private void calculateProjectCompletion() {

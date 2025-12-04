@@ -20,6 +20,7 @@ public class TaskInMemoryDatabase implements InMemoryDatabase<Task> {
 
   @Override
   public Task add(Task model) {
+    model.setProjectId(projectId);
     tasks.add(model);
     return model;
   }

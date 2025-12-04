@@ -1,21 +1,28 @@
 package com.kratosgado.pms.utils;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Scanner;
 import java.util.function.Function;
 
+import com.kratosgado.pms.ApplicationContext;
+import com.kratosgado.pms.data.ProjectInMemoryDatabase;
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
+import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.services.MainService;
 
 public class ConsoleMenu {
+  private ApplicationContext applicationContext;
+  private final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase();
+  private final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
+  private final TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
+
   public static Scanner scanner = new Scanner(System.in);
-  public static Deque<MainService> runningServices = new ArrayDeque<>();
   boolean running = true;
 
   public ConsoleMenu() {
-    final MainService mainService = new MainService();
-    runningServices.add(mainService);
-    mainService.authenticateUser();
+    this.applicationContext = new ApplicationContext(usersDb);
+    final MainService mainService = new MainService(applicationContext, projectsDb, usersDb, tasksDb);
+    applicationContext.getNavigationStack().add(mainService);
+    applicationContext.authenticateUser();
   }
 
   /**
@@ -23,9 +30,9 @@ public class ConsoleMenu {
    */
   public void run() {
     do {
-      runningServices.peek().displayMenu();
+      applicationContext.peekService().displayMenu();
       final int choice = Console.getPositiveIntInput("Enter your choice: ");
-      final int result = runningServices.peek().handleChoice(choice);
+      final int result = applicationContext.peekService().handleChoice(choice);
 
       switch (result) {
         case -1: // Global value for handled choice
@@ -48,12 +55,12 @@ public class ConsoleMenu {
    * application
    */
   private void navigateBack() {
-    if (runningServices.size() == 1) {
+    if (applicationContext.getNavigationStack().size() == 1) {
       System.out.println("You can't go back anymore");
       confirmExit();
       return;
     }
-    runningServices.pop();
+    applicationContext.popService();
   }
 
   /**
@@ -104,15 +111,6 @@ public class ConsoleMenu {
    */
   public final static void displaySuccess(final String success) {
     System.out.println("\n✅ " + success);
-  }
-
-  /**
-   * Verifies that the user is an admin
-   */
-  public final static void requireAdmin() {
-    if (!MainService.getCurrentUser().isAdmin()) {
-      throw new IllegalArgumentException("Only Admin Users can perform this action");
-    }
   }
 
 }

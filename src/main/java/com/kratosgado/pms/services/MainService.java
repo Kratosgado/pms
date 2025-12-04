@@ -1,27 +1,27 @@
 package com.kratosgado.pms.services;
 
+import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.User;
-import com.kratosgado.pms.utils.Console;
-import com.kratosgado.pms.utils.ConsoleMenu;
-import com.kratosgado.pms.utils.CustomUtils;
 
-public class MainService {
-  String title = "MAIN MENU";
-  private static User currentUser;
-  private final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase();
-  private final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
-  private final TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
+public class MainService extends ConsoleService {
+  private final ProjectInMemoryDatabase projectsDb;
+  private final UserInMemoryDatabase usersDb;
+  private final TaskInMemoryDatabase tasksDb;
+  private final ApplicationContext applicationContext;
 
-  public final void displayMenu() {
-    CustomUtils.displayHeader(title);
-    displayOptions();
-    System.out.println("9. Exit");
-    System.out.println("0. Go Back");
+  public MainService(ApplicationContext applicationContext, ProjectInMemoryDatabase projectsDb,
+      UserInMemoryDatabase usersDb, TaskInMemoryDatabase tasksDb) {
+    this.applicationContext = applicationContext;
+    this.projectsDb = projectsDb;
+    this.usersDb = usersDb;
+    this.tasksDb = tasksDb;
+    this.title = "MAIN MENU";
   }
 
+  @Override
   protected void displayOptions() {
     printCurrentUser();
     System.out.println("1. Manage Projects");
@@ -30,43 +30,19 @@ public class MainService {
     System.out.println("4. Manage Users");
   }
 
-  protected static void setCurrentUser(final User user) {
-    currentUser = user;
-  }
-
-  public static User getCurrentUser() {
-    return currentUser;
-  }
-
   private final void printCurrentUser() {
+    User currentUser = applicationContext.getCurrentUser();
     System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getRole());
   }
 
-  public final void authenticateUser() {
-    do {
-      try {
-        CustomUtils.displayHeader("AUTHENTICATION");
-        final String email = Console.getEmailInput();
-        final User user = usersDb.getByEmail(email);
-        final String password = Console.getPasswordInput("Enter User Password: ");
-        if (!user.getPassword().equals(password)) {
-          throw new IllegalArgumentException("Invalid Password");
-        }
-        ConsoleMenu.displaySuccess("User logged in");
-        setCurrentUser(user);
-      } catch (final Exception e) {
-        ConsoleMenu.displayError(e.getMessage());
-      }
-    } while (currentUser.equals(null));
-  }
-
+  @Override
   public int handleChoice(final int choice) {
     switch (choice) {
       case 1:
-        ConsoleMenu.runningServices.add(new ProjectService(projectsDb, tasksDb, usersDb));
+        applicationContext.pushService(new ProjectService(projectsDb, tasksDb, usersDb, applicationContext));
         break;
       case 2:
-        final ProjectService projectService = new ProjectService(projectsDb, tasksDb, usersDb);
+        final ProjectService projectService = new ProjectService(projectsDb, tasksDb, usersDb, applicationContext);
         projectService.listProjects();
         projectService.askForProject();
         break;
@@ -74,7 +50,7 @@ public class MainService {
         ReportService.displayReport(projectsDb.getAll());
         break;
       case 4:
-        ConsoleMenu.runningServices.add(new UserService(usersDb));
+        applicationContext.pushService(new UserService(usersDb, applicationContext));
         break;
       default:
         return choice;

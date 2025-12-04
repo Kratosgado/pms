@@ -37,6 +37,10 @@ public class Task implements Completable {
     return projectId;
   }
 
+  public void setProjectId(String projectId) {
+    this.projectId = projectId;
+  }
+
   public String getName() {
     return name;
   }

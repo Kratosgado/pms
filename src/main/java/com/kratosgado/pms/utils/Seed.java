@@ -37,43 +37,43 @@ public class Seed {
     final String prefix = "PJ";
     String id = CustomUtils.getNextId(prefix, projects.size());
     Project project = new SoftwareProject(id, "PMS", "Project management system", 4, 1000.00);
-    project.addTasks(Seed.seedTasks());
+    project.addTasks(Seed.seedTasks(id));
     projects.add(project);
 
     id = CustomUtils.getNextId(prefix, projects.size());
     project = new HardwareProject(id, "Psuedo Interpreter", "Project management system", 7, 2000.00);
-    project.addTasks(Seed.seedTasks());
+    project.addTasks(Seed.seedTasks(id));
     projects.add(project);
     id = CustomUtils.getNextId(prefix, projects.size());
     project = new HardwareProject(id, "Psuedo Runner", "Project management system", 11, 13000.00);
-    project.addTasks(Seed.seedTasks());
+    project.addTasks(Seed.seedTasks(id));
     projects.add(project);
     id = CustomUtils.getNextId(prefix, projects.size());
     project = new SoftwareProject(id, "Console", "Project management system", 9, 2000.00);
 
-    project.addTasks(Seed.seedTasks());
+    project.addTasks(Seed.seedTasks(id));
     projects.add(project);
     id = CustomUtils.getNextId(prefix, projects.size());
     project = new SoftwareProject(id, "TSM", "Task management system", 4, 5000.00);
-    project.addTasks(Seed.seedTasks());
+    project.addTasks(Seed.seedTasks(id));
     projects.add(project);
     return projects;
   }
 
-  public static ArrayList<Task> seedTasks() {
+  public static ArrayList<Task> seedTasks(String projectId) {
     final ArrayList<Task> tasks = new ArrayList<>();
     final String prefix = "TS";
     String id = CustomUtils.getNextId(prefix, tasks.size());
-    Task task = new Task(id, "Task 1");
+    Task task = new Task(id, "Task 1", projectId);
     tasks.add(task);
     id = CustomUtils.getNextId(prefix, tasks.size());
-    task = new Task(id, "Task 2");
+    task = new Task(id, "Task 2", projectId);
     tasks.add(task);
     id = CustomUtils.getNextId(prefix, tasks.size());
-    task = new Task(id, "Task 3", TaskStatus.IN_PROGRESS);
+    task = new Task(id, "Task 3", TaskStatus.IN_PROGRESS, projectId);
     tasks.add(task);
     id = CustomUtils.getNextId(prefix, tasks.size());
-    task = new Task(id, "Task 4", TaskStatus.COMPLETED);
+    task = new Task(id, "Task 4", TaskStatus.COMPLETED, projectId);
     tasks.add(task);
     return tasks;
   }

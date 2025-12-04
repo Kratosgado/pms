@@ -1,25 +1,28 @@
 
 package com.kratosgado.pms.services;
 
+import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.AdminUser;
 import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.User;
-import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
 
-public class UserService extends MainService {
+public class UserService extends ConsoleService {
   private UserInMemoryDatabase usersDb;
+  private final ApplicationContext applicationContext;
 
-  public UserService(UserInMemoryDatabase userInMemoryDatabase) {
+  public UserService(UserInMemoryDatabase userInMemoryDatabase, ApplicationContext applicationContext) {
     this.usersDb = userInMemoryDatabase;
     title = "USER MENU";
+    this.applicationContext = applicationContext;
   }
 
   private void addUser() {
-    ConsoleMenu.requireAdmin();
-    ConsoleMenu.displayHeader("ADD USER");
+    applicationContext.requireAdmin();
+    CustomUtils.displayHeader("ADD USER");
     final String name = Console.getString("Enter User Name: ");
     final String email = Console.getEmailInput();
     final String password = Console.getPasswordInput("Enter User Password: ");
@@ -37,17 +40,17 @@ public class UserService extends MainService {
   }
 
   private void removeUser() {
-    ConsoleMenu.requireAdmin();
-    ConsoleMenu.displayHeader("REMOVE USER");
+    applicationContext.requireAdmin();
+    CustomUtils.displayHeader("REMOVE USER");
     final String id = Console.getString("Enter User ID: ");
     usersDb.removeById(id);
     System.out.println("✅User Removed successfully");
   }
 
   private void listUsers() {
-    ConsoleMenu.displayHeader("USER LIST");
+    CustomUtils.displayHeader("USER LIST");
     final StringBuilder sb = new StringBuilder();
-    ConsoleMenu.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
+    CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "EMAIL", "ROLE"));
     for (final User user : usersDb.getAll()) {
       sb.append(user.displayUser());
     }
@@ -56,7 +59,7 @@ public class UserService extends MainService {
   }
 
   public void switchUser() {
-    ConsoleMenu.displayHeader("SWITCH USER");
+    CustomUtils.displayHeader("SWITCH USER");
     final String email = Console.getEmailInput();
     final User user = usersDb.getByEmail(email);
     final String password = Console.getPasswordInput("Enter User Password: ");
@@ -64,7 +67,7 @@ public class UserService extends MainService {
       throw new IllegalArgumentException("Invalid Password");
     }
     System.out.println("✅User switched successfully");
-    MainService.setCurrentUser(user);
+    applicationContext.setCurrentUser(user);
   }
 
   @Override

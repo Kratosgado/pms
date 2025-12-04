@@ -1,5 +1,6 @@
 package com.kratosgado.pms.services;
 
+import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.Task;
@@ -9,18 +10,21 @@ import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.TaskStatus;
 import com.kratosgado.pms.utils.ValidationUtils;
 
-public class TaskService extends MainService {
+public class TaskService extends ConsoleService {
   private final TaskInMemoryDatabase tasksDb;
   private final UserInMemoryDatabase usersDb;
+  private final ApplicationContext applicationContext;
 
-  TaskService(final TaskInMemoryDatabase tasks, final UserInMemoryDatabase usersDb) {
+  TaskService(final TaskInMemoryDatabase tasks, final UserInMemoryDatabase usersDb,
+      ApplicationContext applicationContext) {
     this.usersDb = usersDb;
     this.tasksDb = tasks;
+    this.applicationContext = applicationContext;
     title = "TASK CATALOG";
   }
 
   private void addTask() {
-    ConsoleMenu.requireAdmin();
+    applicationContext.requireAdmin();
     CustomUtils.displayHeader("ADD TASK");
     String name;
     TaskStatus status;
@@ -36,7 +40,7 @@ public class TaskService extends MainService {
   }
 
   private void updateTaskStatus() {
-    ConsoleMenu.requireAdmin();
+    applicationContext.requireAdmin();
     CustomUtils.displayHeader("UDATE TASK STATUS");
 
     final String id = Console.getString("Enter Task ID: ");
@@ -51,7 +55,7 @@ public class TaskService extends MainService {
   }
 
   private void removeTask() {
-    ConsoleMenu.requireAdmin();
+    applicationContext.requireAdmin();
     CustomUtils.displayHeader("REMOVE TASK");
     final String id = Console.getString("Enter Task ID: ");
     tasksDb.removeById(id);

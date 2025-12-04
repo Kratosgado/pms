@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.Seed;
 
 public class UserInMemoryDatabase implements InMemoryDatabase<User> {
   private ArrayList<User> users;
   private static final String PREFIX = "US";
 
   public UserInMemoryDatabase() {
-    users = new ArrayList<>();
+    users = Seed.seedUsers();
   }
 
   @Override

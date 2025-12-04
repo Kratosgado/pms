@@ -82,4 +82,12 @@ public abstract class Project {
   public abstract String getProjectDetails();
 
   public abstract String getProjectType();
+
+  @Override
+  public String toString() {
+    return String.format("%-20s|%-20s|%-20s|%-20s|%-20s\n", id, name,
+        getProjectType(),
+        teamSize, budget);
+  }
+
 }

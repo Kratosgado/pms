@@ -16,7 +16,7 @@ public class MainTest {
   // TODO: unit test for task status updates and progress calculation
   @Test
   void testTaskStatus() {
-    Task task = new Task("id", "name");
+    Task task = new Task("id", "name", "projectId");
     assertEquals(TaskStatus.PENDING, task.getStatus());
     task.setStatus(TaskStatus.IN_PROGRESS);
     assertEquals(TaskStatus.IN_PROGRESS, task.getStatus());
@@ -27,7 +27,7 @@ public class MainTest {
   @Test
   void testCalculatCompletionPercentage() {
     SoftwareProject project = new SoftwareProject("id", "test", "test", 40, 10);
-    project.addedTask(new Task("PJ2", "task1"));
+    project.addedTask(new Task("PJ2", "task1", project.getId()));
     project.addedTask(new Task("PJ4", "task1", TaskStatus.IN_PROGRESS));
     project.addedTask(new Task("PJ5", "task1", TaskStatus.COMPLETED));
     project.addedTask(new Task("PJ8", "task1", TaskStatus.COMPLETED));
@@ -40,7 +40,7 @@ public class MainTest {
   void testAverageCompletionPercentage() {
     ArrayList<Project> projects = new ArrayList<>();
     SoftwareProject project = new SoftwareProject("id", "test", "test", 40, 10);
-    project.addedTask(new Task("PJ2", "task1"));
+    project.addedTask(new Task("PJ2", "task1", project.getId()));
     project.addedTask(new Task("PJ4", "task1", TaskStatus.IN_PROGRESS));
     project.addedTask(new Task("PJ5", "task1", TaskStatus.COMPLETED));
     project.addedTask(new Task("PJ8", "task1", TaskStatus.COMPLETED));
