@@ -10,7 +10,6 @@ import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.models.Task;
 import com.kratosgado.pms.models.User;
-import com.kratosgado.pms.utils.enums.TaskStatus;
 
 public class Seed {
 
@@ -56,21 +55,17 @@ public class Seed {
     return projects.toArray(new Project[0]);
   }
 
-  public static Task[] seedTasks(String projectId) {
+  public static Task[] seedTasks() {
     final ArrayList<Task> tasks = new ArrayList<>();
     final String prefix = "TS";
-    String id = CustomUtils.getNextId(prefix, tasks.size());
-    Task task = new Task(id, "Task 1", projectId);
-    tasks.add(task);
-    id = CustomUtils.getNextId(prefix, tasks.size());
-    task = new Task(id, "Task 2", projectId);
-    tasks.add(task);
-    id = CustomUtils.getNextId(prefix, tasks.size());
-    task = new Task(id, "Task 3", TaskStatus.IN_PROGRESS, projectId);
-    tasks.add(task);
-    id = CustomUtils.getNextId(prefix, tasks.size());
-    task = new Task(id, "Task 4", TaskStatus.COMPLETED, projectId);
-    tasks.add(task);
+    for (int i = 0; i < 5; i++) {
+      String projectId = CustomUtils.getNextId("PJ", i);
+      for (int j = 0; j < 3; j++) {
+        String id = CustomUtils.getNextId(prefix, tasks.size());
+        Task task = new Task(id, "Task " + (i * 3 + j), projectId);
+        tasks.add(task);
+      }
+    }
     return tasks.toArray(new Task[0]);
   }
 }

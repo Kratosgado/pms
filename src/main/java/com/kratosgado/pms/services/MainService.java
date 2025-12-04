@@ -1,17 +1,21 @@
 package com.kratosgado.pms.services;
 
-import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.models.User;
+import com.kratosgado.pms.utils.context.AuthManager;
+import com.kratosgado.pms.utils.context.NavigationManager;
 
 public class MainService extends ConsoleService {
-  private final ApplicationContext applicationContext;
+  private final NavigationManager navigationManager;
+  private final AuthManager authManager;
   private final ServiceFactory serviceFactory;
 
-  public MainService(ApplicationContext applicationContext, ProjectInMemoryDatabase projectsDb,
+  public MainService(NavigationManager navigationManager, ProjectInMemoryDatabase projectsDb,
+      AuthManager authManager,
       ServiceFactory serviceFactory) {
-    this.applicationContext = applicationContext;
+    this.navigationManager = navigationManager;
+    this.authManager = authManager;
     this.title = "MAIN MENU";
     this.serviceFactory = serviceFactory;
   }
@@ -26,7 +30,7 @@ public class MainService extends ConsoleService {
   }
 
   private final void printCurrentUser() {
-    User currentUser = applicationContext.getCurrentUser();
+    User currentUser = authManager.getCurrentUser();
     System.out.printf("\nCurrent User: %s (%s)\n\n", currentUser.getName(), currentUser.getRole());
   }
 
@@ -34,7 +38,7 @@ public class MainService extends ConsoleService {
   public int handleChoice(final int choice) {
     switch (choice) {
       case 1:
-        applicationContext.pushService(serviceFactory.createProjectService());
+        navigationManager.pushService(serviceFactory.createProjectService());
         break;
       case 2:
         final ProjectService projectService = serviceFactory.createProjectService();
@@ -46,7 +50,7 @@ public class MainService extends ConsoleService {
         reportService.displayReport();
         break;
       case 4:
-        applicationContext.pushService(serviceFactory.createUserService());
+        navigationManager.pushService(serviceFactory.createUserService());
         break;
       default:
         return choice;

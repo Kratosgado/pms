@@ -1,25 +1,16 @@
 
-package com.kratosgado.pms;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
+package com.kratosgado.pms.utils.context;
 
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.User;
-import com.kratosgado.pms.services.ConsoleService;
 import com.kratosgado.pms.utils.Console;
-import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
 
-public class ApplicationContext {
-
+public class AuthManager {
   private User currentUser;
-  private final Deque<ConsoleService> navigationStack;
   private final UserInMemoryDatabase usersDb;
-  // Provide thread-safe getters/setters
 
-  public ApplicationContext(UserInMemoryDatabase usersDb) {
-    this.navigationStack = new ArrayDeque<>();
+  public AuthManager(UserInMemoryDatabase usersDb) {
     this.usersDb = usersDb;
   }
 
@@ -39,31 +30,15 @@ public class ApplicationContext {
           throw new IllegalArgumentException("Invalid Password");
         }
         setCurrentUser(user);
-        ConsoleMenu.displaySuccess("User logged in");
+        CustomUtils.displaySuccess("User logged in");
       } catch (final Exception e) {
-        ConsoleMenu.displayError(e.getClass().getSimpleName(), e.getMessage());
+        CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
       }
     } while (getCurrentUser() == null);
   }
 
   public void setCurrentUser(User user) {
     currentUser = user;
-  }
-
-  public Deque<ConsoleService> getNavigationStack() {
-    return navigationStack;
-  }
-
-  public void pushService(ConsoleService service) {
-    navigationStack.push(service);
-  }
-
-  public ConsoleService popService() {
-    return navigationStack.pop();
-  }
-
-  public ConsoleService peekService() {
-    return navigationStack.peek();
   }
 
   /**

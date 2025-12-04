@@ -33,4 +33,21 @@ public class CustomUtils {
     System.out.println("=".repeat(CustomUtils.UI_MAX_WIDTH));
   }
 
+  /**
+   * Displays an error message to the user
+   * 
+   * @param error the error message to display to the user
+   */
+  public final static void displayError(String name, final String error) {
+    System.out.println("\n❌ " + name + ": " + error);
+  }
+
+  /**
+   * Displays a success message to the user
+   * 
+   * @param success the success message to display to the user
+   */
+  public final static void displaySuccess(final String success) {
+    System.out.println("\n✅ " + success);
+  }
 }

@@ -1,28 +1,27 @@
 
 package com.kratosgado.pms.services;
 
-import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.AdminUser;
 import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
-import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.enums.UserRole;
 
 public class UserService extends ConsoleService {
   private UserInMemoryDatabase usersDb;
-  private final ApplicationContext applicationContext;
+  private final AuthManager authManager;
 
-  public UserService(UserInMemoryDatabase userInMemoryDatabase, ApplicationContext applicationContext) {
+  public UserService(UserInMemoryDatabase userInMemoryDatabase, AuthManager authManager) {
     this.usersDb = userInMemoryDatabase;
     title = "USER MENU";
-    this.applicationContext = applicationContext;
+    this.authManager = authManager;
   }
 
   private void addUser() {
-    applicationContext.requireAdmin();
+    authManager.requireAdmin();
     CustomUtils.displayHeader("ADD USER");
     final String name = Console.getString("Enter User Name: ");
     final String email = Console.getEmailInput();
@@ -41,7 +40,7 @@ public class UserService extends ConsoleService {
   }
 
   private void removeUser() {
-    applicationContext.requireAdmin();
+    authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE USER");
     final String id = Console.getString("Enter User ID: ");
     usersDb.removeById(id);
@@ -68,7 +67,7 @@ public class UserService extends ConsoleService {
       throw new IllegalArgumentException("Invalid Password");
     }
     System.out.println("✅User switched successfully");
-    applicationContext.setCurrentUser(user);
+    authManager.setCurrentUser(user);
   }
 
   @Override
@@ -103,7 +102,7 @@ public class UserService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      ConsoleMenu.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
     }
     return -1;
   }

@@ -3,21 +3,21 @@ package com.kratosgado.pms.utils;
 import java.util.Scanner;
 import java.util.function.Function;
 
-import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.services.MainService;
+import com.kratosgado.pms.utils.context.AuthManager;
+import com.kratosgado.pms.utils.context.NavigationManager;
 
 public class ConsoleMenu {
-  private ApplicationContext applicationContext;
+  private NavigationManager navigationManager;
 
-  public static Scanner scanner = new Scanner(System.in);
+  private static Scanner scanner = new Scanner(System.in);
   boolean running = true;
 
-  public ConsoleMenu(ServiceFactory serviceFactory, ApplicationContext applicationContext) {
-    this.applicationContext = applicationContext;
+  public ConsoleMenu(ServiceFactory serviceFactory, NavigationManager navigationManager, AuthManager authManager) {
     final MainService mainService = serviceFactory.createMainService();
-    applicationContext.getNavigationStack().add(mainService);
-    applicationContext.authenticateUser();
+    navigationManager.pushService(mainService);
+    authManager.authenticateUser();
   }
 
   /**
@@ -28,9 +28,9 @@ public class ConsoleMenu {
    */
   public void run() {
     do {
-      applicationContext.peekService().displayMenu();
+      navigationManager.peekService().displayMenu();
       final int choice = Console.getPositiveIntInput("Enter your choice: ");
-      final int result = applicationContext.peekService().handleChoice(choice);
+      final int result = navigationManager.peekService().handleChoice(choice);
 
       switch (result) {
         case -1:
@@ -42,7 +42,7 @@ public class ConsoleMenu {
           confirmExit();
           break;
         default:
-          displayError("INPUT ERROR", "Invalid choice");
+          CustomUtils.displayError("INPUT ERROR", "Invalid choice");
       }
     } while (running);
 
@@ -53,12 +53,12 @@ public class ConsoleMenu {
    * application
    */
   private void navigateBack() {
-    if (applicationContext.getNavigationStack().size() == 1) {
+    if (!navigationManager.canNavigateBack()) {
       System.out.println("You can't go back anymore");
       confirmExit();
       return;
     }
-    applicationContext.popService();
+    navigationManager.popService();
   }
 
   /**
@@ -75,7 +75,7 @@ public class ConsoleMenu {
       try {
         input = function.apply(choiceStr);
       } catch (final Exception e) {
-        displayError(e.getClass().getSimpleName(), e.getMessage());
+        CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
         input = null;
       }
     } while (input == null);
@@ -91,24 +91,6 @@ public class ConsoleMenu {
     if (choice.equals("y")) {
       running = false;
     }
-  }
-
-  /**
-   * Displays an error message to the user
-   * 
-   * @param error the error message to display to the user
-   */
-  public final static void displayError(String name, final String error) {
-    System.out.println("\n❌ " + name + ": " + error);
-  }
-
-  /**
-   * Displays a success message to the user
-   * 
-   * @param success the success message to display to the user
-   */
-  public final static void displaySuccess(final String success) {
-    System.out.println("\n✅ " + success);
   }
 
 }

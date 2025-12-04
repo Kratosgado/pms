@@ -14,7 +14,6 @@ public class Task implements HasId, Completable {
   private String projectId;
 
   public Task(final String id, final String name, final TaskStatus status) {
-    // TODO: Auto-generated constructor stub
     this(id, name, status, null);
   }
 
@@ -84,8 +83,4 @@ public class Task implements HasId, Completable {
     return status.equals(TaskStatus.COMPLETED);
   }
 
-  @Override
-  public void setId(String id) {
-    throw new UnsupportedOperationException("Unimplemented method 'setId'");
-  }
 }

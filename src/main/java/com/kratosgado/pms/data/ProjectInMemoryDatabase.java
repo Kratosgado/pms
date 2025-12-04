@@ -1,13 +1,15 @@
 
 package com.kratosgado.pms.data;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
 
+import com.kratosgado.pms.interfaces.Filterable;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.Seed;
 
-public class ProjectInMemoryDatabase extends Repository<Project> {
+public class ProjectInMemoryDatabase extends Repository<Project> implements Filterable<Project> {
 
   public ProjectInMemoryDatabase() {
     entities = Seed.seedProjects();
@@ -19,31 +21,9 @@ public class ProjectInMemoryDatabase extends Repository<Project> {
     return innerAdd(model);
   }
 
-  public Project[] getSoftwareProjects() {
-    ArrayList<Project> projects = new ArrayList<>();
-    for (Project project : entities) {
-      if (project.getProjectType().equals("Software"))
-        projects.add(project);
-    }
-    return projects.toArray(new Project[0]);
-  }
-
-  public Project[] getHardwareProjects() {
-    ArrayList<Project> projects = new ArrayList<>();
-    for (Project project : entities) {
-      if (project.getProjectType().equals("Hardware"))
-        projects.add(project);
-    }
-    return projects.toArray(new Project[0]);
-  }
-
-  public Project[] getBudgetRangeProjects(double min, double max) {
-    ArrayList<Project> projects = new ArrayList<>();
-    for (Project project : entities) {
-      if (project.getBudget() >= min && project.getBudget() <= max)
-        projects.add(project);
-    }
-    return projects.toArray(new Project[0]);
+  @Override
+  public Project[] filter(Predicate<Project> predicate) {
+    return Arrays.stream(entities).filter(predicate).toArray(Project[]::new);
   }
 
 }

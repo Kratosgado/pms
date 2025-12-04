@@ -1,17 +1,16 @@
 
 package com.kratosgado.pms.data;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.kratosgado.pms.models.Task;
-import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.Seed;
 
 public class TaskInMemoryDatabase extends Repository<Task> {
   private String projectId = "";
 
   public TaskInMemoryDatabase() {
-    entities = Seed.seedTasks("PJ000");
+    entities = Seed.seedTasks();
   }
 
   public void setProjectId(String projectId) {
@@ -20,19 +19,13 @@ public class TaskInMemoryDatabase extends Repository<Task> {
 
   @Override
   public Task add(Task model) {
-    model.setId(CustomUtils.getNextId("TS", count()));
     model.setProjectId(projectId);
     return innerAdd(model);
   }
 
   @Override
   public Task[] getAll() {
-    ArrayList<Task> tasks = new ArrayList<>();
-    for (Task task : entities) {
-      if (task.getProjectId().equals(projectId))
-        tasks.add(task);
-    }
-    return tasks.toArray(Task[]::new);
+    return Arrays.stream(entities).filter(task -> task.getProjectId().equals(projectId)).toArray(Task[]::new);
   }
 
   // @Override

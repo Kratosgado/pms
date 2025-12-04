@@ -1,6 +1,10 @@
 
 package com.kratosgado.pms.interfaces;
 
+import java.util.Optional;
+
+import com.kratosgado.pms.utils.exceptions.PMSException;
+
 public interface InMemoryDatabase<T> {
 
   public T add(T model);
@@ -9,7 +13,7 @@ public interface InMemoryDatabase<T> {
 
   public T[] getAll();
 
-  public T getById(String id);
+  public Optional<T> getById(String id) throws PMSException;
 
   public void removeById(String id);
 

@@ -1,6 +1,5 @@
 package com.kratosgado.pms.services;
 
-import com.kratosgado.pms.ApplicationContext;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.Task;
@@ -8,23 +7,26 @@ import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.ValidationUtils;
+import com.kratosgado.pms.utils.context.AuthManager;
+import com.kratosgado.pms.utils.context.NavigationManager;
 import com.kratosgado.pms.utils.enums.TaskStatus;
+import com.kratosgado.pms.utils.exceptions.TaskNotFoundException;
 
 public class TaskService extends ConsoleService {
   private final TaskInMemoryDatabase tasksDb;
   private final UserInMemoryDatabase usersDb;
-  private final ApplicationContext applicationContext;
+  private final AuthManager authManager;
 
   public TaskService(final TaskInMemoryDatabase tasksDb, final UserInMemoryDatabase usersDb,
-      ApplicationContext applicationContext) {
+      AuthManager authManager, NavigationManager navigationManager) {
     this.usersDb = usersDb;
     this.tasksDb = tasksDb;
-    this.applicationContext = applicationContext;
+    this.authManager = authManager;
     title = "TASK CATALOG";
   }
 
   private void addTask() {
-    applicationContext.requireAdmin();
+    authManager.requireAdmin();
     CustomUtils.displayHeader("ADD TASK");
     String name;
     TaskStatus status;
@@ -45,11 +47,11 @@ public class TaskService extends ConsoleService {
   }
 
   private void updateTaskStatus() {
-    applicationContext.requireAdmin();
+    authManager.requireAdmin();
     CustomUtils.displayHeader("UDATE TASK STATUS");
 
     final String id = Console.getString("Enter Task ID: ");
-    final Task task = tasksDb.getById(id);
+    final Task task = tasksDb.getById(id).orElseThrow(TaskNotFoundException::new);
     final TaskStatus taskStatus = ConsoleMenu.getInput("Enter New Status (Pending, In Progress, Completed): ",
         input -> {
           return ValidationUtils.validateTaskStatus(input);
@@ -60,7 +62,7 @@ public class TaskService extends ConsoleService {
   }
 
   private void removeTask() {
-    applicationContext.requireAdmin();
+    authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE TASK");
     final String id = Console.getString("Enter Task ID: ");
     tasksDb.removeById(id);
@@ -106,7 +108,7 @@ public class TaskService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      ConsoleMenu.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
     }
     return -1;
   }

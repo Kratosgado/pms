@@ -2,6 +2,7 @@
 package com.kratosgado.pms.data;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
@@ -11,7 +12,7 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
   protected int capacity;
 
   public Repository() {
-    this.capacity = 0;
+    this.capacity = 10;
   }
 
   public T innerAdd(T entity) {
@@ -24,7 +25,7 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
 
   @Override
   public T update(T model) {
-    T entity = getById(model.getId());
+    T entity = getById(model.getId()).orElseThrow();
     entity = model;
     return entity;
   }
@@ -35,17 +36,13 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
   }
 
   @Override
-  public T getById(String id) {
-    for (T t : entities) {
-      if (t.getId().equals(id))
-        return t;
-    }
-    return null;
+  public Optional<T> getById(String id) {
+    return Arrays.stream(entities).filter(t -> t.getId().equals(id)).findFirst();
   }
 
   @Override
   public void removeById(String id) {
-    T entity = getById(id);
+    T entity = getById(id).orElse(null);
     if (entity != null) {
       int index = Arrays.asList(entities).indexOf(entity);
       if (index >= 0) {
@@ -58,25 +55,13 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
 
   @Override
   public boolean exists(String id) {
-    return getById(id) != null;
+    return getById(id).isPresent();
   }
 
   @Override
   public int count() {
     return entities.length;
   }
-
-  // @Override
-  // public T[] getWhere(String field, String value) {
-  // T.class.getDeclaredField(field);
-  // Field field = T.getClass().getDeclaredField(field);
-  // ArrayList<T> results = new ArrayList<>();
-  // for (T entity : entities) {
-  // if (entity.get(field).equals(value))
-  // results.add(entity);
-  // }
-  // return results.toArray(new T[0]);
-  // }
 
   private void ensureCapacity(int minCapacity) {
     if (minCapacity > capacity) {

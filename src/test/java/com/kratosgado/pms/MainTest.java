@@ -9,11 +9,9 @@ import org.junit.jupiter.api.Test;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.models.Task;
-import com.kratosgado.pms.services.ReportService;
 import com.kratosgado.pms.utils.enums.TaskStatus;
 
 public class MainTest {
-  // TODO: unit test for task status updates and progress calculation
   @Test
   void testTaskStatus() {
     Task task = new Task("id", "name", "projectId");
