@@ -1,9 +1,9 @@
 package com.kratosgado.pms.models;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 import com.kratosgado.pms.interfaces.HasId;
+import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.enums.ProjectType;
 
 public abstract class Project implements HasId {
@@ -14,7 +14,7 @@ public abstract class Project implements HasId {
   private int teamSize;
   private double budget;
 
-  private ArrayList<Task> tasks;
+  private Task[] tasks;
 
   public Project(String id, String name, String description, int teamSize, double budget) {
     this.id = id;
@@ -22,7 +22,7 @@ public abstract class Project implements HasId {
     this.description = description;
     this.teamSize = teamSize;
     this.budget = budget;
-    this.tasks = new ArrayList<>();
+    this.tasks = new Task[CustomUtils.DEFAULT_MEMORY_CAPACITY];
   }
 
   public String getId() {
@@ -61,26 +61,22 @@ public abstract class Project implements HasId {
     this.budget = budget;
   }
 
-  public java.util.List<Task> getTasks() {
-    return Collections.unmodifiableList(tasks);
+  public Task[] getTasks() {
+    return Arrays.copyOf(tasks, tasks.length);
   }
 
-  public void addTask(Task task) {
-    tasks.add(task);
-  }
-
-  public void addTasks(ArrayList<Task> tasks) {
-    this.tasks.addAll(tasks);
+  public void setTasks(Task[] tasks) {
+    this.tasks = tasks;
   }
 
   public int getCompletedTasks() {
-    return (int) tasks.stream().filter(task -> task.isCompleted()).count();
+    return (int) Arrays.stream(tasks).filter(task -> task.isCompleted()).count();
   }
 
   public double calculateCompletionPercentage() {
-    if (getTasks().size() == 0)
+    if (getTasks().length == 0)
       return 0;
-    return ((double) getCompletedTasks() / getTasks().size() * 100);
+    return ((double) getCompletedTasks() / getTasks().length * 100);
   }
 
   public abstract String getProjectDetails();

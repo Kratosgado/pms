@@ -7,14 +7,16 @@ import java.util.function.Predicate;
 import com.kratosgado.pms.interfaces.Filterable;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
-import com.kratosgado.pms.utils.Seed;
 import com.kratosgado.pms.utils.enums.ProjectType;
 import com.kratosgado.pms.utils.factories.ModelFactory;
 
 public class ProjectInMemoryDatabase extends Repository<Project> implements Filterable<Project> {
 
   public ProjectInMemoryDatabase() {
-    entities = Seed.seedProjects();
+  }
+
+  public ProjectInMemoryDatabase(Project[] entities) {
+    super(entities);
   }
 
   public Project add(String name, String description, int teamSize, double budget, String type) {

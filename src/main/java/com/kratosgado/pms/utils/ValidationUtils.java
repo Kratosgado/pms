@@ -1,6 +1,7 @@
 package com.kratosgado.pms.utils;
 
 import com.kratosgado.pms.utils.enums.TaskStatus;
+import com.kratosgado.pms.utils.enums.UserRole;
 
 public class ValidationUtils {
 
@@ -14,6 +15,16 @@ public class ValidationUtils {
         return TaskStatus.COMPLETED;
     }
     throw new IllegalArgumentException("Invalid Task Status");
+  }
+
+  public static UserRole validateUserRole(final String role) throws IllegalArgumentException {
+    switch (role) {
+      case "Admin":
+        return UserRole.ADMIN;
+      case "Regular":
+        return UserRole.REGULAR;
+    }
+    throw new IllegalArgumentException("Invalid User Role");
   }
 
   public static String isValidEmail(final String email) throws IllegalArgumentException {

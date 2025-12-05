@@ -40,10 +40,10 @@ public class TaskService extends ConsoleService {
     String userId = Console.getString("Enter id of user to be assigned (0 for no user): ");
     if (userId.equals("0"))
       task.setUserId(null);
+    else if (!usersDb.exists(userId))
+      throw new UserNotFoundException();
     else
       task.setUserId(userId);
-    if (!usersDb.exists(userId))
-      throw new UserNotFoundException();
     tasksDb.add(task);
     System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
@@ -67,7 +67,8 @@ public class TaskService extends ConsoleService {
     authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE TASK");
     final String id = Console.getString("Enter Task ID: ");
-    tasksDb.removeById(id);
+    if (!tasksDb.removeById(id))
+      throw new TaskNotFoundException();
     System.out.println("✅Task Removed successfully");
   }
 

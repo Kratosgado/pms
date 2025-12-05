@@ -10,18 +10,33 @@ import com.kratosgado.pms.utils.CustomUtils;
 
 public abstract class Repository<T extends HasId> implements InMemoryDatabase<T> {
   protected T[] entities;
-  protected int capacity;
+  protected int size;
 
   public Repository() {
-    this.capacity = CustomUtils.DEFAULT_MEMORY_CAPACITY;
+    this.size = 0;
+    this.entities = (T[]) new HasId[CustomUtils.DEFAULT_MEMORY_CAPACITY];
+  }
+
+  public Repository(T[] entities) {
+    this.size = entities.length;
+    this.entities = entities;
   }
 
   protected T safeAdd(T entity) {
-    if (entities.length == capacity) {
+    if (entities.length == size) {
       ensureCapacity();
     }
-    entities[entities.length - 1] = entity;
+    entities[size++] = entity;
     return entity;
+  }
+
+  private int getIndexById(String id) {
+    for (int i = 0; i < size; i++) {
+      if (entities[i].getId().equals(id)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   @Override
@@ -33,43 +48,48 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
 
   @Override
   public T[] getAll() {
-    return Arrays.copyOf(entities, entities.length);
+    return Arrays.copyOf(entities, size);
   }
 
   @Override
   public Optional<T> getById(String id) {
-    return Arrays.stream(entities).filter(t -> t.getId().equals(id)).findFirst();
+    int index = getIndexById(id);
+    if (index >= 0) {
+      return Optional.of(entities[index]);
+    }
+    return Optional.empty();
   }
 
   @Override
-  public void removeById(String id) {
-    T entity = getById(id).orElse(null);
-    if (entity != null) {
-      int index = Arrays.asList(entities).indexOf(entity);
-      if (index >= 0) {
-        entities[index] = null;
-        entities = Arrays.copyOf(entities, entities.length - 1);
-      }
-    }
+  public boolean removeById(String id) {
+    int index = getIndexById(id);
+    if (index < 0)
+      return false;
 
+    T[] newEntities = Arrays.copyOf(entities, --size);
+    int currentIndex = 0;
+    for (int i = index + 1; i <= size; i++) {
+      newEntities[currentIndex++] = entities[i];
+    }
+    entities = (T[]) newEntities;
+    return true;
   }
 
   @Override
   public boolean exists(String id) {
-    return getById(id).isPresent();
+    return getIndexById(id) >= 0;
   }
 
   @Override
   public int count() {
-    return entities.length;
+    return size;
   }
 
   private void ensureCapacity() {
-    int newCapacity = capacity * 2;
-    T[] newEntities = (T[]) new Object[newCapacity];
+    int newCapacity = size * 2;
+    T[] newEntities = (T[]) new HasId[newCapacity];
     System.arraycopy(entities, 0, newEntities, 0, entities.length);
     entities = newEntities;
-    capacity = newCapacity;
   }
 
 }

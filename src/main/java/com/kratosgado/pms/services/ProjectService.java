@@ -5,6 +5,7 @@ import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.models.Project;
+import com.kratosgado.pms.models.Task;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
@@ -61,8 +62,10 @@ public class ProjectService extends ConsoleService {
     authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE PROJECT");
     final String id = Console.getString("Enter Project ID: ");
-    projectsDb.removeById(id);
+    if (!projectsDb.removeById(id))
+      throw new ProjectNotFoundException();
     System.out.println("✅Project Removed successfully");
+
   }
 
   private void listSoftwareProjects() {
@@ -86,8 +89,8 @@ public class ProjectService extends ConsoleService {
   private void displayProjectDetails(final String id) {
     final Project project = projectsDb.getById(id).orElseThrow(ProjectNotFoundException::new);
     CustomUtils.displayHeader("PROJECT DETAILS: " + id);
-    // TODO: display project details
-
+    Task[] tasks = tasksDb.getAll();
+    project.setTasks(tasks);
     System.out.println(project.getProjectDetails());
   }
 
@@ -95,8 +98,8 @@ public class ProjectService extends ConsoleService {
     final String id = Console.getString("Enter project Id to view details (or 0 to return): ");
     if (id.equals("0"))
       return;
-    this.displayProjectDetails(id);
     TaskService taskService = serviceFactory.createTaskService(id);
+    this.displayProjectDetails(id);
     navigationManager.pushService(taskService);
   }
 
@@ -104,6 +107,8 @@ public class ProjectService extends ConsoleService {
     CustomUtils.displayHeader("CALCULATE PROJECT COMPLETION");
     final String id = Console.getString("Enter Project ID: ");
     final Project project = projectsDb.getById(id).orElseThrow(ProjectNotFoundException::new);
+    Task[] tasks = tasksDb.getAll();
+    project.setTasks(tasks);
     final double progress = project.calculateCompletionPercentage();
     System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
   }

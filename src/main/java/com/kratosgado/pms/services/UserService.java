@@ -4,8 +4,12 @@ package com.kratosgado.pms.services;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
+import com.kratosgado.pms.utils.enums.UserRole;
+import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 
 public class UserService extends ConsoleService {
   private UserInMemoryDatabase usersDb;
@@ -23,7 +27,9 @@ public class UserService extends ConsoleService {
     final String name = Console.getString("Enter User Name: ");
     final String email = Console.getEmailInput();
     final String password = Console.getPasswordInput("Enter User Password: ");
-    final String role = Console.getString("Enter User Role(Admin/Regular): ");
+    final UserRole role = ConsoleMenu.getInput("Enter User Role(Admin/Regular): ", input -> {
+      return ValidationUtils.validateUserRole(input);
+    });
     User user = usersDb.add(name, email, password, role);
     System.out.printf("✅User '%s\' added successfully\n", user.getName());
   }
@@ -32,7 +38,8 @@ public class UserService extends ConsoleService {
     authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE USER");
     final String id = Console.getString("Enter User ID: ");
-    usersDb.removeById(id);
+    if (!usersDb.removeById(id))
+      throw new UserNotFoundException();
     System.out.println("✅User Removed successfully");
   }
 

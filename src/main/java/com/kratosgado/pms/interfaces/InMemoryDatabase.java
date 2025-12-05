@@ -15,7 +15,7 @@ public interface InMemoryDatabase<T> {
 
   public Optional<T> getById(String id) throws PMSException;
 
-  public void removeById(String id);
+  public boolean removeById(String id);
 
   public boolean exists(String id);
 

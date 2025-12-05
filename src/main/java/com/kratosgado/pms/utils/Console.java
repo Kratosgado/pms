@@ -15,8 +15,8 @@ public class Console {
   }
 
   public static String getString(final String prompt) throws IllegalArgumentException {
-    return ConsoleMenu.getInput(prompt, e -> {
-      return ValidationUtils.isValidName(e);
+    return ConsoleMenu.getInput(prompt, input -> {
+      return input;
     });
   }
 

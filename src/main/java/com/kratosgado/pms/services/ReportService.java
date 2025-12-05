@@ -32,7 +32,7 @@ public class ReportService {
       sb.append(String.format("%-20s", project.getId()));
 
       sb.append(String.format("|%-20s", project.getName()));
-      sb.append(String.format("|%-20s", project.getTasks().size()));
+      sb.append(String.format("|%-20s", project.getTasks().length));
       sb.append(String.format("|%-20s", project.getCompletedTasks()));
       final double progress = project.calculateCompletionPercentage();
       progressSum += progress;

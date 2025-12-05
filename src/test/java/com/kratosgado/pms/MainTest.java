@@ -25,10 +25,11 @@ public class MainTest {
   @Test
   void testCalculatCompletionPercentage() {
     SoftwareProject project = new SoftwareProject("id", "test", "test", 40, 10);
-    project.addTask(new Task("PJ2", "task1", project.getId()));
-    project.addTask(new Task("PJ4", "task1", TaskStatus.IN_PROGRESS));
-    project.addTask(new Task("PJ5", "task1", TaskStatus.COMPLETED));
-    project.addTask(new Task("PJ8", "task1", TaskStatus.COMPLETED));
+    Task[] tasks = { new Task("PJ2", "task1", project.getId()),
+        new Task("PJ4", "task1", TaskStatus.IN_PROGRESS),
+        new Task("PJ5", "task1", TaskStatus.COMPLETED),
+        new Task("PJ8", "task1", TaskStatus.COMPLETED) };
+    project.setTasks(tasks);
     double percentege = project.calculateCompletionPercentage();
     assertEquals(50.0, percentege);
   }
@@ -38,10 +39,11 @@ public class MainTest {
   void testAverageCompletionPercentage() {
     ArrayList<Project> projects = new ArrayList<>();
     SoftwareProject project = new SoftwareProject("id", "test", "test", 40, 10);
-    project.addTask(new Task("PJ2", "task1", project.getId()));
-    project.addTask(new Task("PJ4", "task1", TaskStatus.IN_PROGRESS));
-    project.addTask(new Task("PJ5", "task1", TaskStatus.COMPLETED));
-    project.addTask(new Task("PJ8", "task1", TaskStatus.COMPLETED));
+    Task[] tasks = { new Task("PJ2", "task1", project.getId()),
+        new Task("PJ4", "task1", TaskStatus.IN_PROGRESS),
+        new Task("PJ5", "task1", TaskStatus.COMPLETED),
+        new Task("PJ8", "task1", TaskStatus.COMPLETED) };
+    project.setTasks(tasks);
     projects.add(project);
     // ReportService reportService = new ReportService(projects);
     // double percentege = reportService.getAverageCompletionPercentage();
