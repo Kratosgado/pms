@@ -6,12 +6,27 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import com.kratosgado.pms.data.ProjectInMemoryDatabase;
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
+import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.models.Task;
+import com.kratosgado.pms.services.ReportService;
+import com.kratosgado.pms.utils.context.AuthManager;
+import com.kratosgado.pms.utils.context.NavigationManager;
 import com.kratosgado.pms.utils.enums.TaskStatus;
+import com.kratosgado.pms.utils.factories.ServiceFactory;
 
 public class MainTest {
+  private final TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
+  private final UserInMemoryDatabase usersDb = new UserInMemoryDatabase();
+  private final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase(tasksDb);
+  private final AuthManager authManager = new AuthManager(usersDb);
+  private final NavigationManager navigationManager = new NavigationManager();
+  private final ServiceFactory serviceFactory = new ServiceFactory(usersDb, projectsDb, tasksDb, authManager,
+      navigationManager);
+
   @Test
   void testTaskStatus() {
     Task task = new Task("id", "name", "projectId");
@@ -34,7 +49,6 @@ public class MainTest {
     assertEquals(50.0, percentege);
   }
 
-  // TODO: unit test for report
   @Test
   void testAverageCompletionPercentage() {
     ArrayList<Project> projects = new ArrayList<>();
@@ -45,9 +59,9 @@ public class MainTest {
         new Task("PJ8", "task1", TaskStatus.COMPLETED) };
     project.setTasks(tasks);
     projects.add(project);
-    // ReportService reportService = new ReportService(projects);
-    // double percentege = reportService.getAverageCompletionPercentage();
-    // assertEquals(50.0, percentege);
+    ReportService reportService = serviceFactory.createReportService();
+    double percentege = reportService.calculateAverageCompletionPercentage(projects.toArray(new Project[0]));
+    assertEquals(50.0, percentege);
   }
 
 }

@@ -1,7 +1,9 @@
 
 package com.kratosgado.pms.services;
 
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
+import com.kratosgado.pms.models.Task;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
 import com.kratosgado.pms.utils.ConsoleMenu;
@@ -9,14 +11,17 @@ import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.enums.UserRole;
+import com.kratosgado.pms.utils.exceptions.UnauthorizedException;
 import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 
 public class UserService extends ConsoleService {
   private UserInMemoryDatabase usersDb;
+  private TaskInMemoryDatabase tasksDb;
   private final AuthManager authManager;
 
-  public UserService(UserInMemoryDatabase userDb, AuthManager authManager) {
+  public UserService(UserInMemoryDatabase userDb, TaskInMemoryDatabase tasksDb, AuthManager authManager) {
     this.usersDb = userDb;
+    this.tasksDb = tasksDb;
     title = "USER MENU";
     this.authManager = authManager;
   }
@@ -54,13 +59,33 @@ public class UserService extends ConsoleService {
     System.out.println(sb);
   }
 
-  public void switchUser() {
+  private void viewUserDetails() {
+    String userId = Console.getString("Enter User Id: ");
+    User user = usersDb.getById(userId).orElseThrow(UserNotFoundException::new);
+    CustomUtils.displayHeader("USER DETAILS: " + userId);
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("ID: ").append(user.getId()).append("\n");
+    sb.append("NAME: ").append(user.getName()).append("\n");
+    sb.append("EMAIL: ").append(user.getEmail()).append("\n");
+    sb.append("ROLE: ").append(user.getRole()).append("\n");
+
+    sb.append("ASSOCIATED TASKS: ").append("\n");
+    Task[] tasks = tasksDb.filter(task -> task.getUserId() == userId);
+    CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
+    for (Task task : tasks) {
+      sb.append(task.toString());
+    }
+    System.out.println(sb);
+  }
+
+  private void switchUser() {
     CustomUtils.displayHeader("SWITCH USER");
     final String email = Console.getEmailInput();
     final User user = usersDb.getByEmail(email);
     final String password = Console.getPasswordInput("Enter User Password: ");
     if (!user.getPassword().equals(password)) {
-      throw new IllegalArgumentException("Invalid Password");
+      throw new UnauthorizedException("Email or Password is incorrect");
     }
     System.out.println("✅User switched successfully");
     authManager.setCurrentUser(user);
@@ -89,7 +114,7 @@ public class UserService extends ConsoleService {
           removeUser();
           break;
         case 4:
-          System.out.println("User Details");
+          viewUserDetails();
           break;
         case 5:
           switchUser();

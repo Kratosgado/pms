@@ -87,9 +87,7 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
 
   private void ensureCapacity() {
     int newCapacity = size * 2;
-    T[] newEntities = (T[]) new HasId[newCapacity];
-    System.arraycopy(entities, 0, newEntities, 0, entities.length);
-    entities = newEntities;
+    entities = Arrays.copyOf(entities, newCapacity);
   }
 
 }

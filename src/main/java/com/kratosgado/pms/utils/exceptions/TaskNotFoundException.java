@@ -1,10 +1,10 @@
 
 package com.kratosgado.pms.utils.exceptions;
 
-public class TaskNotFoundException extends RuntimeException {
+public class TaskNotFoundException extends PMSException {
 
   public TaskNotFoundException() {
-    super("Task not found");
+    super("Task does not exist");
   }
 
   public TaskNotFoundException(String message) {

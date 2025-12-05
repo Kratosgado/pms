@@ -36,12 +36,12 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
 
   @Override
   public ProjectService createProjectService() {
-    return new ProjectService(projectsDb, tasksDb, authManager, navigationManager, this);
+    return new ProjectService(projectsDb, authManager, navigationManager, this);
   }
 
   @Override
   public UserService createUserService() {
-    return new UserService(usersDb, authManager);
+    return new UserService(usersDb, tasksDb, authManager);
   }
 
   @Override

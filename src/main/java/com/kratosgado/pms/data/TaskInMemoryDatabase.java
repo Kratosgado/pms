@@ -2,10 +2,12 @@
 package com.kratosgado.pms.data;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
+import com.kratosgado.pms.interfaces.Filterable;
 import com.kratosgado.pms.models.Task;
 
-public class TaskInMemoryDatabase extends Repository<Task> {
+public class TaskInMemoryDatabase extends Repository<Task> implements Filterable<Task> {
   private String projectId = "";
 
   public TaskInMemoryDatabase() {
@@ -38,13 +40,17 @@ public class TaskInMemoryDatabase extends Repository<Task> {
     return result;
   }
 
-  // @Override
-  // public Task update(Task model) {
-  // final Task task = getById(model.getId());
-  // task.setName(model.getName());
-  // task.setStatus(model.getStatus());
-  // task.setHours(model.getHours());
-  // task.setUserId(model.getUserId());
-  // return task;
-  // }
+  @Override
+  public Task[] filter(Predicate<Task> predicate) {
+    ArrayList<Task> tasks = new ArrayList<>();
+    for (int i = 0; i < size; i++) {
+      if (predicate.test(entities[i])) {
+        tasks.add(entities[i]);
+      }
+    }
+    Task[] result = new Task[tasks.size()];
+    tasks.toArray(result);
+    return result;
+  }
+
 }

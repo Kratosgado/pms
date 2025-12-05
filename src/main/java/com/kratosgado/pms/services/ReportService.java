@@ -1,9 +1,13 @@
 
 package com.kratosgado.pms.services;
 
+import java.util.Arrays;
+
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.dto.ProjectDetailDto;
+import com.kratosgado.pms.utils.dto.ReportDto;
 
 public class ReportService {
   private final ProjectInMemoryDatabase projectsDb;
@@ -12,7 +16,7 @@ public class ReportService {
     this.projectsDb = projectsDb;
   }
 
-  public int calculateAverageCompletionPercentage(final Project[] projects) {
+  public double calculateAverageCompletionPercentage(final Project[] projects) {
     double progressSum = 0;
     for (final Project project : projects) {
       final double progress = project.calculateCompletionPercentage();
@@ -41,6 +45,12 @@ public class ReportService {
     CustomUtils.appendTableHeader(sb,
         "AVERAGE COMPLETION: " + String.format("%.2f%%", (progressSum / projectsDb.count())));
     System.out.println(sb.toString());
+  }
+
+  public ReportDto getReport() {
+    return new ReportDto(
+        (ProjectDetailDto[]) Arrays.stream(projectsDb.getAll()).map(project -> project.getDetails()).toArray());
+
   }
 
 }

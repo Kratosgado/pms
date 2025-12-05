@@ -1,10 +1,10 @@
 
 package com.kratosgado.pms.utils.exceptions;
 
-public class ProjectNotFoundException extends RuntimeException {
+public class ProjectNotFoundException extends PMSException {
 
   public ProjectNotFoundException() {
-    super("Task not found");
+    super("Project does not exist");
   }
 
   public ProjectNotFoundException(String message) {

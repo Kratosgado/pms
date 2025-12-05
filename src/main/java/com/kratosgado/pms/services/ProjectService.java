@@ -2,12 +2,12 @@
 package com.kratosgado.pms.services;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
-import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.models.Project;
-import com.kratosgado.pms.models.Task;
 import com.kratosgado.pms.utils.Console;
+import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 import com.kratosgado.pms.utils.enums.ProjectType;
@@ -15,15 +15,13 @@ import com.kratosgado.pms.utils.exceptions.ProjectNotFoundException;
 
 public class ProjectService extends ConsoleService {
   private final ProjectInMemoryDatabase projectsDb;
-  private final TaskInMemoryDatabase tasksDb;
   private final ServiceFactory serviceFactory;
   private final AuthManager authManager;
   private final NavigationManager navigationManager;
 
-  public ProjectService(ProjectInMemoryDatabase projectsDb, TaskInMemoryDatabase tasksDb,
-      AuthManager authManager, NavigationManager navigationManager, ServiceFactory serviceFactory) {
+  public ProjectService(ProjectInMemoryDatabase projectsDb, AuthManager authManager,
+      NavigationManager navigationManager, ServiceFactory serviceFactory) {
     this.projectsDb = projectsDb;
-    this.tasksDb = tasksDb;
     this.title = "PROJECT CATALOG";
     this.serviceFactory = serviceFactory;
     this.authManager = authManager;
@@ -32,6 +30,7 @@ public class ProjectService extends ConsoleService {
 
   protected void listProjects() {
     System.out.println(listProjects(projectsDb.getAll()));
+    askForProject();
   }
 
   private String listProjects(final Project[] projects) {
@@ -53,7 +52,9 @@ public class ProjectService extends ConsoleService {
     final String description = Console.getString("Enter Project Description: ");
     final int teamSize = Console.getPositiveIntInput("Enter Team Size: ");
     final double budget = Console.getDoubleInput("Enter Budget: ");
-    final String type = Console.getString("Enter Project Type (Software/Hardware): ");
+    final ProjectType type = ConsoleMenu.getInput("Enter Project Type (Software/Hardware): ", input -> {
+      return ValidationUtils.validateProjectType(input);
+    });
     final Project project = projectsDb.add(name, description, teamSize, budget, type);
     System.out.printf("✅Project '%s\' added successfully with id '%s'\n", project.getName(), project.getId());
   }
@@ -89,8 +90,6 @@ public class ProjectService extends ConsoleService {
   private void displayProjectDetails(final String id) {
     final Project project = projectsDb.getById(id).orElseThrow(ProjectNotFoundException::new);
     CustomUtils.displayHeader("PROJECT DETAILS: " + id);
-    Task[] tasks = tasksDb.getAll();
-    project.setTasks(tasks);
     System.out.println(project.getProjectDetails());
   }
 
@@ -107,8 +106,6 @@ public class ProjectService extends ConsoleService {
     CustomUtils.displayHeader("CALCULATE PROJECT COMPLETION");
     final String id = Console.getString("Enter Project ID: ");
     final Project project = projectsDb.getById(id).orElseThrow(ProjectNotFoundException::new);
-    Task[] tasks = tasksDb.getAll();
-    project.setTasks(tasks);
     final double progress = project.calculateCompletionPercentage();
     System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
   }
@@ -153,7 +150,6 @@ public class ProjectService extends ConsoleService {
         default:
           return choice;
       }
-      askForProject();
     } catch (final Exception e) {
       CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
     }

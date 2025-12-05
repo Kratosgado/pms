@@ -8,6 +8,7 @@ import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.enums.ProjectType;
 import com.kratosgado.pms.utils.enums.UserRole;
+import com.kratosgado.pms.utils.exceptions.InputValidationException;
 
 public class ModelFactory {
   public static Project createProject(String id, String name, String description,
@@ -18,7 +19,7 @@ public class ModelFactory {
       case HARDWARE:
         return new HardwareProject(id, name, description, teamSize, budget);
       default:
-        throw new IllegalArgumentException("Unknown project type: " + type);
+        throw new InputValidationException("Unknown project type: " + type);
     }
   }
 
@@ -29,7 +30,7 @@ public class ModelFactory {
       case REGULAR:
         return new RegularUser(id, name, email, password);
       default:
-        throw new IllegalArgumentException("Unknown user role: " + role);
+        throw new InputValidationException("Unknown user role: " + role);
     }
   }
 }

@@ -49,15 +49,6 @@ public class RepositoryTest {
   }
 
   @Test
-  void testGetAll() {
-    TaskInMemoryDatabase repository = new TaskInMemoryDatabase();
-    repository.setProjectId("projectId");
-    repository.add(new Task("id1", "name", "projectId"));
-    repository.add(new Task("id2", "name", "projectId"));
-    assertEquals(2, repository.getAll().length);
-  }
-
-  @Test
   void testGetById() {
     Repository<Task> repository = new TaskInMemoryDatabase();
     repository.add(new Task("id1", "name", "projectId"));

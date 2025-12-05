@@ -43,7 +43,6 @@ public class MainService extends ConsoleService {
       case 2:
         final ProjectService projectService = serviceFactory.createProjectService();
         projectService.listProjects();
-        projectService.askForProject();
         break;
       case 3:
         final ReportService reportService = serviceFactory.createReportService();

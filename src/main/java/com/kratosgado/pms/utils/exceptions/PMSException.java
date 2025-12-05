@@ -1,7 +1,7 @@
 
 package com.kratosgado.pms.utils.exceptions;
 
-public class PMSException extends Exception {
+public class PMSException extends RuntimeException {
 
   public PMSException() {
   }
