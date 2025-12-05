@@ -139,34 +139,15 @@ After authentication, you can:
 ## Project Structure
 
 ```
-pms/
-├── src/
+pms/src/
+├── main/java/com/kratosgado/pms
 │   ├── Main.java                 # Application entry point
 │   ├── models/                   # Data models
-│   │   ├── Project.java
-│   │   ├── SoftwareProject.java
-│   │   ├── HardwareProject.java
-│   │   ├── Task.java
-│   │   ├── User.java
-│   │   ├── AdminUser.java
-│   │   ├── RegularUser.java
-│   │   └── StatusReport.java
 │   ├── services/                 # Business logic
-│   │   ├── MainService.java
-│   │   ├── ProjectService.java
-│   │   ├── TaskService.java
-│   │   ├── UserService.java
-│   │   └── ReportService.java
 │   ├── utils/                    # Utilities
-│   │   ├── ConsoleMenu.java
-│   │   ├── Console.java
-│   │   ├── ValidationUtils.java
-│   │   ├── CustomUtils.java
-│   │   ├── TaskStatus.java
-│   │   └── Seed.java
 │   └── interfaces/               # Interfaces
-├── bin/                          # Compiled class files
-├── docs/                         # Documentation
+├── test/                         # test cases
+├── docs/java/com/kratosgado/pms  # Documentation
 └── README.md                     # This file
 ```
 
