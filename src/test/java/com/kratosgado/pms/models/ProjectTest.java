@@ -2,6 +2,8 @@ package com.kratosgado.pms.models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,19 +53,18 @@ public class ProjectTest {
 
   @Test
   void testCompletionPercentageWithNoTasks() {
-    Task[] tasks = new Task[0];
+    ArrayList<Task> tasks = new ArrayList<>();
     softwareProject.setTasks(tasks);
     assertEquals(0.0, softwareProject.calculateCompletionPercentage());
   }
 
   @Test
   void testCompletionPercentageWithTasks() {
-    Task[] tasks = new Task[4];
-    tasks[0] = new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001");
-    tasks[1] = new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001");
-    tasks[2] = new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001");
-    tasks[3] = new Task("T004", "Task 4", TaskStatus.IN_PROGRESS, "PJ001");
-
+    ArrayList<Task> tasks = new ArrayList<>();
+    tasks.add(new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001"));
+    tasks.add(new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001"));
+    tasks.add(new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001"));
+    tasks.add(new Task("T004", "Task 4", TaskStatus.IN_PROGRESS, "PJ001"));
     softwareProject.setTasks(tasks);
 
     assertEquals(50.0, softwareProject.calculateCompletionPercentage());
@@ -72,10 +73,9 @@ public class ProjectTest {
 
   @Test
   void testAllTasksCompleted() {
-    Task[] tasks = new Task[2];
-    tasks[0] = new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001");
-    tasks[1] = new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001");
-
+    ArrayList<Task> tasks = new ArrayList<>();
+    tasks.add(new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001"));
+    tasks.add(new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001"));
     softwareProject.setTasks(tasks);
 
     assertEquals(100.0, softwareProject.calculateCompletionPercentage());
@@ -84,10 +84,10 @@ public class ProjectTest {
 
   @Test
   void testNoTasksCompleted() {
-    Task[] tasks = new Task[3];
-    tasks[0] = new Task("T001", "Task 1", TaskStatus.PENDING, "PJ001");
-    tasks[1] = new Task("T002", "Task 2", TaskStatus.IN_PROGRESS, "PJ001");
-    tasks[2] = new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001");
+    ArrayList<Task> tasks = new ArrayList<>();
+    tasks.add(new Task("T001", "Task 1", TaskStatus.PENDING, "PJ001"));
+    tasks.add(new Task("T002", "Task 2", TaskStatus.IN_PROGRESS, "PJ001"));
+    tasks.add(new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001"));
 
     softwareProject.setTasks(tasks);
 
@@ -97,8 +97,8 @@ public class ProjectTest {
 
   @Test
   void testGetProjectDetails() {
-    Task[] tasks = new Task[1];
-    tasks[0] = new Task("T001", "Setup Environment", TaskStatus.COMPLETED, "PJ001");
+    ArrayList<Task> tasks = new ArrayList<>();
+    tasks.add(new Task("T001", "Setup Environment", TaskStatus.COMPLETED, "PJ001"));
     softwareProject.setTasks(tasks);
 
     String details = softwareProject.getProjectDetails();
@@ -111,9 +111,9 @@ public class ProjectTest {
 
   @Test
   void testProjectDetailsDto() {
-    Task[] tasks = new Task[2];
-    tasks[0] = new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001");
-    tasks[1] = new Task("T002", "Task 2", TaskStatus.PENDING, "PJ001");
+    ArrayList<Task> tasks = new ArrayList<>();
+    tasks.add(new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001"));
+    tasks.add(new Task("T002", "Task 2", TaskStatus.PENDING, "PJ001"));
     softwareProject.setTasks(tasks);
 
     var dto = softwareProject.getDetails();
