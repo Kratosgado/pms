@@ -47,6 +47,7 @@ A comprehensive Java-based project management system for managing projects, task
 ## Prerequisites
 
 > - \*\*Java Development Kit (JDK) 21 or higher
+> - Maven 3.8.6 or higher
 > - **Terminal/Command Prompt** for running commands
 
 ## Setup
@@ -58,18 +59,16 @@ gh repo clone kratosgado/pms or git clone https://github.com/kratosgado/pms.git
 cd pms
 ```
 
-### 2. Compile the project
+### 2. Run the application
 
 ```bash
-javac -d bin src/**/*.java src/*.java
+mvn exec:java
 ```
 
-This command compiles all Java source files and outputs `.class` files to the `bin` directory.
-
-### 3. Run the application
+### 3. Run tests
 
 ```bash
-java -cp bin Main
+mvn test
 ```
 
 The application will start with an authentication menu.
