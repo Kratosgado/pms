@@ -20,7 +20,7 @@ public class SoftwareProject extends Project {
     sb.append("\tTeam Size: ").append(getTeamSize()).append("\n");
     sb.append("\tBudget: ").append(getBudget()).append("\n");
 
-    sb.append("\tAssociated Tasks: ").append(getTasks().length).append("\n");
+    sb.append("\tAssociated Tasks: ").append(getTasks().size()).append("\n");
 
     CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
     for (Task task : getTasks()) {

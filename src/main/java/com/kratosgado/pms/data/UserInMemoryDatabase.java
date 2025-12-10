@@ -1,6 +1,8 @@
 
 package com.kratosgado.pms.data;
 
+import java.util.HashMap;
+
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.enums.UserRole;
@@ -13,7 +15,7 @@ public class UserInMemoryDatabase extends Repository<User> {
   public UserInMemoryDatabase() {
   }
 
-  public UserInMemoryDatabase(User[] entities) {
+  public UserInMemoryDatabase(HashMap<String, User> entities) {
     super(entities);
   }
 
@@ -22,13 +24,9 @@ public class UserInMemoryDatabase extends Repository<User> {
     return safeAdd(ModelFactory.createUser(id, name, email, password, role));
   }
 
-  public User getByEmail(String email) {
-    for (final User user : entities) {
-      if (user.getEmail().equals(email)) {
-        return user;
-      }
-    }
-    throw new UserNotFoundException();
+  public User getByEmail(String email) throws UserNotFoundException {
+    return entities.values().stream().filter(user -> user.getEmail().equals(email)).findFirst()
+        .orElseThrow(UserNotFoundException::new);
   }
 
   @Override

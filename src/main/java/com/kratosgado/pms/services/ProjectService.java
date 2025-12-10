@@ -1,6 +1,8 @@
 
 package com.kratosgado.pms.services;
 
+import java.util.List;
+
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.models.Project;
@@ -33,7 +35,7 @@ public class ProjectService extends ConsoleService {
     askForProject();
   }
 
-  private String listProjects(final Project[] projects) {
+  private String listProjects(final List<Project> projects) {
     CustomUtils.displayHeader("PROJECT LIST");
     final StringBuilder sb = new StringBuilder();
     CustomUtils.appendTableHeader(sb,

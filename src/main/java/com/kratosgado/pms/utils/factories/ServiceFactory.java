@@ -2,7 +2,6 @@
 package com.kratosgado.pms.utils.factories;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
-import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.services.MainService;
 import com.kratosgado.pms.services.ProjectService;
@@ -15,23 +14,21 @@ import com.kratosgado.pms.utils.context.NavigationManager;
 public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFactory {
   private final UserInMemoryDatabase usersDb;
   private final ProjectInMemoryDatabase projectsDb;
-  private final TaskInMemoryDatabase tasksDb;
   private final AuthManager authManager;
   private final NavigationManager navigationManager;
 
   public ServiceFactory(UserInMemoryDatabase usersDb, ProjectInMemoryDatabase projectsDb,
-      TaskInMemoryDatabase tasksDb, AuthManager authManager, NavigationManager navigationManager) {
+      AuthManager authManager, NavigationManager navigationManager) {
     this.usersDb = usersDb;
     this.projectsDb = projectsDb;
-    this.tasksDb = tasksDb;
     this.authManager = authManager;
     this.navigationManager = navigationManager;
   }
 
   @Override
   public TaskService createTaskService(String projectId) {
-    tasksDb.setProjectId(projectId);
-    return new TaskService(tasksDb, usersDb, authManager, navigationManager);
+    // tasksDb.setProjectId(projectId);
+    return new TaskService(usersDb, authManager, navigationManager);
   }
 
   @Override
@@ -41,7 +38,7 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
 
   @Override
   public UserService createUserService() {
-    return new UserService(usersDb, tasksDb, authManager);
+    return new UserService(usersDb, authManager);
   }
 
   @Override

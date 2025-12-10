@@ -1,7 +1,8 @@
 
 package com.kratosgado.pms.data;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 
 import com.kratosgado.pms.interfaces.Filterable;
@@ -13,7 +14,7 @@ public class TaskInMemoryDatabase extends Repository<Task> implements Filterable
   public TaskInMemoryDatabase() {
   }
 
-  public TaskInMemoryDatabase(Task[] entities) {
+  public TaskInMemoryDatabase(HashMap<String, Task> entities) {
     super(entities);
   }
 
@@ -28,29 +29,8 @@ public class TaskInMemoryDatabase extends Repository<Task> implements Filterable
   }
 
   @Override
-  public Task[] getAll() {
-    ArrayList<Task> tasks = new ArrayList<>();
-    for (int i = 0; i < size; i++) {
-      if ((entities[i]).getProjectId().equals(projectId)) {
-        tasks.add(entities[i]);
-      }
-    }
-    Task[] result = new Task[tasks.size()];
-    tasks.toArray(result);
-    return result;
-  }
-
-  @Override
-  public Task[] filter(Predicate<Task> predicate) {
-    ArrayList<Task> tasks = new ArrayList<>();
-    for (int i = 0; i < size; i++) {
-      if (predicate.test(entities[i])) {
-        tasks.add(entities[i]);
-      }
-    }
-    Task[] result = new Task[tasks.size()];
-    tasks.toArray(result);
-    return result;
+  public List<Task> filter(Predicate<Task> predicate) {
+    return entities.values().stream().filter(predicate).toList();
   }
 
 }
