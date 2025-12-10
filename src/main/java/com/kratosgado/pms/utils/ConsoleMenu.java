@@ -19,7 +19,7 @@ public class ConsoleMenu {
 
   /**
    * # Starts the main loop of the application <br>
-   * 1 - Global value for handled choice <br>
+   * -1 - Global value for handled choice <br>
    * 0 - Global choice for going back <br>
    * 9 - Global choice for exiting the application <br>
    */
