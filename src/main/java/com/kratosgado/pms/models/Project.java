@@ -2,9 +2,9 @@ package com.kratosgado.pms.models;
 
 import java.util.Arrays;
 
+import com.kratosgado.pms.data.dto.ProjectDetailDto;
 import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.utils.CustomUtils;
-import com.kratosgado.pms.utils.dto.ProjectDetailDto;
 import com.kratosgado.pms.utils.enums.ProjectType;
 
 public abstract class Project implements HasId {
