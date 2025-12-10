@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.kratosgado.pms.data.dto.ProjectDetailDto;
 import com.kratosgado.pms.interfaces.HasId;
-import com.kratosgado.pms.utils.dto.ProjectDetailDto;
 import com.kratosgado.pms.utils.enums.ProjectType;
 
 public abstract class Project implements HasId {

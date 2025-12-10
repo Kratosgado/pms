@@ -1,13 +1,9 @@
 
 package com.kratosgado.pms.services;
 
-import java.util.Arrays;
-
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
-import com.kratosgado.pms.utils.dto.ProjectDetailDto;
-import com.kratosgado.pms.utils.dto.ReportDto;
 
 public class ReportService {
   private final ProjectInMemoryDatabase projectsDb;
@@ -45,12 +41,6 @@ public class ReportService {
     CustomUtils.appendTableHeader(sb,
         "AVERAGE COMPLETION: " + String.format("%.2f%%", (progressSum / projectsDb.count())));
     System.out.println(sb.toString());
-  }
-
-  public ReportDto getReport() {
-    return new ReportDto(
-        (ProjectDetailDto[]) Arrays.stream(projectsDb.getAll()).map(project -> project.getDetails()).toArray());
-
   }
 
 }

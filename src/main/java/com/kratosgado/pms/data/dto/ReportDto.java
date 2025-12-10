@@ -1,5 +1,5 @@
 
-package com.kratosgado.pms.utils.dto;
+package com.kratosgado.pms.data.dto;
 
 public record ReportDto(ProjectDetailDto[] projectDetails) {
 
