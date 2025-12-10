@@ -1,42 +1,36 @@
 
 package com.kratosgado.pms.data;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
-import com.kratosgado.pms.utils.CustomUtils;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
 
 public abstract class Repository<T extends HasId> implements InMemoryDatabase<T> {
-  protected T[] entities;
+  protected HashMap<String, T> entities;
   protected int size;
 
   public Repository() {
     this.size = 0;
-    this.entities = (T[]) new HasId[CustomUtils.DEFAULT_MEMORY_CAPACITY];
+    this.entities = new HashMap<>();
   }
 
-  public Repository(T[] entities) {
-    this.size = entities.length;
+  public Repository(HashMap<String, T> entities) {
+    this.size = entities.size();
     this.entities = entities;
   }
 
   protected T safeAdd(T entity) {
-    if (entities.length == size) {
-      ensureCapacity();
+    if (exists(entity.getId())) {
+      throw new ConflictException("Entity with id " + entity.getId() + " already exists");
     }
-    entities[size++] = entity;
-    return entity;
-  }
 
-  private int getIndexById(String id) {
-    for (int i = 0; i < size; i++) {
-      if (entities[i].getId().equals(id)) {
-        return i;
-      }
-    }
-    return -1;
+    this.entities.put(entity.getId(), entity);
+    return entity;
   }
 
   @Override
@@ -47,47 +41,33 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
   }
 
   @Override
-  public T[] getAll() {
-    return Arrays.copyOf(entities, size);
+  public List<T> getAll() {
+    return Collections.unmodifiableList(entities.values().stream().toList());
   }
 
   @Override
   public Optional<T> getById(String id) {
-    int index = getIndexById(id);
-    if (index >= 0) {
-      return Optional.of(entities[index]);
+    T entity = entities.get(id);
+    if (entity == null) {
+      return Optional.empty();
     }
-    return Optional.empty();
+    return Optional.of(entity);
   }
 
   @Override
   public boolean removeById(String id) {
-    int index = getIndexById(id);
-    if (index < 0)
-      return false;
-
-    T[] newEntities = Arrays.copyOf(entities, --size);
-    int currentIndex = 0;
-    for (int i = index + 1; i <= size; i++) {
-      newEntities[currentIndex++] = entities[i];
-    }
-    entities = (T[]) newEntities;
-    return true;
+    // T entity = entities.remove(id);
+    return entities.remove(id, null);
   }
 
   @Override
   public boolean exists(String id) {
-    return getIndexById(id) >= 0;
+    return entities.containsKey(id);
   }
 
   @Override
   public int count() {
     return size;
-  }
-
-  private void ensureCapacity() {
-    int newCapacity = size * 2;
-    entities = Arrays.copyOf(entities, newCapacity);
   }
 
 }
