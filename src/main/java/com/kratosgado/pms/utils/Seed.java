@@ -66,7 +66,7 @@ public class Seed {
   }
 
   private static TaskStatus getRandomTaskStatus() {
-    return TaskStatus.values()[random.nextInt() % TaskStatus.values().length];
+    return TaskStatus.values()[random.nextInt(0, TaskStatus.values().length)];
   }
 
   private static ArrayList<Task> seedTasks(String project) {

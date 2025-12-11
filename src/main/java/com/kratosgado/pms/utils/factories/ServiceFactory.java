@@ -27,8 +27,10 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
 
   @Override
   public TaskService createTaskService(String projectId) {
+    // TODO: remove
+    throw new UnsupportedOperationException();
     // tasksDb.setProjectId(projectId);
-    return new TaskService(usersDb, authManager, navigationManager);
+    // return new TaskService(usersDb, authManager, navigationManager);
   }
 
   @Override

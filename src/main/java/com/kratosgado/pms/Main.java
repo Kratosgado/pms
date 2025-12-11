@@ -1,7 +1,6 @@
 package com.kratosgado.pms;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
-import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.utils.ConsoleMenu;
 import com.kratosgado.pms.utils.Seed;
@@ -13,12 +12,13 @@ public class Main {
 
   public static void main(final String[] args) {
     final UserInMemoryDatabase usersDb = new UserInMemoryDatabase(Seed.seedUsers());
-    final TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase(Seed.seedTasks());
-    final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase(tasksDb, Seed.seedProjects());
+    // final TaskInMemoryDatabase tasksDb = new
+    // TaskInMemoryDatabase(Seed.seedTasks());
+    final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase(Seed.seedProjects());
     final AuthManager authManager = new AuthManager(usersDb);
     final NavigationManager navigationManager = new NavigationManager();
 
-    final ServiceFactory serviceFactory = new ServiceFactory(usersDb, projectsDb, tasksDb, authManager,
+    final ServiceFactory serviceFactory = new ServiceFactory(usersDb, projectsDb, authManager,
         navigationManager);
     navigationManager.pushService(serviceFactory.createMainService());
 

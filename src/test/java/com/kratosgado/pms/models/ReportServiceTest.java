@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
-import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.services.ReportService;
 import com.kratosgado.pms.utils.enums.TaskStatus;
 
 public class ReportServiceTest {
-  private final TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
-  private final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase(tasksDb);
+  private final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase();
   ReportService reportService = new ReportService(projectsDb);
 
   @Test

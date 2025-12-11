@@ -13,12 +13,10 @@ import com.kratosgado.pms.utils.enums.ProjectType;
 public class ProjectInMemoryDatabaseTest {
 
   private ProjectInMemoryDatabase projectDb;
-  private TaskInMemoryDatabase taskDb;
 
   @BeforeEach
   void setUp() {
-    taskDb = new TaskInMemoryDatabase();
-    projectDb = new ProjectInMemoryDatabase(taskDb);
+    projectDb = new ProjectInMemoryDatabase();
   }
 
   @Test
