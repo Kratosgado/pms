@@ -41,7 +41,7 @@ public class CustomUtils {
    * @param error the error message to display to the user
    */
   public final static void displayError(String name, final String error) {
-    System.out.println("\n❌ " + name + ": " + error);
+    System.out.println("\n❌  " + name + ": " + error);
   }
 
   /**
@@ -50,6 +50,6 @@ public class CustomUtils {
    * @param success the success message to display to the user
    */
   public final static void displaySuccess(final String success) {
-    System.out.println("\n✅ " + success);
+    System.out.println("\n✅  " + success);
   }
 }

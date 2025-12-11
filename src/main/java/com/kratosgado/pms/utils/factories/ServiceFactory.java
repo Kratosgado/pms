@@ -2,6 +2,7 @@
 package com.kratosgado.pms.utils.factories;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
+import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.services.MainService;
 import com.kratosgado.pms.services.ProjectService;
@@ -27,10 +28,9 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
 
   @Override
   public TaskService createTaskService(String projectId) {
-    // TODO: remove
-    throw new UnsupportedOperationException();
-    // tasksDb.setProjectId(projectId);
-    // return new TaskService(usersDb, authManager, navigationManager);
+    // TODO: fix tasks operations
+    TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
+    return new TaskService(tasksDb, usersDb, authManager, navigationManager);
   }
 
   @Override

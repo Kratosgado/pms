@@ -24,7 +24,7 @@ public class SoftwareProject extends Project {
 
     CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s", "ID", "NAME", "STATUS", "HOURS"));
     for (Task task : getTasks()) {
-      sb.append(task.toString());
+      sb.append(task);
     }
 
     CustomUtils.appendTableHeader(sb, String.format("COMPLETION RATE: %.2f%%\n", calculateCompletionPercentage()));

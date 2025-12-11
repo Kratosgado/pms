@@ -56,8 +56,8 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
 
   @Override
   public boolean removeById(String id) {
-    // T entity = entities.remove(id);
-    return entities.remove(id, null);
+    T entity = entities.remove(id);
+    return entity != null;
   }
 
   @Override
