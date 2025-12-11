@@ -3,9 +3,10 @@ package com.kratosgado.pms.models;
 
 import com.kratosgado.pms.interfaces.Completable;
 import com.kratosgado.pms.interfaces.HasId;
+import com.kratosgado.pms.interfaces.JsonSerializable;
 import com.kratosgado.pms.utils.enums.TaskStatus;
 
-public class Task implements HasId, Completable {
+public class Task implements HasId, Completable, JsonSerializable<Task> {
   private final String id;
   private String name;
   private TaskStatus status;
@@ -81,6 +82,40 @@ public class Task implements HasId, Completable {
   @Override
   public boolean isCompleted() {
     return status.equals(TaskStatus.COMPLETED);
+  }
+
+  @Override
+  public String toJson() {
+    return String.format(
+        "{\"id\":\"%s\",\"name\":\"%s\",\"status\":\"%s\",\"hours\":%s,\"userId\":\"%s\"}", id,
+        name, status, hours, userId);
+  }
+
+  @Override
+  public Task fromJson(String json) {
+    int idStart = json.indexOf("\"id\":\"") + 6;
+    int idEnd = json.indexOf("\",", idStart + 1);
+    String id = json.substring(idStart, idEnd);
+
+    int nameStart = json.indexOf("\"name\":\"") + 8;
+    int nameEnd = json.indexOf("\",", nameStart + 1);
+    String name = json.substring(nameStart, nameEnd);
+
+    int statusStart = json.indexOf("\"status\":\"") + 10;
+    int statusEnd = json.indexOf("\",", statusStart + 1);
+    String status = json.substring(statusStart, statusEnd);
+
+    int hoursStart = json.indexOf("\"hours\":") + 8;
+    int hoursEnd = json.indexOf(",", hoursStart + 1);
+    String hours = json.substring(hoursStart, hoursEnd);
+
+    int userIdStart = json.indexOf("\"userId\":\"") + 10;
+    int userIdEnd = json.indexOf("\",", userIdStart + 1);
+    String userId = json.substring(userIdStart, userIdEnd);
+
+    Task task = new Task(id, name, TaskStatus.valueOf(status), userId);
+    task.setHours(Integer.parseInt(hours));
+    return task;
   }
 
 }

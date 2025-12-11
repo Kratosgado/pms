@@ -6,9 +6,10 @@ import java.util.List;
 
 import com.kratosgado.pms.data.dto.ProjectDetailDto;
 import com.kratosgado.pms.interfaces.HasId;
+import com.kratosgado.pms.interfaces.JsonSerializable;
 import com.kratosgado.pms.utils.enums.ProjectType;
 
-public abstract class Project implements HasId {
+public abstract class Project implements HasId, JsonSerializable<Project> {
 
   private final String id;
   private String name;
@@ -102,6 +103,12 @@ public abstract class Project implements HasId {
     return String.format("%-20s|%-20s|%-20s|%-20s|%-20s\n", id, name,
         getProjectType(),
         teamSize, budget);
+  }
+
+  public String toJson() {
+    return "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"description\":\"" + description
+        + "\",\"projectType\":\"" + getProjectType() + "\",\"teamSize\":" + teamSize + ",\"budget\":"
+        + budget + "\"tasks\":" + tasks + "}";
   }
 
 }

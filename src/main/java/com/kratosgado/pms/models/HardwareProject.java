@@ -35,4 +35,39 @@ public class HardwareProject extends Project {
     return ProjectType.HARDWARE;
   }
 
+  @Override
+  public Project fromJson(String json) {
+    int idStart = json.indexOf("\"id\":\"") + 6;
+    int idEnd = json.indexOf("\",", idStart + 1);
+    String id = json.substring(idStart, idEnd);
+
+    int nameStart = json.indexOf("\"name\":\"") + 8;
+    int nameEnd = json.indexOf("\",", nameStart + 1);
+    String name = json.substring(nameStart, nameEnd);
+
+    int descriptionStart = json.indexOf("\"description\":\"") + 15;
+    int descriptionEnd = json.indexOf("\",", descriptionStart + 1);
+    String description = json.substring(descriptionStart, descriptionEnd);
+
+    int projectTypeStart = json.indexOf("\"projectType\":\"") + 15;
+    int projectTypeEnd = json.indexOf("\",", projectTypeStart + 1);
+    String projectType = json.substring(projectTypeStart, projectTypeEnd);
+
+    int teamSizeStart = json.indexOf("\"teamSize\":") + 11;
+    int teamSizeEnd = json.indexOf(",", teamSizeStart + 1);
+    String teamSize = json.substring(teamSizeStart, teamSizeEnd);
+
+    int budgetStart = json.indexOf("\"budget\":") + 9;
+    int budgetEnd = json.indexOf(",", budgetStart + 1);
+    String budget = json.substring(budgetStart, budgetEnd);
+
+    int tasksStart = json.indexOf("\"tasks\":") + 8;
+    int tasksEnd = json.indexOf("}", tasksStart + 1);
+    String tasks = json.substring(tasksStart, tasksEnd);
+
+    Project project = new SoftwareProject(id, name, description, Integer.parseInt(teamSize),
+        Double.parseDouble(budget));
+    // project.setTasks(tasks); TODO: fix tasks operations
+    return project;
+  }
 }

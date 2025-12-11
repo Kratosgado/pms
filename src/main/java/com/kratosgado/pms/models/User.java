@@ -1,9 +1,10 @@
 package com.kratosgado.pms.models;
 
 import com.kratosgado.pms.interfaces.HasId;
+import com.kratosgado.pms.interfaces.JsonSerializable;
 import com.kratosgado.pms.utils.enums.UserRole;
 
-public abstract class User implements HasId {
+public abstract class User implements HasId, JsonSerializable<User> {
   private final String id;
   private String name;
   private String email;
@@ -58,4 +59,11 @@ public abstract class User implements HasId {
   public String toString() {
     return String.format("%-20s|%-20s|%-20s|%-20s\n", id, name, email, role);
   }
+
+  @Override
+  public String toJson() {
+    return "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"email\":\"" + email + "\",\"password\":\""
+        + password + "\",\"role\":\"" + role + "\"}";
+  }
+
 }
