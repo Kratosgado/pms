@@ -1,11 +1,13 @@
 
 package com.kratosgado.pms.interfaces;
 
+import java.io.IOException;
+
 public interface Persists {
 
-  public void saveData(String fileName);
+  public void saveData() throws IOException;
 
-  public boolean dataExists(String fileName);
+  public boolean dataExists();
 
-  public void loadData(String fileName);
+  public void loadData() throws IOException;
 }

@@ -6,7 +6,7 @@ import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.JsonSerializable;
 import com.kratosgado.pms.utils.enums.TaskStatus;
 
-public class Task implements HasId, Completable, JsonSerializable<Task> {
+public class Task implements HasId, Completable, JsonSerializable {
   private final String id;
   private String name;
   private TaskStatus status;
@@ -91,7 +91,6 @@ public class Task implements HasId, Completable, JsonSerializable<Task> {
         name, status, hours, userId);
   }
 
-  @Override
   public Task fromJson(String json) {
     int idStart = json.indexOf("\"id\":\"") + 6;
     int idEnd = json.indexOf("\",", idStart + 1);

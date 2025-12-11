@@ -36,8 +36,7 @@ public class SoftwareProject extends Project {
     return ProjectType.SOFTWARE;
   }
 
-  @Override
-  public Project fromJson(String json) {
+  public static Project fromJson(String json) {
     int idStart = json.indexOf("\"id\":\"") + 6;
     int idEnd = json.indexOf("\",", idStart + 1);
     String id = json.substring(idStart, idEnd);
@@ -49,10 +48,6 @@ public class SoftwareProject extends Project {
     int descriptionStart = json.indexOf("\"description\":\"") + 15;
     int descriptionEnd = json.indexOf("\",", descriptionStart + 1);
     String description = json.substring(descriptionStart, descriptionEnd);
-
-    int projectTypeStart = json.indexOf("\"projectType\":\"") + 15;
-    int projectTypeEnd = json.indexOf("\",", projectTypeStart + 1);
-    String projectType = json.substring(projectTypeStart, projectTypeEnd);
 
     int teamSizeStart = json.indexOf("\"teamSize\":") + 11;
     int teamSizeEnd = json.indexOf(",", teamSizeStart + 1);

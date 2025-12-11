@@ -9,7 +9,7 @@ import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.JsonSerializable;
 import com.kratosgado.pms.utils.enums.ProjectType;
 
-public abstract class Project implements HasId, JsonSerializable<Project> {
+public abstract class Project implements HasId, JsonSerializable {
 
   private final String id;
   private String name;
@@ -85,6 +85,12 @@ public abstract class Project implements HasId, JsonSerializable<Project> {
   public abstract String getProjectDetails();
 
   public abstract ProjectType getProjectType();
+
+  public static String getProjectType(String json) {
+    int projectTypeStart = json.indexOf("\"projectType\":\"") + 15;
+    int projectTypeEnd = json.indexOf("\",", projectTypeStart + 1);
+    return json.substring(projectTypeStart, projectTypeEnd);
+  }
 
   public ProjectDetailDto getDetails() {
     return new ProjectDetailDto(

@@ -9,8 +9,7 @@ public class AdminUser extends User {
     super(id, name, email, password, UserRole.ADMIN);
   }
 
-  @Override
-  public User fromJson(String json) {
+  public static User fromJson(String json) {
     int idStart = json.indexOf("\"id\":\"") + 6;
     int idEnd = json.indexOf("\",", idStart + 1);
     String id = json.substring(idStart, idEnd);
@@ -26,12 +25,6 @@ public class AdminUser extends User {
     int passwordStart = json.indexOf("\"password\":\"") + 12;
     int passwordEnd = json.indexOf("\",", passwordStart + 1);
     String password = json.substring(passwordStart, passwordEnd);
-
-    int roleStart = json.indexOf("\"role\":\"") + 8;
-    int roleEnd = json.indexOf("\",", roleStart + 1);
-    String role = json.substring(roleStart, roleEnd);
-
-    User user = new AdminUser(id, name, email, password);
-    return user;
+    return new AdminUser(id, name, email, password);
   }
 }

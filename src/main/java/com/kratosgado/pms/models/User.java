@@ -4,7 +4,7 @@ import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.JsonSerializable;
 import com.kratosgado.pms.utils.enums.UserRole;
 
-public abstract class User implements HasId, JsonSerializable<User> {
+public abstract class User implements HasId, JsonSerializable {
   private final String id;
   private String name;
   private String email;
@@ -49,6 +49,10 @@ public abstract class User implements HasId, JsonSerializable<User> {
 
   public boolean isAdmin() {
     return role.equals(UserRole.ADMIN);
+  }
+
+  public static boolean isAdmin(String json) {
+    return json.contains("\"role\":\"ADMIN\"");
   }
 
   public String getRole() {

@@ -9,8 +9,7 @@ public class RegularUser extends User {
     super(id, name, email, password, UserRole.REGULAR);
   }
 
-  @Override
-  public User fromJson(String json) {
+  public static User fromJson(String json) {
     int idStart = json.indexOf("\"id\":\"") + 6;
     int idEnd = json.indexOf("\",", idStart + 1);
     String id = json.substring(idStart, idEnd);

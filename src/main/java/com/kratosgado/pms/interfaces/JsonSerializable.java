@@ -1,9 +1,7 @@
 
 package com.kratosgado.pms.interfaces;
 
-public interface JsonSerializable<T> {
+public interface JsonSerializable {
 
   String toJson();
-
-  T fromJson(String json);
 }
