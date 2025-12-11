@@ -22,7 +22,7 @@ public class Main {
         navigationManager);
     navigationManager.pushService(serviceFactory.createMainService());
 
-    final ConsoleMenu menu = new ConsoleMenu(navigationManager, authManager);
+    final ConsoleMenu menu = new ConsoleMenu(navigationManager, authManager, serviceFactory);
     menu.run();
   }
 }

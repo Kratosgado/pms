@@ -1,6 +1,8 @@
 
 package com.kratosgado.pms.utils.factories;
 
+import java.io.IOException;
+
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
@@ -9,6 +11,7 @@ import com.kratosgado.pms.services.ProjectService;
 import com.kratosgado.pms.services.ReportService;
 import com.kratosgado.pms.services.TaskService;
 import com.kratosgado.pms.services.UserService;
+import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 
@@ -35,11 +38,21 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
 
   @Override
   public ProjectService createProjectService() {
+    try {
+      projectsDb.loadData();
+    } catch (IOException e) {
+      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+    }
     return new ProjectService(projectsDb, authManager, navigationManager, this);
   }
 
   @Override
   public UserService createUserService() {
+    try {
+      usersDb.loadData();
+    } catch (IOException e) {
+      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+    }
     return new UserService(usersDb, authManager);
   }
 
@@ -52,4 +65,25 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
   public MainService createMainService() {
     return new MainService(navigationManager, projectsDb, authManager, this);
   }
+
+  @Override
+  public void saveData() {
+    try {
+      projectsDb.saveData();
+      usersDb.saveData();
+    } catch (IOException e) {
+      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+    }
+  }
+
+  @Override
+  public void loadData() {
+    try {
+      projectsDb.loadData();
+      usersDb.loadData();
+    } catch (IOException e) {
+      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+    }
+  }
+
 }

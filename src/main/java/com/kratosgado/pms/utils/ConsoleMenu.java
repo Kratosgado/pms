@@ -3,16 +3,19 @@ package com.kratosgado.pms.utils;
 import java.util.Scanner;
 import java.util.function.Function;
 
+import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 
 public class ConsoleMenu {
   private NavigationManager navigationManager;
+  private final ServiceFactory serviceFactory;
 
   private static Scanner scanner = new Scanner(System.in);
   boolean running = true;
 
-  public ConsoleMenu(NavigationManager navigationManager, AuthManager authManager) {
+  public ConsoleMenu(NavigationManager navigationManager, AuthManager authManager, ServiceFactory serviceFactory) {
+    this.serviceFactory = serviceFactory;
     this.navigationManager = navigationManager;
     authManager.authenticateUser();
   }
@@ -22,6 +25,8 @@ public class ConsoleMenu {
    * -1 - Global value for handled choice <br>
    * 0 - Global choice for going back <br>
    * 9 - Global choice for exiting the application <br>
+   * 100 - Global choice for saving data <br>
+   * 101 - Global choice for loading data <br>
    */
   public void run() {
     do {
@@ -37,6 +42,12 @@ public class ConsoleMenu {
           break;
         case 9:
           confirmExit();
+          break;
+        case 100:
+          serviceFactory.saveData();
+          break;
+        case 101:
+          serviceFactory.loadData();
           break;
         default:
           CustomUtils.displayError("INPUT ERROR", "Invalid choice");

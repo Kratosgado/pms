@@ -52,7 +52,7 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
   @Override
   public void saveData() throws IOException {
     Files.writeString(Path.of(fileName),
-        entities.values().stream().map(project -> project.toJson()).toString());
+        entities.values().stream().map(project -> project.toJson()).toList().toString());
 
   }
 

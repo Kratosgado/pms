@@ -11,6 +11,8 @@ public abstract class ConsoleService {
     displayOptions();
     System.out.println("9. Exit");
     System.out.println("0. Go Back");
+    System.out.println("100. Save Data");
+    System.out.println("101. Load Data");
   }
 
   protected abstract void displayOptions();

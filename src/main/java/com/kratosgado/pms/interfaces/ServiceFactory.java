@@ -17,4 +17,8 @@ public interface ServiceFactory {
   ReportService createReportService();
 
   MainService createMainService();
+
+  void saveData();
+
+  void loadData();
 }
