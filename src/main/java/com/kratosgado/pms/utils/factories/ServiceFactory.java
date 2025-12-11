@@ -27,6 +27,7 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
     this.projectsDb = projectsDb;
     this.authManager = authManager;
     this.navigationManager = navigationManager;
+    loadData();
   }
 
   @Override

@@ -53,8 +53,8 @@ public class SoftwareProject extends Project {
     int teamSizeEnd = json.indexOf(",", teamSizeStart + 1);
     String teamSize = json.substring(teamSizeStart, teamSizeEnd);
 
-    int budgetStart = json.indexOf("\"budget\":") + 9;
-    int budgetEnd = json.indexOf(",", budgetStart + 1);
+    int budgetStart = json.indexOf("\"budget\":") + 10;
+    int budgetEnd = json.indexOf("\",", budgetStart);
     String budget = json.substring(budgetStart, budgetEnd);
 
     int tasksStart = json.indexOf("\"tasks\":") + 8;

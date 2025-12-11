@@ -25,11 +25,6 @@ public class RegularUser extends User {
     int passwordStart = json.indexOf("\"password\":\"") + 12;
     int passwordEnd = json.indexOf("\",", passwordStart + 1);
     String password = json.substring(passwordStart, passwordEnd);
-
-    int roleStart = json.indexOf("\"role\":\"") + 8;
-    int roleEnd = json.indexOf("\",", roleStart + 1);
-    String role = json.substring(roleStart, roleEnd);
-
     User user = new AdminUser(id, name, email, password);
     return user;
   }

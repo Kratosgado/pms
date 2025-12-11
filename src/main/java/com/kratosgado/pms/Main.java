@@ -11,10 +11,10 @@ import com.kratosgado.pms.utils.factories.ServiceFactory;
 public class Main {
 
   public static void main(final String[] args) {
-    final UserInMemoryDatabase usersDb = new UserInMemoryDatabase(Seed.seedUsers());
+    final UserInMemoryDatabase usersDb = new UserInMemoryDatabase("users.json");
     // final TaskInMemoryDatabase tasksDb = new
     // TaskInMemoryDatabase(Seed.seedTasks());
-    final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase(Seed.seedProjects());
+    final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase("projects.json");
     final AuthManager authManager = new AuthManager(usersDb);
     final NavigationManager navigationManager = new NavigationManager();
 
