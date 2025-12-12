@@ -8,6 +8,7 @@ import com.kratosgado.pms.data.dto.ProjectDetailDto;
 import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.JsonSerializable;
 import com.kratosgado.pms.utils.enums.ProjectType;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
 
 public abstract class Project implements HasId, JsonSerializable {
 
@@ -64,7 +65,9 @@ public abstract class Project implements HasId, JsonSerializable {
     this.budget = budget;
   }
 
-  public void addTask(Task task) {
+  public void addTask(Task task) throws ConflictException {
+    if (tasks.stream().anyMatch(t -> t.getId().equals(task.getId())))
+      throw new ConflictException("Task with id " + task.getId() + " already exists");
     this.tasks.add(task);
   }
 

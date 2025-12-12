@@ -4,7 +4,7 @@ package com.kratosgado.pms.interfaces;
 import java.util.List;
 import java.util.Optional;
 
-import com.kratosgado.pms.utils.exceptions.PMSException;
+import com.kratosgado.pms.utils.exceptions.RuntimeException;
 
 public interface InMemoryDatabase<T> {
 
@@ -14,7 +14,7 @@ public interface InMemoryDatabase<T> {
 
   public List<T> getAll();
 
-  public Optional<T> getById(String id) throws PMSException;
+  public Optional<T> getById(String id) throws RuntimeException;
 
   public boolean removeById(String id);
 

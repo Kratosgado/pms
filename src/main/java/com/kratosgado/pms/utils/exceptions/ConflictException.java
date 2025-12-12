@@ -1,7 +1,7 @@
 
 package com.kratosgado.pms.utils.exceptions;
 
-public class ConflictException extends PMSException {
+public class ConflictException extends RuntimeException {
 
   public ConflictException(String message) {
     super(message);

@@ -1,7 +1,7 @@
 
 package com.kratosgado.pms.utils.exceptions;
 
-public class UnauthorizedException extends PMSException {
+public class UnauthorizedException extends RuntimeException {
 
   public UnauthorizedException() {
   }

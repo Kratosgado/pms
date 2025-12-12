@@ -1,7 +1,7 @@
 
 package com.kratosgado.pms.utils.exceptions;
 
-public class InvalidProjectDataException extends PMSException {
+public class InvalidProjectDataException extends RuntimeException {
 
   public InvalidProjectDataException() {
     super("Poject has invalid data");
