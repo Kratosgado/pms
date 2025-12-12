@@ -64,9 +64,11 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
 
   @Override
   public void loadData() throws IOException {
-    String json = Files.readString(Path.of(fileName)).replace("\n", "").replace(" ", "");
+    String json = readFile(fileName);
     entities = new HashMap<>();
     for (String projectStr : json.split("]},")) {
+      if (projectStr.equals("[]"))
+        continue;
       Project project;
       if (Project.getProjectType(projectStr).equals("HARDWARE")) {
         project = HardwareProject.fromJson(projectStr);

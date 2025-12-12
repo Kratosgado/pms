@@ -51,13 +51,13 @@ public class SoftwareProject extends Project {
     int descriptionEnd = json.indexOf("\",", descriptionStart + 1);
     String description = json.substring(descriptionStart, descriptionEnd);
 
-    int teamSizeStart = json.indexOf("\"teamSize\":") + 11;
+    int teamSizeStart = json.indexOf("\"teamSize\":") + 12;
     int teamSizeEnd = json.indexOf(",", teamSizeStart + 1);
-    String teamSize = json.substring(teamSizeStart, teamSizeEnd);
+    int teamSize = Integer.parseInt(json.substring(teamSizeStart, teamSizeEnd));
 
-    int budgetStart = json.indexOf("\"budget\":") + 10;
+    int budgetStart = json.indexOf("\"budget\":") + 11;
     int budgetEnd = json.indexOf("\",", budgetStart);
-    String budget = json.substring(budgetStart, budgetEnd);
+    double budget = Double.parseDouble(json.substring(budgetStart, budgetEnd));
 
     int tasksStart = json.indexOf("\"tasks\":") + 8;
     int tasksEnd = json.indexOf("]", tasksStart + 1);
@@ -66,10 +66,11 @@ public class SoftwareProject extends Project {
 
     ArrayList<Task> tasks = new ArrayList<>();
     for (String taskStr : tasksStr.split("},")) {
+      if (taskStr.equals("["))
+        continue;
       tasks.add(Task.fromJson(taskStr));
     }
-    Project project = new SoftwareProject(id, name, description, Integer.parseInt(teamSize),
-        Double.parseDouble(budget));
+    Project project = new SoftwareProject(id, name, description, teamSize, budget);
     project.setTasks(tasks);
     return project;
   }
