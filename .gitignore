@@ -4,3 +4,6 @@ target/
 .classpath
 .project
 .settings/
+GEMINI.md
+projects.json
+users.json
