@@ -63,7 +63,6 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
     String json = Files.readString(Path.of(fileName)).replace("\n", "").replace(" ", "");
     entities = new HashMap<>();
     for (String userStr : json.split("},")) {
-      System.out.println(userStr);
       User user;
       if (User.isAdmin(userStr)) {
         user = AdminUser.fromJson(userStr);

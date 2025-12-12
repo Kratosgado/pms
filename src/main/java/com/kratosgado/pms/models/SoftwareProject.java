@@ -1,6 +1,8 @@
 
 package com.kratosgado.pms.models;
 
+import java.util.ArrayList;
+
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.enums.ProjectType;
 
@@ -58,12 +60,17 @@ public class SoftwareProject extends Project {
     String budget = json.substring(budgetStart, budgetEnd);
 
     int tasksStart = json.indexOf("\"tasks\":") + 8;
-    int tasksEnd = json.indexOf("}", tasksStart + 1);
-    String tasks = json.substring(tasksStart, tasksEnd);
+    int tasksEnd = json.indexOf("]", tasksStart + 1);
+    tasksEnd = tasksEnd == -1 ? json.length() - 1 : tasksEnd;
+    String tasksStr = json.substring(tasksStart, tasksEnd);
 
+    ArrayList<Task> tasks = new ArrayList<>();
+    for (String taskStr : tasksStr.split("},")) {
+      tasks.add(Task.fromJson(taskStr));
+    }
     Project project = new SoftwareProject(id, name, description, Integer.parseInt(teamSize),
         Double.parseDouble(budget));
-    // project.setTasks(tasks); TODO: fix tasks operations
+    project.setTasks(tasks);
     return project;
   }
 }

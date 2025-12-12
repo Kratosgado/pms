@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
-import com.kratosgado.pms.interfaces.Persists;
 import com.kratosgado.pms.utils.exceptions.ConflictException;
 
 public abstract class Repository<T extends HasId> implements InMemoryDatabase<T> {

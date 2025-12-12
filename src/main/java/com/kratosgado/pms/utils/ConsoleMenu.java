@@ -97,6 +97,7 @@ public class ConsoleMenu {
     System.out.print("Are you sure you want to exit? (y/n): ");
     final String choice = scanner.nextLine();
     if (choice.equals("y")) {
+      serviceFactory.saveData();
       running = false;
     }
   }
