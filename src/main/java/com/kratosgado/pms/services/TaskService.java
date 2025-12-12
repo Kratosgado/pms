@@ -27,10 +27,11 @@ public class TaskService extends ConsoleService {
   private void addTask() {
     authManager.requireAdmin();
     CustomUtils.displayHeader("ADD TASK");
+    String id = ConsoleMenu.getInput("Enter Task ID: ", ValidationUtils::validateTaskId);
     String name = Console.getString("Enter Task Name: ");
     TaskStatus status = ConsoleMenu.getInput("Enter Initial Status (Pending, In Progress, Completed): ",
         ValidationUtils::validateTaskStatus);
-    final Task task = new Task(CustomUtils.getNextId("TS", project.getTasks().size()), name, status);
+    final Task task = new Task(id, name, status);
     task.setHours(Console.getPositiveIntInput("Enter Hours: "));
     String userId = Console.getString("Enter id of user to be assigned (0 for no user): ");
     if (userId.equals("0")) {
