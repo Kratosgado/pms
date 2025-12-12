@@ -51,6 +51,8 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
   public void saveData() throws IOException {
     Files.writeString(Path.of(fileName), entities.values().stream().map(user -> user.toJson()).toList().toString());
 
+    System.out.println("Saved " + count() + " users" + " to " + fileName);
+
   }
 
   @Override
@@ -73,6 +75,7 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
         user = RegularUser.fromJson(userStr);
         entities.put(user.getId(), user);
       }
+    System.out.println("Loaded " + count() + " users" + " from " + fileName);
   }
 
 }

@@ -54,6 +54,7 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
     Files.writeString(Path.of(fileName),
         entities.values().stream().map(project -> project.toJson()).toList().toString());
 
+    System.out.println("Saved " + count() + " projects" + " to " + fileName);
   }
 
   @Override
@@ -78,6 +79,8 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
         project = SoftwareProject.fromJson(projectStr);
         entities.put(project.getId(), project);
       }
+
+    System.out.println("Loaded " + count() + " projects" + " from " + fileName);
   }
 
 }
