@@ -24,12 +24,12 @@ public class RepositoryTest {
   }
 
   @Test
-  void testAdd() {
+  void testAddEntity() {
     assertEquals(2, repository.count());
   }
 
   @Test
-  void testUpdate() {
+  void testEntityUpdate() {
     User task = repository.getById("id1").get();
     task.setName("newName");
     User updated = repository.update(task);
@@ -37,19 +37,19 @@ public class RepositoryTest {
   }
 
   @Test
-  void testRemoveById() {
+  void testRemoveEntityById() {
     repository.removeById("id1");
     assertEquals(1, repository.count());
   }
 
   @Test
-  void testExists() {
+  void testEntityExists() {
     assertTrue(repository.exists("id1"));
     assertFalse(repository.exists("id5"));
   }
 
   @Test
-  void testGetById() {
+  void testGetEntityById() {
     assertTrue(repository.getById("id1").isPresent());
   }
 
