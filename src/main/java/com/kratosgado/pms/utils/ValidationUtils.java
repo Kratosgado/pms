@@ -39,8 +39,14 @@ public class ValidationUtils {
     throw new InputValidationException("Invalid User Role");
   }
 
+  public static String validateTaskId(final String id) throws InputValidationException {
+    if (!id.matches("TS\\d{3}"))
+      throw new InputValidationException("Invalid Task ID. Must be TS###");
+    return id;
+  }
+
   public static String isValidEmail(final String email) throws InputValidationException {
-    if (!email.contains("@"))
+    if (!email.matches("[\\w._]+@[\\w.-]+\\.[a-zA-Z]{2,}"))
       throw new InputValidationException("Email is invalid");
     return email;
   }
