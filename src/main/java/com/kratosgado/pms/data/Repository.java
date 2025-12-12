@@ -12,15 +12,12 @@ import com.kratosgado.pms.utils.exceptions.ConflictException;
 
 public abstract class Repository<T extends HasId> implements InMemoryDatabase<T> {
   protected HashMap<String, T> entities;
-  protected int size;
 
   public Repository() {
-    this.size = 0;
     this.entities = new HashMap<>();
   }
 
   public Repository(HashMap<String, T> entities) {
-    this.size = entities.size();
     this.entities = entities;
   }
 
@@ -67,7 +64,7 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
 
   @Override
   public int count() {
-    return size;
+    return entities.size();
   }
 
 }
