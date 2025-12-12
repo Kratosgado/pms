@@ -5,54 +5,51 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.kratosgado.pms.models.Task;
+import com.kratosgado.pms.models.User;
+import com.kratosgado.pms.models.AdminUser;
+import com.kratosgado.pms.models.RegularUser;
 
 public class RepositoryTest {
+  private Repository<User> repository;
+
+  @BeforeEach
+  void setUp() {
+    this.repository = new UserInMemoryDatabase();
+    repository.add(new RegularUser("id1", "name", "email", "password"));
+    repository.add(new AdminUser("id2", "name", "email", "password"));
+
+  }
 
   @Test
   void testAdd() {
-    Repository<Task> repository = new TaskInMemoryDatabase();
-    repository.add(new Task("id1", "name", "projectId"));
-    repository.add(new Task("id2", "name", "projectId"));
     assertEquals(2, repository.count());
   }
 
   @Test
   void testUpdate() {
-    Repository<Task> repository = new TaskInMemoryDatabase();
-    repository.add(new Task("id1", "name", "projectId"));
-    repository.add(new Task("id2", "name", "projectId"));
-    Task task = repository.getById("id1").get();
+    User task = repository.getById("id1").get();
     task.setName("newName");
-    Task updated = repository.update(task);
+    User updated = repository.update(task);
     assertEquals(task, updated);
   }
 
   @Test
   void testRemoveById() {
-    Repository<Task> repository = new TaskInMemoryDatabase();
-    repository.add(new Task("id1", "name", "projectId"));
-    repository.add(new Task("id2", "name", "projectId"));
     repository.removeById("id1");
     assertEquals(1, repository.count());
   }
 
   @Test
   void testExists() {
-    Repository<Task> repository = new TaskInMemoryDatabase();
-    repository.add(new Task("id1", "name", "projectId"));
-    repository.add(new Task("id2", "name", "projectId"));
     assertTrue(repository.exists("id1"));
     assertFalse(repository.exists("id5"));
   }
 
   @Test
   void testGetById() {
-    Repository<Task> repository = new TaskInMemoryDatabase();
-    repository.add(new Task("id1", "name", "projectId"));
-    repository.add(new Task("id2", "name", "projectId"));
     assertTrue(repository.getById("id1").isPresent());
   }
 
