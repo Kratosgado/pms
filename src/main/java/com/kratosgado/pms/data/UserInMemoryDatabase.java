@@ -62,18 +62,17 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
   public void loadData() throws IOException {
     String json = readFile(fileName);
     entities = new HashMap<>();
-    for (String userStr : json.split("},")) {
-      if (userStr.equals("[]"))
-        continue;
-      User user;
-      if (User.isAdmin(userStr)) {
-        user = AdminUser.fromJson(userStr);
+    if (json.contains("id"))
+      for (String userStr : json.split("},")) {
+        User user;
+        if (User.isAdmin(userStr)) {
+          user = AdminUser.fromJson(userStr);
+          entities.put(user.getId(), user);
+          continue;
+        }
+        user = RegularUser.fromJson(userStr);
         entities.put(user.getId(), user);
-        continue;
       }
-      user = RegularUser.fromJson(userStr);
-      entities.put(user.getId(), user);
-    }
   }
 
 }

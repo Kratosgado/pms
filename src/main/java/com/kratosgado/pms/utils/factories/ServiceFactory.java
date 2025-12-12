@@ -4,8 +4,8 @@ package com.kratosgado.pms.utils.factories;
 import java.io.IOException;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
-import com.kratosgado.pms.data.TaskInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
+import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.services.MainService;
 import com.kratosgado.pms.services.ProjectService;
 import com.kratosgado.pms.services.ReportService;
@@ -14,28 +14,28 @@ import com.kratosgado.pms.services.UserService;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
+import com.kratosgado.pms.utils.exceptions.ProjectNotFoundException;
 
 public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFactory {
-  private final UserInMemoryDatabase usersDb;
-  private final ProjectInMemoryDatabase projectsDb;
-  private final AuthManager authManager;
-  private final NavigationManager navigationManager;
+    private final UserInMemoryDatabase usersDb;
+    private final ProjectInMemoryDatabase projectsDb;
+    private final AuthManager authManager;
+    private final NavigationManager navigationManager;
 
-  public ServiceFactory(UserInMemoryDatabase usersDb, ProjectInMemoryDatabase projectsDb,
-      AuthManager authManager, NavigationManager navigationManager) {
-    this.usersDb = usersDb;
-    this.projectsDb = projectsDb;
-    this.authManager = authManager;
-    this.navigationManager = navigationManager;
-    loadData();
-  }
+    public ServiceFactory(UserInMemoryDatabase usersDb, ProjectInMemoryDatabase projectsDb,
+            AuthManager authManager, NavigationManager navigationManager) {
+        this.usersDb = usersDb;
+        this.projectsDb = projectsDb;
+        this.authManager = authManager;
+        this.navigationManager = navigationManager;
+        loadData();
+    }
 
-  @Override
-  public TaskService createTaskService(String projectId) {
-    // TODO: fix tasks operations
-    TaskInMemoryDatabase tasksDb = new TaskInMemoryDatabase();
-    return new TaskService(tasksDb, usersDb, authManager, navigationManager);
-  }
+    @Override
+    public TaskService createTaskService(String projectId) {
+        Project project = projectsDb.getById(projectId).orElseThrow(ProjectNotFoundException::new);
+        return new TaskService(project, usersDb, authManager);
+    }
 
   @Override
   public ProjectService createProjectService() {

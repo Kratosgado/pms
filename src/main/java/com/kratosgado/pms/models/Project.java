@@ -64,6 +64,27 @@ public abstract class Project implements HasId, JsonSerializable {
     this.budget = budget;
   }
 
+  public void addTask(Task task) {
+    this.tasks.add(task);
+  }
+
+  public Task findTaskById(String taskId) {
+    return tasks.stream().filter(t -> t.getId().equals(taskId)).findFirst().orElse(null);
+  }
+
+  public boolean removeTaskById(String taskId) {
+    return tasks.removeIf(t -> t.getId().equals(taskId));
+  }
+
+  public void updateTask(Task task) {
+    for (int i = 0; i < tasks.size(); i++) {
+      if (tasks.get(i).getId().equals(task.getId())) {
+        tasks.set(i, task);
+        return;
+      }
+    }
+  }
+
   public List<Task> getTasks() {
     return Collections.unmodifiableList(tasks);
   }

@@ -65,11 +65,10 @@ public class SoftwareProject extends Project {
     String tasksStr = json.substring(tasksStart, tasksEnd);
 
     ArrayList<Task> tasks = new ArrayList<>();
-    for (String taskStr : tasksStr.split("},")) {
-      if (taskStr.equals("["))
-        continue;
-      tasks.add(Task.fromJson(taskStr));
-    }
+    if (tasksStr.contains("id"))
+      for (String taskStr : tasksStr.split("},")) {
+        tasks.add(Task.fromJson(taskStr));
+      }
     Project project = new SoftwareProject(id, name, description, teamSize, budget);
     project.setTasks(tasks);
     return project;

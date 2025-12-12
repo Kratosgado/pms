@@ -69,7 +69,8 @@ public class HardwareProject extends Project {
         continue;
       tasks.add(Task.fromJson(taskStr));
     }
-    Project project = new SoftwareProject(id, name, description, teamSize, budget);
+    Project project = new HardwareProject(id, name, description, teamSize, budget);
+    project.setTasks(tasks);
     return project;
   }
 }

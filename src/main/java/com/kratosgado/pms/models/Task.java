@@ -104,9 +104,9 @@ public class Task implements HasId, Completable, JsonSerializable {
     int statusEnd = json.indexOf("\",", statusStart + 1);
     String status = json.substring(statusStart, statusEnd);
 
-    int hoursStart = json.indexOf("\"hours\":") + 8;
-    int hoursEnd = json.indexOf(",", hoursStart + 1);
-    String hours = json.substring(hoursStart, hoursEnd);
+    int hoursStart = json.indexOf("\"hours\":") + 9;
+    int hoursEnd = json.indexOf(",", hoursStart);
+    int hours = Integer.parseInt(json.substring(hoursStart, hoursEnd));
 
     int userIdStart = json.indexOf("\"userId\":\"") + 10;
     int userIdEnd = json.indexOf("}", userIdStart + 1);
@@ -114,7 +114,7 @@ public class Task implements HasId, Completable, JsonSerializable {
     String userId = json.substring(userIdStart, userIdEnd);
 
     Task task = new Task(id, name, TaskStatus.valueOf(status), userId);
-    task.setHours(Integer.parseInt(hours));
+    task.setHours(hours);
     return task;
   }
 

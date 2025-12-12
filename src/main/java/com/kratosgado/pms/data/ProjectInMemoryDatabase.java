@@ -66,18 +66,18 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
   public void loadData() throws IOException {
     String json = readFile(fileName);
     entities = new HashMap<>();
-    for (String projectStr : json.split("]},")) {
-      if (projectStr.equals("[]"))
-        continue;
-      Project project;
-      if (Project.getProjectType(projectStr).equals("HARDWARE")) {
-        project = HardwareProject.fromJson(projectStr);
+    if (json.contains("id"))
+      for (String projectStr : json.split("]\n},")) {
+
+        Project project;
+        if (Project.getProjectType(projectStr).equals("HARDWARE")) {
+          project = HardwareProject.fromJson(projectStr);
+          entities.put(project.getId(), project);
+          continue;
+        }
+        project = SoftwareProject.fromJson(projectStr);
         entities.put(project.getId(), project);
-        continue;
       }
-      project = SoftwareProject.fromJson(projectStr);
-      entities.put(project.getId(), project);
-    }
   }
 
 }
