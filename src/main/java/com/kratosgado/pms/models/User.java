@@ -11,6 +11,14 @@ public abstract class User implements HasId, JsonSerializable {
   private String password;
   private UserRole role;
 
+  public User() {
+    this.id = null;
+    this.name = null;
+    this.email = null;
+    this.password = null;
+    this.role = UserRole.REGULAR;
+  }
+
   public User(String id, String name, String email, String password) {
     this.id = id;
     this.name = name;

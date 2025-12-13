@@ -1,5 +1,7 @@
 package com.kratosgado.pms.services;
 
+import java.util.function.BiFunction;
+
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.Task;
@@ -49,10 +51,7 @@ public class TaskService extends ConsoleService {
     CustomUtils.displayHeader("UPDATE TASK STATUS");
 
     final String id = Console.getString("Enter Task ID: ");
-    final Task task = project.findTaskById(id);
-    if (task == null) {
-      throw new TaskNotFoundException();
-    }
+    final Task task = project.findTaskById(id).orElseThrow(TaskNotFoundException::new);
     final TaskStatus taskStatus = ConsoleMenu.getInput("Enter New Status (Pending, In Progress, Completed): ",
         ValidationUtils::validateTaskStatus);
     task.setStatus(taskStatus);
@@ -81,14 +80,28 @@ public class TaskService extends ConsoleService {
   }
 
   private void simulateConcurrentTaskUpdate() {
-    CustomUtils.displayHeader("SIMULATE CONCURRENT TASK UPDATE");
-    final String id = Console.getString("Enter Task ID: ");
-    final Task task = project.findTaskById(id);
-    if (task == null) {
-      throw new TaskNotFoundException();
+    CustomUtils.displayHeader("PARALLEL TASK UPDATE SIMULATION");
+    System.out.println("Starting 3 threads to update tasks in parallel...");
+    BiFunction<String, TaskStatus, Void> updateFunction = (id, status) -> {
+      System.out.println(Thread.currentThread().getName() + " updating task " + id + " -> " + status);
+      project.updateTaskStatus(id, status);
+      return null;
+    };
+    Thread t1 = new Thread(() -> updateFunction.apply("TS001", TaskStatus.PENDING), "Thread 1");
+    Thread t2 = new Thread(() -> updateFunction.apply("TS002", TaskStatus.IN_PROGRESS), "Thread 2");
+    Thread t3 = new Thread(() -> updateFunction.apply("TS003", TaskStatus.COMPLETED), "Thread 3");
+    t1.start();
+    t2.start();
+    t3.start();
+    try {
+      t1.join();
+      t2.join();
+      t3.join();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+
     }
-    task.setStatus(TaskStatus.COMPLETED);
-    System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), task.getStatus().getStatus());
+    CustomUtils.displaySuccess("Task Update Simulation Completed");
   }
 
   @Override
