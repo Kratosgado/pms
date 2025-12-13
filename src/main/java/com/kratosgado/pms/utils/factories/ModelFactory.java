@@ -23,6 +23,22 @@ public class ModelFactory {
     }
   }
 
+  public static Project createProjectFromJson(String json) {
+    if (Project.getProjectType(json).equals("HARDWARE")) {
+      return HardwareProject.fromJson(json);
+    }
+    return SoftwareProject.fromJson(json);
+
+  }
+
+  public static User createUserFromJson(String json) {
+    if (User.isAdmin(json)) {
+      return AdminUser.fromJson(json);
+    }
+    return RegularUser.fromJson(json);
+
+  }
+
   public static User createUser(String id, String name, String email, String password, UserRole role) {
     switch (role) {
       case ADMIN:

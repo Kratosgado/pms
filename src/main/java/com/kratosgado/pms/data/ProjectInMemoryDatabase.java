@@ -10,9 +10,7 @@ import java.util.function.Predicate;
 
 import com.kratosgado.pms.interfaces.Filterable;
 import com.kratosgado.pms.interfaces.Persists;
-import com.kratosgado.pms.models.HardwareProject;
 import com.kratosgado.pms.models.Project;
-import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.enums.ProjectType;
 import com.kratosgado.pms.utils.factories.ModelFactory;
@@ -72,14 +70,7 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
     entities = new HashMap<>();
     if (json.contains("id"))
       for (String projectStr : json.split("]\n},")) {
-
-        Project project;
-        if (Project.getProjectType(projectStr).equals("HARDWARE")) {
-          project = HardwareProject.fromJson(projectStr);
-          entities.put(project.getId(), project);
-          continue;
-        }
-        project = SoftwareProject.fromJson(projectStr);
+        Project project = ModelFactory.createProjectFromJson(projectStr);
         entities.put(project.getId(), project);
       }
 

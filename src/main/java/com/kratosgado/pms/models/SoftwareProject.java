@@ -28,8 +28,9 @@ public class SoftwareProject extends Project {
     for (Task task : getTasks()) {
       sb.append(task);
     }
+    sb.append("\n");
 
-    CustomUtils.appendTableHeader(sb, String.format("COMPLETION RATE: %.2f%%\n", calculateCompletionPercentage()));
+    CustomUtils.appendTableHeader(sb, String.format("COMPLETION RATE: %.2f%%", calculateCompletionPercentage()));
     return sb.toString();
   }
 

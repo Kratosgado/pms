@@ -7,8 +7,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 import com.kratosgado.pms.interfaces.Persists;
-import com.kratosgado.pms.models.AdminUser;
-import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.enums.UserRole;
@@ -72,13 +70,7 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
     entities = new HashMap<>();
     if (json.contains("id"))
       for (String userStr : json.split("},")) {
-        User user;
-        if (User.isAdmin(userStr)) {
-          user = AdminUser.fromJson(userStr);
-          entities.put(user.getId(), user);
-          continue;
-        }
-        user = RegularUser.fromJson(userStr);
+        User user = ModelFactory.createUserFromJson(userStr);
         entities.put(user.getId(), user);
       }
     System.out.println("Loaded " + count() + " users" + " from " + fileName);

@@ -27,8 +27,9 @@ public class HardwareProject extends Project {
     for (Task task : getTasks()) {
       sb.append(task.toString());
     }
+    sb.append("\n");
 
-    sb.append(String.format("Completion Rate: %.2f%%\n", calculateCompletionPercentage()));
+    sb.append(String.format("Completion Rate: %.2f%%", calculateCompletionPercentage()));
     return sb.toString();
   }
 
