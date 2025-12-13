@@ -80,12 +80,24 @@ public class TaskService extends ConsoleService {
     System.out.println(sb);
   }
 
+  private void simulateConcurrentTaskUpdate() {
+    CustomUtils.displayHeader("SIMULATE CONCURRENT TASK UPDATE");
+    final String id = Console.getString("Enter Task ID: ");
+    final Task task = project.findTaskById(id);
+    if (task == null) {
+      throw new TaskNotFoundException();
+    }
+    task.setStatus(TaskStatus.COMPLETED);
+    System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), task.getStatus().getStatus());
+  }
+
   @Override
   protected void displayOptions() {
     System.out.println("1. Add New Task");
     System.out.println("2. Update Task Status");
     System.out.println("3. Remove Task");
     System.out.println("4. View Tasks");
+    System.out.println("5. Simulate Concurrent Task Update");
   }
 
   @Override
@@ -103,6 +115,9 @@ public class TaskService extends ConsoleService {
           break;
         case 4:
           listTasks();
+          break;
+        case 5:
+          simulateConcurrentTaskUpdate();
           break;
         default:
           return choice;
