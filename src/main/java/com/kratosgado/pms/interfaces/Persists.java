@@ -19,7 +19,7 @@ public interface Persists {
    * 
    * @return true if the data exists, false otherwise
    */
-  public boolean dataExists();
+  public boolean fileExists();
 
   /**
    * Loads the data from the file

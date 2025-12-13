@@ -144,9 +144,13 @@ public abstract class Project implements HasId, JsonSerializable {
   }
 
   public String toJson() {
-    return "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"description\":\"" + description
-        + "\",\"projectType\":\"" + getProjectType() + "\",\"teamSize\":" + teamSize + ",\"budget\":\""
-        + budget + "\",\"tasks\":" + tasks.stream().map(task -> task.toJson()).toList().toString() + "}";
+    return "\n{\n\"id\":\"" + id +
+        "\",\n\"name\":\"" + name +
+        "\",\n\"description\":\"" + description
+        + "\",\n\"projectType\":\"" + getProjectType() +
+        "\",\n\"teamSize\": " + teamSize +
+        ",\n\"budget\":\"" + budget +
+        "\",\n\"tasks\":" + tasks.stream().map(task -> task.toJson()).toList().toString() + "\n}";
   }
 
 }

@@ -85,7 +85,6 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
       usersDb.loadData();
     } catch (IOException e) {
       CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
-      usersDb.add(new AdminUser("US001", "Kratos", "kratos@gmail.com", "password"));
       saveData();
     }
   }

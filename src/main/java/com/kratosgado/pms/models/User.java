@@ -74,8 +74,8 @@ public abstract class User implements HasId, JsonSerializable {
 
   @Override
   public String toJson() {
-    return "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"email\":\"" + email + "\",\"password\":\""
-        + password + "\",\"role\":\"" + role + "\"}";
+    return "\n{\n\"id\":\"" + id + "\",\n\"name\":\"" + name + "\",\n\"email\":\"" + email + "\",\n\"password\":\""
+        + password + "\",\n\"role\":\"" + role + "\"\n}";
   }
 
 }

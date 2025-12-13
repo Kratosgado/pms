@@ -28,9 +28,11 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
     this.fileName = fileName;
   }
 
-  public ProjectInMemoryDatabase(HashMap<String, Project> entities) {
-    super(entities);
+  public ProjectInMemoryDatabase(String fileName, HashMap<String, Project> entities) {
     this.fileName = "projects.json";
+    if (!fileExists())
+      this.entities = entities;
+
   }
 
   public Project add(String name, String description, int teamSize, double budget, ProjectType type) {
@@ -58,13 +60,14 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
   }
 
   @Override
-  public boolean dataExists() {
+  public boolean fileExists() {
     return Files.exists(Path.of(fileName));
 
   }
 
   @Override
   public void loadData() throws IOException {
+
     String json = readFile(fileName);
     entities = new HashMap<>();
     if (json.contains("id"))

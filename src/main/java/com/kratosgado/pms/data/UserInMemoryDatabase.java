@@ -27,9 +27,15 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
     this.fileName = fileName;
   }
 
-  public UserInMemoryDatabase(HashMap<String, User> entities) {
-    super(entities);
+  /**
+   * @param fileName File to save and load data from
+   * @param entities Entiies to seed the database
+   */
+  public UserInMemoryDatabase(String fileName, HashMap<String, User> entities) {
     this.fileName = "users.json";
+    if (!fileExists()) {
+      this.entities = entities;
+    }
   }
 
   public User add(String name, String email, String password, UserRole role) {
@@ -56,7 +62,7 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
   }
 
   @Override
-  public boolean dataExists() {
+  public boolean fileExists() {
     return Files.exists(Path.of(fileName));
   }
 

@@ -87,8 +87,11 @@ public class Task implements HasId, Completable, JsonSerializable {
   @Override
   public String toJson() {
     return String.format(
-        "{\"id\":\"%s\",\"name\":\"%s\",\"status\":\"%s\",\"hours\":%s,\"userId\":\"%s\"}", id,
-        name, status, hours, userId);
+        "\n{\n\"id\":\"" + id +
+            "\",\n\"name\":\"" + name +
+            "\",\n\"status\":\"" + status +
+            "\",\n\"hours\": " + hours
+            + ",\n\"userId\":\"" + userId + "\"\n}");
   }
 
   public static Task fromJson(String json) {
