@@ -4,6 +4,10 @@ A comprehensive Java-based project management system for managing projects, task
 
 ![Project Manager System UML Class Diagram](./docs/class-diagram.png)
 
+![Threading Diagram](./docs/threading.png)
+
+![Test Results](./docs/tests_result.png)
+
 ## Features
 
 ### Feature 1: Project Catalog Management
