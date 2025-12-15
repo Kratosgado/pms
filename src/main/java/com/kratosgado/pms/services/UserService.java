@@ -66,14 +66,6 @@ public class UserService extends ConsoleService {
     sb.append("EMAIL: ").append(user.getEmail()).append("\n");
     sb.append("ROLE: ").append(user.getRole()).append("\n");
 
-    // sb.append("ASSOCIATED TASKS: ").append("\n");
-    // Task[] tasks = tasksDb.filter(task -> task.getUserId() != null &&
-    // task.getUserId().equals(user.getId()));
-    // CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s",
-    // "ID", "NAME", "STATUS", "HOURS"));
-    // for (Task task : tasks) {
-    // sb.append(task.toString());
-    // }
     System.out.println(sb);
   }
 
