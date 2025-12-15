@@ -25,7 +25,7 @@ public class ProjectInMemoryDatabaseTest {
 
   @Test
   void testProjectFileExists() throws IOException {
-    final String fileName = "projects.json";
+    final String fileName = "data/projects.json";
     projectDb = new ProjectInMemoryDatabase(fileName);
     projectDb.saveData();
     assertTrue(projectDb.fileExists());

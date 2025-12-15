@@ -30,7 +30,7 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
    * @param entities Entiies to seed the database
    */
   public UserInMemoryDatabase(String fileName, HashMap<String, User> entities) {
-    this.fileName = "users.json";
+    this.fileName = fileName;
     if (!fileExists()) {
       this.entities = entities;
     }

@@ -19,15 +19,24 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
   private final String fileName;
 
   public ProjectInMemoryDatabase() {
-    this.fileName = "projects.json";
+    this.fileName = "data/projects.json";
   }
+
+  /**
+   * @param fileName File to save and load data from
+   * @param entities Entiies to seed the database
+   */
 
   public ProjectInMemoryDatabase(String fileName) {
     this.fileName = fileName;
   }
 
+  /**
+   * @param fileName File to save and load data from
+   * @param entities Entiies to seed the database
+   */
   public ProjectInMemoryDatabase(String fileName, HashMap<String, Project> entities) {
-    this.fileName = "projects.json";
+    this.fileName = fileName;
     if (!fileExists())
       this.entities = entities;
 
