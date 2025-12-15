@@ -2,6 +2,8 @@ package com.kratosgado.pms.models;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -89,6 +91,15 @@ public class TaskTest {
 
     task.setStatus(TaskStatus.IN_PROGRESS);
     assertFalse(task.isCompleted());
+  }
+
+  @Test
+  void testFilterCmpletedTasksUsingStreams() {
+    List<Task> tasks = List.of(
+        new Task("T001", "Task 1", TaskStatus.COMPLETED),
+        new Task("T002", "Task 2", TaskStatus.PENDING));
+    double completedTasks = tasks.stream().filter(Task::isCompleted).count();
+    assertEquals(1, completedTasks);
   }
 
 }

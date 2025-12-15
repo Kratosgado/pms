@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
 import com.kratosgado.pms.data.UserInMemoryDatabase;
-import com.kratosgado.pms.models.AdminUser;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.services.MainService;
 import com.kratosgado.pms.services.ProjectService;

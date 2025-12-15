@@ -2,6 +2,10 @@ package com.kratosgado.pms.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +21,35 @@ public class ProjectInMemoryDatabaseTest {
   @BeforeEach
   void setUp() {
     projectDb = new ProjectInMemoryDatabase();
+  }
+
+  @Test
+  void testProjectFileExists() throws IOException {
+    final String fileName = "projects.json";
+    projectDb = new ProjectInMemoryDatabase(fileName);
+    projectDb.saveData();
+    assertTrue(projectDb.fileExists());
+  }
+
+  @Test
+  void testProjectFileDoesNotExist() {
+    final String fileName = "nonexistent.json";
+    projectDb = new ProjectInMemoryDatabase(fileName);
+    assertFalse(projectDb.fileExists());
+  }
+
+  @Test
+  void testSavingAndLoadingProjects() throws IOException {
+    final String fileName = "projects_json.json";
+    projectDb = new ProjectInMemoryDatabase(fileName);
+    assertThrows(IOException.class, () -> {
+      projectDb.loadData();
+    });
+    projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
+    projectDb.saveData();
+    assertEquals(1, projectDb.count());
+    assertTrue(projectDb.fileExists());
+    Files.delete(Path.of(fileName));
   }
 
   @Test

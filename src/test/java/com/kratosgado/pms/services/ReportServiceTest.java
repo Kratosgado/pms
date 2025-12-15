@@ -22,7 +22,7 @@ public class ReportServiceTest {
 
   @BeforeEach
   void setUp() {
-    SoftwareProject project = new SoftwareProject("id", "test", "test", 40, 10);
+    project = new SoftwareProject("id", "test", "test", 40, 10);
     ArrayList<Task> tasks = new ArrayList<>();
     tasks.add(new Task("PJ2", "task1", project.getId()));
     tasks.add(new Task("PJ4", "task1", TaskStatus.IN_PROGRESS));
@@ -42,7 +42,7 @@ public class ReportServiceTest {
   void testAverageCompletionPercentage() {
     ArrayList<Project> projects = new ArrayList<>();
     projects.add(project);
-    double percentege = reportService.calculateAverageCompletionPercentage(projects.toArray(new Project[0]));
+    double percentege = reportService.calculateAverageCompletionPercentage(projects);
     assertEquals(50.0, percentege);
   }
 }
