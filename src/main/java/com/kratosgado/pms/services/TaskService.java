@@ -11,6 +11,7 @@ import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.enums.TaskStatus;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
 import com.kratosgado.pms.utils.exceptions.TaskNotFoundException;
 import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 
@@ -33,39 +34,51 @@ public class TaskService extends ConsoleService {
     String name = Console.getString("Enter Task Name: ");
     TaskStatus status = ConsoleMenu.getInput("Enter Initial Status (Pending, In Progress, Completed): ",
         ValidationUtils::validateTaskStatus);
-    final Task task = new Task(id, name, status);
-    task.setHours(Console.getPositiveIntInput("Enter Hours: "));
-    String userId = Console.getString("Enter id of user to be assigned (0 for no user): ");
-    if (userId.equals("0")) {
-      task.setUserId(null);
-    } else if (!usersDb.exists(userId)) {
-      throw new UserNotFoundException();
-    } else {
-      task.setUserId(userId);
+    int hours = Console.getPositiveIntInput("Enter Hours: ");
+    try {
+
+      final Task task = new Task(id, name, status);
+      task.setHours(hours);
+      String userId = Console.getString("Enter id of user to be assigned (0 for no user): ");
+      if (userId.equals("0")) {
+        task.setUserId(null);
+      } else if (!usersDb.exists(userId)) {
+        throw new UserNotFoundException();
+      } else {
+        task.setUserId(userId);
+      }
+      project.addTask(task);
+      System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
+    } catch (UserNotFoundException | ConflictException e) {
+      CustomUtils.displayError(e);
     }
-    project.addTask(task);
-    System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
   }
 
   private void updateTaskStatus() {
     CustomUtils.displayHeader("UPDATE TASK STATUS");
-
     final String id = Console.getString("Enter Task ID: ");
-    final Task task = project.findTaskById(id).orElseThrow(TaskNotFoundException::new);
     final TaskStatus taskStatus = ConsoleMenu.getInput("Enter New Status (Pending, In Progress, Completed): ",
         ValidationUtils::validateTaskStatus);
-    task.setStatus(taskStatus);
-    System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
+
+    try {
+      final Task task = project.findTaskById(id);
+      task.setStatus(taskStatus);
+      System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
+    } catch (TaskNotFoundException e) {
+      CustomUtils.displayError(e);
+    }
   }
 
   private void removeTask() {
     authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE TASK");
     final String id = Console.getString("Enter Task ID: ");
-    if (!project.removeTaskById(id)) {
-      throw new TaskNotFoundException();
+    try {
+      project.removeTaskById(id);
+      System.out.println("✅Task Removed successfully");
+    } catch (TaskNotFoundException e) {
+      CustomUtils.displayError(e);
     }
-    System.out.println("✅Task Removed successfully");
   }
 
   private void listTasks() {
@@ -84,7 +97,11 @@ public class TaskService extends ConsoleService {
     System.out.println("Starting 3 threads to update tasks in parallel...");
     BiFunction<String, TaskStatus, Void> updateFunction = (id, status) -> {
       System.out.println(Thread.currentThread().getName() + " updating task " + id + " -> " + status);
-      project.updateTaskStatus(id, status);
+      try {
+        project.updateTaskStatus(id, status);
+      } catch (TaskNotFoundException e) {
+        CustomUtils.displayError(e);
+      }
       return null;
     };
     Thread t1 = new Thread(() -> updateFunction.apply("TS001", TaskStatus.PENDING), "Thread 1");
@@ -136,7 +153,7 @@ public class TaskService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
     return -1;
   }

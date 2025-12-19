@@ -3,7 +3,6 @@ package com.kratosgado.pms.models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import com.kratosgado.pms.data.dto.ProjectDetailDto;
 import com.kratosgado.pms.interfaces.HasId;
@@ -74,16 +73,20 @@ public abstract class Project implements HasId, JsonSerializable {
     this.tasks.add(task);
   }
 
-  public Optional<Task> findTaskById(String taskId) {
-    return tasks.stream().filter(t -> t.getId().equals(taskId)).findFirst();
+  public Task findTaskById(String taskId) throws TaskNotFoundException {
+    return tasks.stream().filter(t -> t.getId().equals(taskId)).findFirst().orElseThrow(TaskNotFoundException::new);
   }
 
-  public boolean removeTaskById(String taskId) {
-    return tasks.removeIf(t -> t.getId().equals(taskId));
+  public void removeTaskById(String taskId) throws TaskNotFoundException {
+
+    boolean removed = tasks.removeIf(t -> t.getId().equals(taskId));
+    if (!removed) {
+      throw new TaskNotFoundException();
+    }
   }
 
-  synchronized public void updateTaskStatus(String taskId, TaskStatus status) {
-    Task task = findTaskById(taskId).orElseThrow(TaskNotFoundException::new);
+  synchronized public void updateTaskStatus(String taskId, TaskStatus status) throws TaskNotFoundException {
+    Task task = findTaskById(taskId);
     task.setStatus(status);
   }
 

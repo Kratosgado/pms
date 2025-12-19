@@ -5,5 +5,5 @@ target/
 .project
 .settings/
 GEMINI.md
-projects.json
-users.json
+./projects.json
+./users.json
