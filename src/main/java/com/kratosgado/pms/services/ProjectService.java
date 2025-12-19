@@ -1,6 +1,7 @@
 
 package com.kratosgado.pms.services;
 
+import java.rmi.ConnectException;
 import java.util.List;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
@@ -13,6 +14,7 @@ import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 import com.kratosgado.pms.utils.enums.ProjectType;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
 import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
 import com.kratosgado.pms.utils.exceptions.ProjectNotFoundException;
 
@@ -58,8 +60,12 @@ public class ProjectService extends ConsoleService {
     final ProjectType type = ConsoleMenu.getInput("Enter Project Type (Software/Hardware): ", input -> {
       return ValidationUtils.validateProjectType(input);
     });
-    final Project project = projectsDb.add(name, description, teamSize, budget, type);
-    System.out.printf("✅Project '%s\' added successfully with id '%s'\n", project.getName(), project.getId());
+    try {
+      final Project project = projectsDb.add(name, description, teamSize, budget, type);
+      System.out.printf("✅Project '%s\' added successfully with id '%s'\n", project.getName(), project.getId());
+    } catch (ConflictException e) {
+      CustomUtils.displayError(e);
+    }
   }
 
   private void removeProject() {

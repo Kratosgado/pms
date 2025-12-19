@@ -14,7 +14,7 @@ import com.kratosgado.pms.services.UserService;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
-import com.kratosgado.pms.utils.exceptions.ProjectNotFoundException;
+import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
 
 public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFactory {
   private final UserInMemoryDatabase usersDb;
@@ -32,8 +32,8 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
   }
 
   @Override
-  public TaskService createTaskService(String projectId) {
-    Project project = projectsDb.getById(projectId).orElseThrow(ProjectNotFoundException::new);
+  public TaskService createTaskService(String projectId) throws EntityNotFoundException {
+    Project project = projectsDb.getById(projectId);
     return new TaskService(project, usersDb, authManager);
   }
 
@@ -42,7 +42,7 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
     try {
       projectsDb.loadData();
     } catch (IOException e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
     return new ProjectService(projectsDb, authManager, navigationManager, this);
   }
@@ -52,7 +52,7 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
     try {
       usersDb.loadData();
     } catch (IOException e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
     return new UserService(usersDb, authManager);
   }
@@ -73,7 +73,7 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
       projectsDb.saveData();
       usersDb.saveData();
     } catch (IOException e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
   }
 
@@ -83,7 +83,7 @@ public class ServiceFactory implements com.kratosgado.pms.interfaces.ServiceFact
       projectsDb.loadData();
       usersDb.loadData();
     } catch (IOException e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
       saveData();
     }
   }
