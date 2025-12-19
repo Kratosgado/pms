@@ -6,6 +6,7 @@ import java.util.function.Function;
 import com.kratosgado.pms.interfaces.ServiceFactory;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
+import com.kratosgado.pms.utils.exceptions.InputValidationException;
 
 public class ConsoleMenu {
   private NavigationManager navigationManager;
@@ -50,7 +51,7 @@ public class ConsoleMenu {
           serviceFactory.loadData();
           break;
         default:
-          CustomUtils.displayError("INPUT ERROR", "Invalid choice");
+          CustomUtils.displayError(new InputValidationException());
       }
     } while (running);
 
@@ -82,8 +83,8 @@ public class ConsoleMenu {
       final String choiceStr = scanner.nextLine().trim();
       try {
         input = validator.apply(choiceStr);
-      } catch (final Exception e) {
-        CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      } catch (InputValidationException e) {
+        CustomUtils.displayError(e);
         input = null;
       }
     } while (input == null);

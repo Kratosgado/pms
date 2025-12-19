@@ -13,6 +13,7 @@ import com.kratosgado.pms.interfaces.Persists;
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.enums.ProjectType;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
 import com.kratosgado.pms.utils.factories.ModelFactory;
 
 public class ProjectInMemoryDatabase extends Repository<Project> implements Filterable<Project>, Persists {
@@ -42,7 +43,8 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
 
   }
 
-  public Project add(String name, String description, int teamSize, double budget, ProjectType type) {
+  public Project add(String name, String description, int teamSize, double budget, ProjectType type)
+      throws ConflictException {
     String id = CustomUtils.getNextId("PJ", count());
     return safeAdd(ModelFactory.createProject(id, name, description, teamSize, budget, type));
   }
@@ -54,7 +56,7 @@ public class ProjectInMemoryDatabase extends Repository<Project> implements Filt
   }
 
   @Override
-  public Project add(Project model) {
+  public Project add(Project model) throws ConflictException {
     return safeAdd(model);
   }
 

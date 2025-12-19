@@ -1,6 +1,8 @@
 
 package com.kratosgado.pms.services;
 
+import java.net.ConnectException;
+
 import com.kratosgado.pms.data.UserInMemoryDatabase;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.Console;
@@ -9,6 +11,8 @@ import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.enums.UserRole;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
+import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
 import com.kratosgado.pms.utils.exceptions.UnauthorizedException;
 import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 
@@ -31,17 +35,24 @@ public class UserService extends ConsoleService {
     final UserRole role = ConsoleMenu.getInput("Enter User Role(Admin/Regular): ", input -> {
       return ValidationUtils.validateUserRole(input);
     });
-    User user = usersDb.add(name, email, password, role);
-    System.out.printf("✅User '%s\' added successfully\n", user.getName());
+    try {
+      User user = usersDb.add(name, email, password, role);
+      System.out.printf("✅User '%s\' added successfully\n", user.getName());
+    } catch (ConflictException e) {
+      CustomUtils.displayError(new ConnectException("User with email " + email + " already exists"));
+    }
   }
 
   private void removeUser() {
     authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE USER");
     final String id = Console.getString("Enter User ID: ");
-    if (!usersDb.removeById(id))
-      throw new UserNotFoundException();
-    System.out.println("✅User Removed successfully");
+    try {
+      usersDb.removeById(id);
+      System.out.println("✅User Removed successfully");
+    } catch (EntityNotFoundException e) {
+      CustomUtils.displayError(new UserNotFoundException());
+    }
   }
 
   private void listUsers() {
@@ -57,36 +68,36 @@ public class UserService extends ConsoleService {
 
   private void viewUserDetails() {
     String userId = Console.getString("Enter User Id: ");
-    User user = usersDb.getById(userId).orElseThrow(UserNotFoundException::new);
-    CustomUtils.displayHeader("USER DETAILS: " + userId);
-    StringBuilder sb = new StringBuilder();
+    try {
+      User user = usersDb.getById(userId);
+      CustomUtils.displayHeader("USER DETAILS: " + userId);
+      StringBuilder sb = new StringBuilder();
 
-    sb.append("ID: ").append(user.getId()).append("\n");
-    sb.append("NAME: ").append(user.getName()).append("\n");
-    sb.append("EMAIL: ").append(user.getEmail()).append("\n");
-    sb.append("ROLE: ").append(user.getRole()).append("\n");
+      sb.append("ID: ").append(user.getId()).append("\n");
+      sb.append("NAME: ").append(user.getName()).append("\n");
+      sb.append("EMAIL: ").append(user.getEmail()).append("\n");
+      sb.append("ROLE: ").append(user.getRole()).append("\n");
 
-    // sb.append("ASSOCIATED TASKS: ").append("\n");
-    // Task[] tasks = tasksDb.filter(task -> task.getUserId() != null &&
-    // task.getUserId().equals(user.getId()));
-    // CustomUtils.appendTableHeader(sb, String.format("%-20s|%-20s|%-20s|%-20s",
-    // "ID", "NAME", "STATUS", "HOURS"));
-    // for (Task task : tasks) {
-    // sb.append(task.toString());
-    // }
-    System.out.println(sb);
+      System.out.println(sb);
+    } catch (EntityNotFoundException e) {
+      CustomUtils.displayError(new UserNotFoundException());
+    }
   }
 
   private void switchUser() {
     CustomUtils.displayHeader("SWITCH USER");
     final String email = Console.getEmailInput();
-    final User user = usersDb.getByEmail(email);
     final String password = Console.getPasswordInput("Enter User Password: ");
-    if (!user.getPassword().equals(password)) {
-      throw new UnauthorizedException("Email or Password is incorrect");
+    try {
+      final User user = usersDb.getByEmail(email);
+      if (!user.getPassword().equals(password)) {
+        throw new UnauthorizedException("Email or Password is incorrect");
+      }
+      System.out.println("✅User switched successfully");
+      authManager.setCurrentUser(user);
+    } catch (EntityNotFoundException e) {
+      CustomUtils.displayError(new UserNotFoundException());
     }
-    System.out.println("✅User switched successfully");
-    authManager.setCurrentUser(user);
   }
 
   @Override
@@ -121,7 +132,7 @@ public class UserService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
     return -1;
   }

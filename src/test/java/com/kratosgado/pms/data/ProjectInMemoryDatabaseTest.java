@@ -13,6 +13,8 @@ import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.SoftwareProject;
 import com.kratosgado.pms.models.HardwareProject;
 import com.kratosgado.pms.utils.enums.ProjectType;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
+import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
 
 public class ProjectInMemoryDatabaseTest {
 
@@ -39,7 +41,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testSavingAndLoadingProjects() throws IOException {
+  void testSavingAndLoadingProjects() throws IOException, ConflictException {
     final String fileName = "projects_json.json";
     projectDb = new ProjectInMemoryDatabase(fileName);
     assertThrows(IOException.class, () -> {
@@ -53,7 +55,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testCreateSoftwareProject() {
+  void testCreateSoftwareProject() throws ConflictException {
     Project project = projectDb.add("E-commerce Platform", "An online shopping platform", 8, 100000.0,
         ProjectType.SOFTWARE);
 
@@ -67,7 +69,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testCreateHardwareProject() {
+  void testCreateHardwareProject() throws ConflictException {
     Project project = projectDb.add("IoT Sensor", "Smart sensor device", 4, 50000.0, ProjectType.HARDWARE);
 
     assertNotNull(project);
@@ -79,8 +81,12 @@ public class ProjectInMemoryDatabaseTest {
     assertTrue(project instanceof HardwareProject);
   }
 
+  /**
+   * @throws ConflictException
+   * 
+   */
   @Test
-  void testProjectIdGeneration() {
+  void testProjectIdGeneration() throws ConflictException {
     Project project1 = projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
     Project project2 = projectDb.add("Project 2", "Description 2", 3, 30000.0, ProjectType.HARDWARE);
 
@@ -92,7 +98,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testAddMultipleProjects() {
+  void testAddMultipleProjects() throws ConflictException {
     projectDb.add("Project A", "Description A", 5, 50000.0, ProjectType.SOFTWARE);
     projectDb.add("Project B", "Description B", 3, 30000.0, ProjectType.HARDWARE);
     projectDb.add("Project C", "Description C", 7, 75000.0, ProjectType.SOFTWARE);
@@ -101,9 +107,9 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testGetProjectById() {
+  void testGetProjectById() throws EntityNotFoundException, ConflictException {
     Project created = projectDb.add("Test Project", "Test Description", 5, 50000.0, ProjectType.SOFTWARE);
-    Project retrieved = projectDb.getById(created.getId()).orElse(null);
+    Project retrieved = projectDb.getById(created.getId());
 
     assertNotNull(retrieved);
     assertEquals(created.getName(), retrieved.getName());
@@ -111,17 +117,17 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testRemoveProject() {
+  void testRemoveProject() throws EntityNotFoundException, ConflictException {
     Project project = projectDb.add("Project to Remove", "Will be removed", 5, 50000.0, ProjectType.SOFTWARE);
     String id = project.getId();
 
     assertEquals(1, projectDb.count());
-    assertTrue(projectDb.removeById(id));
+    projectDb.removeById(id);
     assertEquals(0, projectDb.count());
   }
 
   @Test
-  void testMultipleProjectTypes() {
+  void testMultipleProjectTypes() throws ConflictException {
     Project swProject = projectDb.add("Web App", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
     Project hwProject = projectDb.add("PCB Board", "Description 2", 3, 30000.0, ProjectType.HARDWARE);
 
@@ -130,7 +136,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testProjectBudgetStorage() {
+  void testProjectBudgetStorage() throws ConflictException {
     Project lowBudget = projectDb.add("Low Budget", "Description 1", 2, 10000.0, ProjectType.SOFTWARE);
     Project mediumBudget = projectDb.add("Medium Budget", "Description 2", 5, 50000.0, ProjectType.SOFTWARE);
     Project highBudget = projectDb.add("High Budget", "Description 3", 10, 100000.0, ProjectType.HARDWARE);
@@ -141,7 +147,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testProjectTeamSizeStorage() {
+  void testProjectTeamSizeStorage() throws ConflictException {
     Project smallTeam = projectDb.add("Small Team", "Description 1", 2, 10000.0, ProjectType.SOFTWARE);
     Project mediumTeam = projectDb.add("Medium Team", "Description 2", 5, 50000.0, ProjectType.SOFTWARE);
     Project largeTeam = projectDb.add("Large Team", "Description 3", 10, 100000.0, ProjectType.HARDWARE);
@@ -152,7 +158,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testUpdateProject() {
+  void testUpdateProject() throws ConflictException, EntityNotFoundException {
     Project project = projectDb.add("Original Name", "Original Description", 5, 50000.0, ProjectType.SOFTWARE);
     project.setName("Updated Name");
     project.setDescription("Updated Description");
@@ -166,7 +172,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testProjectExists() {
+  void testProjectExists() throws ConflictException {
     Project project = projectDb.add("Existing Project", "Description", 5, 50000.0, ProjectType.SOFTWARE);
 
     assertTrue(projectDb.exists(project.getId()));
@@ -174,7 +180,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testAddDirectlyProject() {
+  void testAddDirectlyProject() throws ConflictException {
     SoftwareProject project = new SoftwareProject("PJ999", "Direct Add", "Added directly", 3, 30000.0);
     projectDb.add(project);
 
@@ -183,7 +189,7 @@ public class ProjectInMemoryDatabaseTest {
   }
 
   @Test
-  void testCountProjects() {
+  void testCountProjects() throws ConflictException {
     assertEquals(0, projectDb.count());
     projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
     assertEquals(1, projectDb.count());

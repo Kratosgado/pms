@@ -40,8 +40,8 @@ public class CustomUtils {
    * 
    * @param error the error message to display to the user
    */
-  public final static void displayError(String name, final String error) {
-    System.out.println("\n❌  " + name + ": " + error);
+  public final static void displayError(Exception e) {
+    System.out.println("\n❌  " + e.getClass().getSimpleName() + ": " + e.getMessage());
   }
 
   /**
