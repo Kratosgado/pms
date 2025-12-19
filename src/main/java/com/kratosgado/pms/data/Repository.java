@@ -23,7 +23,7 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
 
   protected T safeAdd(T entity) throws ConflictException {
     if (exists(entity.getId())) {
-      throw new ConflictException("Entity with id " + entity.getId() + " already exists");
+      throw new ConflictException();
     }
 
     this.entities.put(entity.getId(), entity);
