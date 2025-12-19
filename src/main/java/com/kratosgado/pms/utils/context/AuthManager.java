@@ -33,9 +33,7 @@ public class AuthManager {
         }
         setCurrentUser(user);
         CustomUtils.displaySuccess("User logged in");
-      } catch (UserNotFoundException e) {
-        CustomUtils.displayError(e);
-      } catch (final UnauthorizedException e) {
+      } catch (UserNotFoundException | UnauthorizedException e) {
         CustomUtils.displayError(e);
       }
     } while (getCurrentUser() == null);

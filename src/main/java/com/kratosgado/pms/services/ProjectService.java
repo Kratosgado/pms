@@ -13,6 +13,7 @@ import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.context.NavigationManager;
 import com.kratosgado.pms.utils.enums.ProjectType;
+import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
 import com.kratosgado.pms.utils.exceptions.ProjectNotFoundException;
 
 public class ProjectService extends ConsoleService {
@@ -65,9 +66,12 @@ public class ProjectService extends ConsoleService {
     authManager.requireAdmin();
     CustomUtils.displayHeader("REMOVE PROJECT");
     final String id = Console.getString("Enter Project ID: ");
-    if (!projectsDb.removeById(id))
-      throw new ProjectNotFoundException();
-    System.out.println("✅Project Removed successfully");
+    try {
+      projectsDb.removeById(id);
+      System.out.println("✅Project Removed successfully");
+    } catch (EntityNotFoundException e) {
+      CustomUtils.displayError(new ProjectNotFoundException());
+    }
 
   }
 
@@ -89,8 +93,8 @@ public class ProjectService extends ConsoleService {
         .println(listProjects(projectsDb.filter(project -> project.getBudget() >= min && project.getBudget() <= max)));
   }
 
-  private void displayProjectDetails(final String id) {
-    final Project project = projectsDb.getById(id).orElseThrow(ProjectNotFoundException::new);
+  private void displayProjectDetails(final String id) throws EntityNotFoundException {
+    final Project project = projectsDb.getById(id);
     CustomUtils.displayHeader("PROJECT DETAILS: " + id);
     System.out.println(project.getProjectDetails());
   }
@@ -99,17 +103,26 @@ public class ProjectService extends ConsoleService {
     final String id = Console.getString("Enter project Id to view details (or 0 to return): ");
     if (id.equals("0"))
       return;
-    TaskService taskService = serviceFactory.createTaskService(id);
-    this.displayProjectDetails(id);
-    navigationManager.pushService(taskService);
+    try {
+      this.displayProjectDetails(id);
+      TaskService taskService = serviceFactory.createTaskService(id);
+      navigationManager.pushService(taskService);
+
+    } catch (EntityNotFoundException e) {
+      CustomUtils.displayError(new ProjectNotFoundException());
+    }
   }
 
   private void calculateProjectCompletion() {
     CustomUtils.displayHeader("CALCULATE PROJECT COMPLETION");
     final String id = Console.getString("Enter Project ID: ");
-    final Project project = projectsDb.getById(id).orElseThrow(ProjectNotFoundException::new);
-    final double progress = project.calculateCompletionPercentage();
-    System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
+    try {
+      final Project project = projectsDb.getById(id);
+      final double progress = project.calculateCompletionPercentage();
+      System.out.printf("✅Project '%s\' completed with progress %.2f%%\n", project.getName(), progress);
+    } catch (EntityNotFoundException e) {
+      CustomUtils.displayError(new ProjectNotFoundException());
+    }
   }
 
   @Override
@@ -153,7 +166,7 @@ public class ProjectService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
     return -1;
   }

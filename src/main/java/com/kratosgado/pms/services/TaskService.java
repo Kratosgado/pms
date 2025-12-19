@@ -11,6 +11,7 @@ import com.kratosgado.pms.utils.CustomUtils;
 import com.kratosgado.pms.utils.ValidationUtils;
 import com.kratosgado.pms.utils.context.AuthManager;
 import com.kratosgado.pms.utils.enums.TaskStatus;
+import com.kratosgado.pms.utils.exceptions.ConflictException;
 import com.kratosgado.pms.utils.exceptions.TaskNotFoundException;
 import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 
@@ -48,8 +49,8 @@ public class TaskService extends ConsoleService {
       }
       project.addTask(task);
       System.out.printf("✅Task '%s\' added successfully to project\n", task.getName());
-    } catch (UserNotFoundException e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+    } catch (UserNotFoundException | ConflictException e) {
+      CustomUtils.displayError(e);
     }
   }
 
@@ -64,7 +65,7 @@ public class TaskService extends ConsoleService {
       task.setStatus(taskStatus);
       System.out.printf("✅Task '%s\' updated successfully as '%s'\n", task.getName(), taskStatus.getStatus());
     } catch (TaskNotFoundException e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
   }
 
@@ -76,7 +77,7 @@ public class TaskService extends ConsoleService {
       project.removeTaskById(id);
       System.out.println("✅Task Removed successfully");
     } catch (TaskNotFoundException e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
   }
 
@@ -99,7 +100,7 @@ public class TaskService extends ConsoleService {
       try {
         project.updateTaskStatus(id, status);
       } catch (TaskNotFoundException e) {
-        CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+        CustomUtils.displayError(e);
       }
       return null;
     };
@@ -152,7 +153,7 @@ public class TaskService extends ConsoleService {
           return choice;
       }
     } catch (final Exception e) {
-      CustomUtils.displayError(e.getClass().getSimpleName(), e.getMessage());
+      CustomUtils.displayError(e);
     }
     return -1;
   }
