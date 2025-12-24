@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import com.kratosgado.pms.models.Project;
@@ -88,24 +89,29 @@ public class ProjectInMemoryDatabaseTest {
     assertEquals(projectType, project.getProjectType(), "Project type should match");
   }
 
-  @Test
-  void testProjectIdGeneration() throws ConflictException {
-    Project project1 = projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
-    Project project2 = projectDb.add("Project 2", "Description 2", 3, 30000.0, ProjectType.HARDWARE);
+  @ParameterizedTest
+  @CsvSource({
+      "Project 1,Description 1,5,50000.0",
+      "Project 2,Description 2,3,30000.0",
+      "Project 3,Description 3,7,70000.0"
+  })
+  void testProjectIdGenerationAndCount(String name, String description, int teamSize, double budget) throws ConflictException {
+    Project project = projectDb.add(name, description, teamSize, budget, ProjectType.SOFTWARE);
 
-    assertNotNull(project1.getId(), "Project 1 ID should not be null");
-    assertNotNull(project2.getId(), "Project 2 ID should not be null");
-    assertNotEquals(project1.getId(), project2.getId(), "Project IDs should be unique");
-    assertTrue(project1.getId().startsWith("PJ"), "Project ID should start with PJ");
-    assertTrue(project2.getId().startsWith("PJ"), "Project ID should start with PJ");
+    assertNotNull(project.getId(), "Project ID should not be null");
+    assertTrue(project.getId().startsWith("PJ"), "Project ID should start with PJ");
+    assertEquals(1, projectDb.count(), "Project count should be 1 after adding");
   }
 
   @Test
-  void testAddMultipleProjects() throws ConflictException {
-    projectDb.add("Project A", "Description A", 5, 50000.0, ProjectType.SOFTWARE);
-    projectDb.add("Project B", "Description B", 3, 30000.0, ProjectType.HARDWARE);
-    projectDb.add("Project C", "Description C", 7, 75000.0, ProjectType.SOFTWARE);
+  void testProjectIdUniqueness() throws ConflictException {
+    Project project1 = projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
+    Project project2 = projectDb.add("Project 2", "Description 2", 3, 30000.0, ProjectType.HARDWARE);
+    Project project3 = projectDb.add("Project 3", "Description 3", 7, 75000.0, ProjectType.SOFTWARE);
 
+    assertNotEquals(project1.getId(), project2.getId(), "Project IDs should be unique");
+    assertNotEquals(project2.getId(), project3.getId(), "Project IDs should be unique");
+    assertNotEquals(project1.getId(), project3.getId(), "Project IDs should be unique");
     assertEquals(3, projectDb.count(), "Should have 3 projects in the database");
   }
 
