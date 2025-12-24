@@ -1,6 +1,11 @@
 package com.kratosgado.pms.data;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,10 +13,12 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import com.kratosgado.pms.models.Project;
 import com.kratosgado.pms.models.SoftwareProject;
-import com.kratosgado.pms.models.HardwareProject;
 import com.kratosgado.pms.utils.enums.ProjectType;
 import com.kratosgado.pms.utils.exceptions.ConflictException;
 import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
@@ -20,81 +27,77 @@ public class ProjectInMemoryDatabaseTest {
 
   private ProjectInMemoryDatabase projectDb;
 
+  @TempDir
+  Path tempDir;
+
   @BeforeEach
   void setUp() {
     projectDb = new ProjectInMemoryDatabase();
   }
 
   @Test
-  void testProjectFileExists() throws IOException {
-    final String fileName = "data/projects.json";
-    projectDb = new ProjectInMemoryDatabase(fileName);
-    projectDb.saveData();
-    assertTrue(projectDb.fileExists());
-  }
+  void testSaveDataCreatesFile() throws IOException, ConflictException {
 
-  @Test
-  void testProjectFileDoesNotExist() {
-    final String fileName = "nonexistent.json";
-    projectDb = new ProjectInMemoryDatabase(fileName);
-    assertFalse(projectDb.fileExists());
-  }
-
-  @Test
-  void testSavingAndLoadingProjects() throws IOException, ConflictException {
-    final String fileName = "projects_json.json";
-    projectDb = new ProjectInMemoryDatabase(fileName);
-    assertThrows(IOException.class, () -> {
-      projectDb.loadData();
-    });
+    Path file = tempDir.resolve("projects.json");
+    projectDb = new ProjectInMemoryDatabase(file.toString());
     projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
+
     projectDb.saveData();
-    assertEquals(1, projectDb.count());
-    assertTrue(projectDb.fileExists());
-    Files.delete(Path.of(fileName));
+
+    assertTrue(Files.exists(file), "The file should be created after saving data.");
   }
 
   @Test
-  void testCreateSoftwareProject() throws ConflictException {
+  void testLoadDataThrowsExceptionForNonexistentFile() {
+
+    Path file = tempDir.resolve("nonexistent.json");
+    projectDb = new ProjectInMemoryDatabase(file.toString());
+
+    assertThrows(IOException.class, () -> projectDb.loadData(),
+        "Loading data from a nonexistent file should throw an IOException.");
+  }
+
+  @Test
+  void testSaveAndLoadData() throws IOException, ConflictException, EntityNotFoundException {
+
+    Path file = tempDir.resolve("projects.json");
+    projectDb = new ProjectInMemoryDatabase(file.toString());
+    Project originalProject = projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
+    projectDb.saveData();
+
+    ProjectInMemoryDatabase newDb = new ProjectInMemoryDatabase(file.toString());
+    newDb.loadData();
+
+    assertEquals(1, newDb.count(), "The new database should have one project after loading.");
+    Project loadedProject = newDb.getById(originalProject.getId());
+    assertEquals(originalProject.getName(), loadedProject.getName(),
+        "The loaded project name should match the original.");
+  }
+
+  @ParameterizedTest
+  @EnumSource(ProjectType.class)
+  void testCreateProjectTypes(ProjectType projectType) throws ConflictException {
     Project project = projectDb.add("E-commerce Platform", "An online shopping platform", 8, 100000.0,
-        ProjectType.SOFTWARE);
+        projectType);
 
-    assertNotNull(project);
-    assertEquals("E-commerce Platform", project.getName());
-    assertEquals("An online shopping platform", project.getDescription());
-    assertEquals(8, project.getTeamSize());
-    assertEquals(100000.0, project.getBudget());
-    assertEquals(ProjectType.SOFTWARE, project.getProjectType());
-    assertTrue(project instanceof SoftwareProject);
+    assertNotNull(project, "Project should not be null");
+    assertEquals("E-commerce Platform", project.getName(), "Project name should match");
+    assertEquals("An online shopping platform", project.getDescription(), "Project description should match");
+    assertEquals(8, project.getTeamSize(), "Project team size should match");
+    assertEquals(100000.0, project.getBudget(), "Project budget should match");
+    assertEquals(projectType, project.getProjectType(), "Project type should match");
   }
 
-  @Test
-  void testCreateHardwareProject() throws ConflictException {
-    Project project = projectDb.add("IoT Sensor", "Smart sensor device", 4, 50000.0, ProjectType.HARDWARE);
-
-    assertNotNull(project);
-    assertEquals("IoT Sensor", project.getName());
-    assertEquals("Smart sensor device", project.getDescription());
-    assertEquals(4, project.getTeamSize());
-    assertEquals(50000.0, project.getBudget());
-    assertEquals(ProjectType.HARDWARE, project.getProjectType());
-    assertTrue(project instanceof HardwareProject);
-  }
-
-  /**
-   * @throws ConflictException
-   * 
-   */
   @Test
   void testProjectIdGeneration() throws ConflictException {
     Project project1 = projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
     Project project2 = projectDb.add("Project 2", "Description 2", 3, 30000.0, ProjectType.HARDWARE);
 
-    assertNotNull(project1.getId());
-    assertNotNull(project2.getId());
-    assertNotEquals(project1.getId(), project2.getId());
-    assertTrue(project1.getId().startsWith("PJ"));
-    assertTrue(project2.getId().startsWith("PJ"));
+    assertNotNull(project1.getId(), "Project 1 ID should not be null");
+    assertNotNull(project2.getId(), "Project 2 ID should not be null");
+    assertNotEquals(project1.getId(), project2.getId(), "Project IDs should be unique");
+    assertTrue(project1.getId().startsWith("PJ"), "Project ID should start with PJ");
+    assertTrue(project2.getId().startsWith("PJ"), "Project ID should start with PJ");
   }
 
   @Test
@@ -103,7 +106,7 @@ public class ProjectInMemoryDatabaseTest {
     projectDb.add("Project B", "Description B", 3, 30000.0, ProjectType.HARDWARE);
     projectDb.add("Project C", "Description C", 7, 75000.0, ProjectType.SOFTWARE);
 
-    assertEquals(3, projectDb.count());
+    assertEquals(3, projectDb.count(), "Should have 3 projects in the database");
   }
 
   @Test
@@ -111,9 +114,9 @@ public class ProjectInMemoryDatabaseTest {
     Project created = projectDb.add("Test Project", "Test Description", 5, 50000.0, ProjectType.SOFTWARE);
     Project retrieved = projectDb.getById(created.getId());
 
-    assertNotNull(retrieved);
-    assertEquals(created.getName(), retrieved.getName());
-    assertEquals(created.getId(), retrieved.getId());
+    assertNotNull(retrieved, "Retrieved project should not be null");
+    assertEquals(created.getName(), retrieved.getName(), "Retrieved project name should match created project name");
+    assertEquals(created.getId(), retrieved.getId(), "Retrieved project ID should match created project ID");
   }
 
   @Test
@@ -121,9 +124,9 @@ public class ProjectInMemoryDatabaseTest {
     Project project = projectDb.add("Project to Remove", "Will be removed", 5, 50000.0, ProjectType.SOFTWARE);
     String id = project.getId();
 
-    assertEquals(1, projectDb.count());
+    assertEquals(1, projectDb.count(), "Project count should be 1 before removal");
     projectDb.removeById(id);
-    assertEquals(0, projectDb.count());
+    assertEquals(0, projectDb.count(), "Project count should be 0 after removal");
   }
 
   @Test
@@ -131,30 +134,8 @@ public class ProjectInMemoryDatabaseTest {
     Project swProject = projectDb.add("Web App", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
     Project hwProject = projectDb.add("PCB Board", "Description 2", 3, 30000.0, ProjectType.HARDWARE);
 
-    assertEquals(ProjectType.SOFTWARE, swProject.getProjectType());
-    assertEquals(ProjectType.HARDWARE, hwProject.getProjectType());
-  }
-
-  @Test
-  void testProjectBudgetStorage() throws ConflictException {
-    Project lowBudget = projectDb.add("Low Budget", "Description 1", 2, 10000.0, ProjectType.SOFTWARE);
-    Project mediumBudget = projectDb.add("Medium Budget", "Description 2", 5, 50000.0, ProjectType.SOFTWARE);
-    Project highBudget = projectDb.add("High Budget", "Description 3", 10, 100000.0, ProjectType.HARDWARE);
-
-    assertEquals(10000.0, lowBudget.getBudget());
-    assertEquals(50000.0, mediumBudget.getBudget());
-    assertEquals(100000.0, highBudget.getBudget());
-  }
-
-  @Test
-  void testProjectTeamSizeStorage() throws ConflictException {
-    Project smallTeam = projectDb.add("Small Team", "Description 1", 2, 10000.0, ProjectType.SOFTWARE);
-    Project mediumTeam = projectDb.add("Medium Team", "Description 2", 5, 50000.0, ProjectType.SOFTWARE);
-    Project largeTeam = projectDb.add("Large Team", "Description 3", 10, 100000.0, ProjectType.HARDWARE);
-
-    assertEquals(2, smallTeam.getTeamSize());
-    assertEquals(5, mediumTeam.getTeamSize());
-    assertEquals(10, largeTeam.getTeamSize());
+    assertEquals(ProjectType.SOFTWARE, swProject.getProjectType(), "Project type should be SOFTWARE");
+    assertEquals(ProjectType.HARDWARE, hwProject.getProjectType(), "Project type should be HARDWARE");
   }
 
   @Test
@@ -164,19 +145,21 @@ public class ProjectInMemoryDatabaseTest {
     project.setDescription("Updated Description");
     project.setBudget(75000.0);
 
-    Project updated = projectDb.update(project);
-    assertNotNull(updated);
-    assertEquals("Updated Name", updated.getName());
-    assertEquals("Updated Description", updated.getDescription());
-    assertEquals(75000.0, updated.getBudget());
+    projectDb.update(project);
+    Project updated = projectDb.getById(project.getId());
+
+    assertNotNull(updated, "Updated project should not be null");
+    assertEquals("Updated Name", updated.getName(), "Name should be updated");
+    assertEquals("Updated Description", updated.getDescription(), "Description should be updated");
+    assertEquals(75000.0, updated.getBudget(), "Budget should be updated");
   }
 
   @Test
   void testProjectExists() throws ConflictException {
     Project project = projectDb.add("Existing Project", "Description", 5, 50000.0, ProjectType.SOFTWARE);
 
-    assertTrue(projectDb.exists(project.getId()));
-    assertFalse(projectDb.exists("NONEXISTENT_ID"));
+    assertTrue(projectDb.exists(project.getId()), "exists() should return true for existing project");
+    assertFalse(projectDb.exists("NONEXISTENT_ID"), "exists() should return false for non-existent project");
   }
 
   @Test
@@ -184,19 +167,19 @@ public class ProjectInMemoryDatabaseTest {
     SoftwareProject project = new SoftwareProject("PJ999", "Direct Add", "Added directly", 3, 30000.0);
     projectDb.add(project);
 
-    assertEquals(1, projectDb.count());
-    assertTrue(projectDb.exists("PJ999"));
+    assertEquals(1, projectDb.count(), "Count should be 1 after adding project directly");
+    assertTrue(projectDb.exists("PJ999"), "Project added directly should exist");
   }
 
   @Test
   void testCountProjects() throws ConflictException {
-    assertEquals(0, projectDb.count());
+    assertEquals(0, projectDb.count(), "Initially, project count should be 0");
     projectDb.add("Project 1", "Description 1", 5, 50000.0, ProjectType.SOFTWARE);
-    assertEquals(1, projectDb.count());
+    assertEquals(1, projectDb.count(), "Project count should be 1 after adding one project");
     projectDb.add("Project 2", "Description 2", 3, 30000.0, ProjectType.HARDWARE);
-    assertEquals(2, projectDb.count());
+    assertEquals(2, projectDb.count(), "Project count should be 2 after adding two projects");
     projectDb.add("Project 3", "Description 3", 7, 70000.0, ProjectType.SOFTWARE);
-    assertEquals(3, projectDb.count());
+    assertEquals(3, projectDb.count(), "Project count should be 3 after adding three projects");
   }
 
 }

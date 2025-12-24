@@ -2,18 +2,19 @@
 package com.kratosgado.pms.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import com.kratosgado.pms.models.AdminUser;
+import com.kratosgado.pms.models.RegularUser;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.exceptions.ConflictException;
 import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
-import com.kratosgado.pms.models.AdminUser;
-import com.kratosgado.pms.models.RegularUser;
 
 public class RepositoryTest {
   private Repository<User> repository;
@@ -27,16 +28,20 @@ public class RepositoryTest {
   }
 
   @Test
-  void testAddEntity() {
-    assertEquals(2, repository.count());
+  void testAddEntity() throws ConflictException {
+    User user = new RegularUser("id3", "name", "email", "password");
+    repository.add(user);
+    assertEquals(3, repository.count());
   }
 
-  @Test
-  void testEntityUpdate() throws EntityNotFoundException {
+  @ParameterizedTest
+  @ValueSource(strings = { "Design buttons", "Design logo", "Design website" })
+  void testEntityUpdate(String newName) throws EntityNotFoundException {
     User task = repository.getById("id1");
-    task.setName("newName");
+    task.setName(newName);
     User updated = repository.update(task);
     assertEquals(task, updated);
+    assertEquals(newName, updated.getName());
   }
 
   @Test
@@ -45,10 +50,10 @@ public class RepositoryTest {
     assertEquals(1, repository.count());
   }
 
-  @Test
-  void testEntityExists() {
-    assertTrue(repository.exists("id1"));
-    assertFalse(repository.exists("id5"));
+  @ParameterizedTest
+  @CsvSource({ "id1,true", "id2,true", "id5,false", "id3,false" })
+  void testEntityExists(String id, boolean expected) {
+    assertEquals(expected, repository.exists(id));
   }
 
   @Test

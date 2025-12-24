@@ -1,11 +1,17 @@
 package com.kratosgado.pms.models;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import com.kratosgado.pms.utils.enums.ProjectType;
 import com.kratosgado.pms.utils.enums.TaskStatus;
@@ -51,48 +57,37 @@ public class ProjectTest {
     assertEquals(100000.0, softwareProject.getBudget());
   }
 
-  @Test
-  void testCompletionPercentageWithNoTasks() {
-    ArrayList<Task> tasks = new ArrayList<>();
-    softwareProject.setTasks(tasks);
-    assertEquals(0.0, softwareProject.calculateCompletionPercentage());
+  private static Stream<Arguments> completionPercentageSource() {
+    return Stream.of(
+        Arguments.of(List.of(), 0.0, 0),
+        Arguments.of(
+            List.of(
+                new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001"),
+                new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001"),
+                new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001"),
+                new Task("T004", "Task 4", TaskStatus.IN_PROGRESS, "PJ001")),
+            50.0, 2),
+        Arguments.of(
+            List.of(
+                new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001"),
+                new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001")),
+            100.0, 2),
+        Arguments.of(
+            List.of(
+                new Task("T001", "Task 1", TaskStatus.PENDING, "PJ001"),
+                new Task("T002", "Task 2", TaskStatus.IN_PROGRESS, "PJ001"),
+                new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001")),
+            0.0, 0));
   }
 
-  @Test
-  void testCompletionPercentageWithTasks() {
-    ArrayList<Task> tasks = new ArrayList<>();
-    tasks.add(new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001"));
-    tasks.add(new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001"));
-    tasks.add(new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001"));
-    tasks.add(new Task("T004", "Task 4", TaskStatus.IN_PROGRESS, "PJ001"));
-    softwareProject.setTasks(tasks);
-
-    assertEquals(50.0, softwareProject.calculateCompletionPercentage());
-    assertEquals(2, softwareProject.getCompletedTasks());
-  }
-
-  @Test
-  void testAllTasksCompleted() {
-    ArrayList<Task> tasks = new ArrayList<>();
-    tasks.add(new Task("T001", "Task 1", TaskStatus.COMPLETED, "PJ001"));
-    tasks.add(new Task("T002", "Task 2", TaskStatus.COMPLETED, "PJ001"));
-    softwareProject.setTasks(tasks);
-
-    assertEquals(100.0, softwareProject.calculateCompletionPercentage());
-    assertEquals(2, softwareProject.getCompletedTasks());
-  }
-
-  @Test
-  void testNoTasksCompleted() {
-    ArrayList<Task> tasks = new ArrayList<>();
-    tasks.add(new Task("T001", "Task 1", TaskStatus.PENDING, "PJ001"));
-    tasks.add(new Task("T002", "Task 2", TaskStatus.IN_PROGRESS, "PJ001"));
-    tasks.add(new Task("T003", "Task 3", TaskStatus.PENDING, "PJ001"));
-
-    softwareProject.setTasks(tasks);
-
-    assertEquals(0.0, softwareProject.calculateCompletionPercentage());
-    assertEquals(0, softwareProject.getCompletedTasks());
+  @ParameterizedTest
+  @MethodSource("completionPercentageSource")
+  void testCalculateCompletionPercentage(List<Task> tasks, double expectedPercentage, int expectedCompletedTasks) {
+    softwareProject.setTasks(new ArrayList<>(tasks));
+    assertEquals(expectedPercentage, softwareProject.calculateCompletionPercentage(),
+        "Completion percentage should be calculated correctly");
+    assertEquals(expectedCompletedTasks, softwareProject.getCompletedTasks(),
+        "Number of completed tasks should be calculated correctly");
   }
 
   @Test
