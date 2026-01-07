@@ -4,11 +4,11 @@ package com.kratosgado.pms.data;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import com.kratosgado.pms.interfaces.HasId;
 import com.kratosgado.pms.interfaces.InMemoryDatabase;
 import com.kratosgado.pms.utils.exceptions.ConflictException;
+import com.kratosgado.pms.utils.exceptions.EntityNotFoundException;
 
 public abstract class Repository<T extends HasId> implements InMemoryDatabase<T> {
   protected HashMap<String, T> entities;
@@ -21,9 +21,9 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
     this.entities = entities;
   }
 
-  protected T safeAdd(T entity) {
+  protected T safeAdd(T entity) throws ConflictException {
     if (exists(entity.getId())) {
-      throw new ConflictException("Entity with id " + entity.getId() + " already exists");
+      throw new ConflictException();
     }
 
     this.entities.put(entity.getId(), entity);
@@ -31,8 +31,8 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
   }
 
   @Override
-  public T update(T model) {
-    T entity = getById(model.getId()).orElseThrow();
+  public T update(T model) throws EntityNotFoundException {
+    T entity = getById(model.getId());
     entity = model;
     return entity;
   }
@@ -43,18 +43,20 @@ public abstract class Repository<T extends HasId> implements InMemoryDatabase<T>
   }
 
   @Override
-  public Optional<T> getById(String id) {
+  public T getById(String id) throws EntityNotFoundException {
     T entity = entities.get(id);
     if (entity == null) {
-      return Optional.empty();
+      throw new EntityNotFoundException();
     }
-    return Optional.of(entity);
+    return entity;
   }
 
   @Override
-  public boolean removeById(String id) {
+  public void removeById(String id) throws EntityNotFoundException {
     T entity = entities.remove(id);
-    return entity != null;
+    if (entity == null) {
+      throw new EntityNotFoundException();
+    }
   }
 
   @Override
