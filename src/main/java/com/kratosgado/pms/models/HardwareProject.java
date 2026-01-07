@@ -55,7 +55,7 @@ public class HardwareProject extends Project {
     int teamSizeEnd = json.indexOf(",", teamSizeStart + 1);
     int teamSize = Integer.parseInt(json.substring(teamSizeStart, teamSizeEnd));
 
-    int budgetStart = json.indexOf("\"budget\":") + 11;
+    int budgetStart = json.indexOf("\"budget\":") + 10;
     int budgetEnd = json.indexOf("\",", budgetStart);
     double budget = Double.parseDouble(json.substring(budgetStart, budgetEnd));
 

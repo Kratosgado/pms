@@ -5,7 +5,7 @@
 "description":"Project management system",
 "projectType":"HARDWARE",
 "teamSize": 11,
-"budget":"13000.0",
+"budget":"0.0",
 "tasks":[
 {
 "id":"TS000",
@@ -49,7 +49,7 @@
 "description":"Project management system",
 "projectType":"HARDWARE",
 "teamSize": 7,
-"budget":"2000.0",
+"budget":"0.0",
 "tasks":[
 {
 "id":"TS000",
@@ -88,12 +88,21 @@
 }]
 }, 
 {
+"id":"PJ005",
+"name":"Blog",
+"description":"Java Blog",
+"projectType":"SOFTWARE",
+"teamSize": 3,
+"budget":"0.0",
+"tasks":[]
+}, 
+{
 "id":"PJ004",
 "name":"Console",
 "description":"Project management system",
 "projectType":"SOFTWARE",
 "teamSize": 9,
-"budget":"2000.0",
+"budget":"0.0",
 "tasks":[
 {
 "id":"TS000",
@@ -132,12 +141,30 @@
 }]
 }, 
 {
+"id":"PJ007",
+"name":"test",
+"description":"testing",
+"projectType":"SOFTWARE",
+"teamSize": 3,
+"budget":"500.0",
+"tasks":[]
+}, 
+{
+"id":"PJ006",
+"name":"Blog2",
+"description":"dfh",
+"projectType":"SOFTWARE",
+"teamSize": 3,
+"budget":"443.23",
+"tasks":[]
+}, 
+{
 "id":"PJ001",
 "name":"Steganography",
 "description":"Hiding information in images",
 "projectType":"SOFTWARE",
 "teamSize": 4,
-"budget":"1000.0",
+"budget":"0.0",
 "tasks":[
 {
 "id":"TS000",
@@ -181,7 +208,7 @@
 "description":"Project management system",
 "projectType":"SOFTWARE",
 "teamSize": 4,
-"budget":"1000.0",
+"budget":"0.0",
 "tasks":[
 {
 "id":"TS000",
