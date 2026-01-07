@@ -1,7 +1,7 @@
 
 package com.kratosgado.pms.utils.exceptions;
 
-public class UserNotFoundException extends RuntimeException {
+public class UserNotFoundException extends EntityNotFoundException {
 
   public UserNotFoundException() {
     super("User does not exist");
