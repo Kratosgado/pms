@@ -1,7 +1,6 @@
 
 package com.kratosgado.pms.services;
 
-import java.rmi.ConnectException;
 import java.util.List;
 
 import com.kratosgado.pms.data.ProjectInMemoryDatabase;
