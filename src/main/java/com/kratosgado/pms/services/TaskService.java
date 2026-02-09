@@ -105,7 +105,7 @@ public class TaskService extends ConsoleService {
       return null;
     };
     Thread t1 = new Thread(() -> updateFunction.apply("TS001", TaskStatus.PENDING), "Thread 1");
-    Thread t2 = new Thread(() -> updateFunction.apply("TS002", TaskStatus.IN_PROGRESS), "Thread 2");
+    Thread t2 = new Thread(() -> updateFunction.apply("TS001", TaskStatus.IN_PROGRESS), "Thread 2");
     Thread t3 = new Thread(() -> updateFunction.apply("TS003", TaskStatus.COMPLETED), "Thread 3");
     t1.start();
     t2.start();
