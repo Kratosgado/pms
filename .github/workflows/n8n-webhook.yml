@@ -1,0 +1,30 @@
+name: Trigger n8n Webhook
+
+on:
+  push:
+    branches:
+      - '**'  # Triggers on push to any branch
+
+jobs:
+  notify-n8n:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send webhook to n8n
+        run: |
+          curl -X POST https://kratosgado.app.n8n.cloud/webhook-test/github-webhook \
+            -H "Content-Type: application/json" \
+            -d '{
+              "event": "push",
+              "repository": "${{ github.repository }}",
+              "branch": "${{ github.ref_name }}",
+              "commit_sha": "${{ github.sha }}",
+              "commit_message": "${{ github.event.head_commit.message }}",
+              "author": "${{ github.actor }}",
+              "timestamp": "${{ github.event.head_commit.timestamp }}",
+              "compare_url": "${{ github.event.compare }}"
+            }'
+
+      - name: Check webhook response
+        if: failure()
+        run: echo "Webhook request failed. Please check the n8n endpoint."
