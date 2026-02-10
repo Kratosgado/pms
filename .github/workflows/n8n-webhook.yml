@@ -3,7 +3,7 @@ name: Trigger n8n Webhook
 on:
   push:
     branches:
-      - '**'  # Triggers on push to any branch
+      - "**"
 
 jobs:
   notify-n8n:
