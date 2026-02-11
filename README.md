@@ -79,6 +79,13 @@ mvn exec:java
 mvn test
 ```
 
+### 4. Run tests with coverage report
+
+```bash
+mvn clean test
+# View coverage report: open target/site/jacoco/index.html in browser
+```
+
 The application will start with an authentication menu.
 
 ## Usage
@@ -186,8 +193,38 @@ The system validates all user inputs:
 > - Check that all class files were compiled to the `bin` directory
 > - Ensure proper input format when prompted
 
+## Testing
+
+The project includes comprehensive unit and integration tests:
+
+- **Total Tests:** 103
+- **Test Coverage:** Focused on business logic (models, data layer, calculations)
+- **Test Framework:** JUnit 5
+- **Coverage Tool:** JaCoCo
+
+### Running Tests
+
+```bash
+# Run all tests
+mvn test
+
+# Run tests with coverage report
+mvn clean test
+
+# Run specific test class
+mvn test -Dtest=UserTest
+
+# View coverage report
+open target/site/jacoco/index.html
+```
+
+### Test Documentation
+
+See [`docs/testing-strategy.md`](docs/testing-strategy.md) for detailed testing strategy and approach.
+
 ## Notes
 
 > - The system uses an in-memory data structure (may be enhanced with database integration in future versions)
 > - User performance summaries are flagged for future expansion
 > - The system supports graceful error handling with user-friendly error messages
+> - Comprehensive test suite with 103 tests covering core business logic
