@@ -7,25 +7,6 @@
 
 ## Backlog Items
 
-### US-1: RESTful API for Task Management
-- **Priority:** High
-- **Story Points:** 8
-- **Status:** Not Started
-- **Sprint:** Sprint 2
-- **Assignee:** TBD
-
-**Description:**
-As a third-party application developer, I want a RESTful API to interact with the PMS system, so that I can integrate task management capabilities into external tools and platforms.
-
-**Acceptance Criteria:**
-- [ ] API endpoints exist for CRUD operations on projects, tasks, and users
-- [ ] API returns proper HTTP status codes (200, 201, 400, 401, 404, 500)
-- [ ] Request/response payloads use JSON format
-- [ ] API includes authentication using token-based approach
-- [ ] API documentation is available (Swagger/OpenAPI)
-
----
-
 ### US-2: Enhanced Task Filtering and Search
 - **Priority:** High
 - **Story Points:** 5
@@ -140,7 +121,7 @@ As a developer, I want an automated CI/CD pipeline, so that code changes are aut
 
 ---
 
-### US-8: Health Check Endpoint
+### US-8: System Diagnostics Command
 - **Priority:** Low
 - **Story Points:** 2
 - **Status:** Not Started
@@ -148,14 +129,13 @@ As a developer, I want an automated CI/CD pipeline, so that code changes are aut
 - **Assignee:** TBD
 
 **Description:**
-As a DevOps engineer, I want a health check endpoint, so that I can monitor if the application is running.
+As a DevOps engineer, I want a system diagnostics command, so that I can monitor if the application is running correctly.
 
 **Acceptance Criteria:**
-- [ ] Health endpoint returns HTTP 200 when healthy
-- [ ] Response includes system info (uptime, memory, DB status)
-- [ ] Responds within 500ms
-- [ ] Does not require authentication
-- [ ] Documented in API documentation
+- [ ] 'status' command prints system information (uptime, memory, DB status)
+- [ ] Command executes within 500ms
+- [ ] Output is formatted as a readable table
+- [ ] Documented in user guide
 
 ---
 
@@ -176,7 +156,6 @@ As a DevOps engineer, I want a health check endpoint, so that I can monitor if t
 
 | Story | Points | Priority |
 |-------|--------|----------|
-| US-1: RESTful API | 8 | High |
 | US-2: Enhanced Filtering | 5 | High |
 | US-4: Task Assignment | 3 | Medium |
 | US-6: Task Priority | 2 | Medium |
@@ -185,15 +164,15 @@ As a DevOps engineer, I want a health check endpoint, so that I can monitor if t
 ### Backlog (Future Sprints)
 | Story | Points | Priority |
 |-------|--------|----------|
-| US-8: Health Check Endpoint | 2 | Low |
+| US-8: System Diagnostics Command | 2 | Low |
 
 ---
 
 ## Backlog Metrics
 - **Total Stories:** 8
-- **Total Story Points:** 33
+- **Total Story Points:** 25
 - **Sprint 1 Points:** 13
-- **Sprint 2 Planned Points:** 18
+- **Sprint 2 Planned Points:** 10
 - **Average Story Size:** 4.1 points
 
 ---

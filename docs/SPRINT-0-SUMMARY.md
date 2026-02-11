@@ -16,7 +16,6 @@
 
 | ID   | Story                              | Priority | Points | Sprint       |
 | ---- | ---------------------------------- | -------- | ------ | ------------ |
-| US-1 | RESTful API for Task Management    | High     | 8      | Sprint 2     |
 | US-2 | Enhanced Task Filtering and Search | High     | 5      | Sprint 2     |
 | US-3 | Automated Testing Framework        | High     | 5      | **Sprint 1** |
 | US-4 | Task Assignment and Ownership      | Medium   | 3      | Sprint 2     |

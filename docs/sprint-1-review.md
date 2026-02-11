@@ -395,7 +395,7 @@ All sprint work meets the Definition of Done:
 ### Documentation Updates ✅
 - [x] Code has Javadoc comments
 - [x] README updated
-- [x] API documentation (not applicable)
+- [x] JavaDoc documentation (complete)
 - [x] Technical documentation complete
 
 ### Code Review Completion ✅
@@ -591,13 +591,12 @@ $ cat logs/error.log
 
 4. **Documentation**
    - Add architecture diagrams
-   - API documentation with Swagger
    - User guide for end users
 
 ### Action Items for Sprint 2 📋
 
-1. **US-1: RESTful API** (8 points) - High priority
-2. **US-2: Enhanced Task Filtering** (5 points) - High priority
+1. **US-2: Enhanced Task Filtering** (5 points) - High priority
+2. **US-4: Task Assignment** (3 points) - Medium priority
 3. **Add code quality checks** to CI/CD pipeline
 4. **Expand integration tests** for complex scenarios
 5. **Create Sprint 2 review template** based on Sprint 1 learnings
@@ -647,7 +646,6 @@ The sprint goal to "Establish foundational DevOps infrastructure" has been **ful
 
 ### Ready for Sprint 2
 With the DevOps foundation in place, Sprint 2 can focus on delivering additional user-facing features:
-- RESTful API (US-1)
 - Enhanced filtering (US-2)
 - Task assignment (US-4)
 - Task priorities (US-6)

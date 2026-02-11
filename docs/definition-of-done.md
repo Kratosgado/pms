@@ -65,7 +65,7 @@ This document defines the criteria that MUST be met before any user story, featu
 ### ✓ Project Documentation
 - [ ] README.md updated with new features or changes
 - [ ] Setup instructions updated (if dependencies changed)
-- [ ] API documentation updated (if API changes made)
+- [ ] JavaDoc updated (if public methods changed)
 - [ ] Architecture diagrams updated (if structure changed)
 
 ### ✓ User-Facing Documentation

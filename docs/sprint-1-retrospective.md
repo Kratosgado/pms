@@ -378,12 +378,6 @@ Sprint review requires manual screenshot collection and evidence gathering.
    - **Owner:** Development Team
    - **Target:** Sprint 2
 
-2. **Begin US-1: RESTful API**
-   - Highest priority feature (8 points)
-   - Critical for external integration
-   - **Owner:** Development Team
-   - **Target:** Sprint 2
-
 3. **Begin US-2: Enhanced Filtering**
    - High priority feature (5 points)
    - Improves user experience
@@ -482,22 +476,19 @@ Sprint review requires manual screenshot collection and evidence gathering.
 - **Sprint 2 Capacity:** 15-18 points (more experience, less setup)
 
 ### Proposed Sprint 2 Backlog
-1. **US-1: RESTful API** (8 points) - High
-2. **US-2: Enhanced Filtering** (5 points) - High
-3. **US-4: Task Assignment** (3 points) - Medium
-4. **Code Quality Tools** (estimate: 2 points) - High
+1. **US-2: Enhanced Filtering** (5 points) - High
+2. **US-4: Task Assignment** (3 points) - Medium
+3. **Code Quality Tools** (estimate: 2 points) - High
 
-**Total:** 18 points (stretch goal)
+**Total:** 10 points (manageable goal)
 
 ### Dependencies
 - None (clean slate after DevOps foundation)
 
 ### Risks
-- REST API might be more complex than estimated
 - Code quality tools might surface existing issues
 
 ### Mitigation
-- Break down US-1 into smaller tasks
 - Prioritize code quality early in sprint
 - Regular check-ins on progress
 

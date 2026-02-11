@@ -8,22 +8,6 @@
 
 ## 2. Product Backlog
 
-### User Story 1: RESTful API for Task Management
-**Priority:** High
-**Story Points:** 8
-
-**User Story:**
-As a **third-party application developer**, I want **a RESTful API to interact with the PMS system**, so that **I can integrate task management capabilities into external tools and platforms**.
-
-**Acceptance Criteria:**
-1. API endpoints exist for CRUD operations on projects, tasks, and users (GET, POST, PUT, DELETE)
-2. API returns proper HTTP status codes (200, 201, 400, 401, 404, 500)
-3. Request/response payloads use JSON format
-4. API includes authentication using token-based approach (JWT or API keys)
-5. API documentation is available (Swagger/OpenAPI specification)
-
----
-
 ### User Story 2: Enhanced Task Filtering and Search
 **Priority:** High
 **Story Points:** 5
@@ -120,19 +104,19 @@ As a **developer**, I want **an automated CI/CD pipeline**, so that **code chang
 
 ---
 
-### User Story 8: Health Check Endpoint
+### User Story 8: System Diagnostics Command
 **Priority:** Low
 **Story Points:** 2
 
 **User Story:**
-As a **DevOps engineer**, I want **a health check endpoint**, so that **I can monitor if the application is running and responsive**.
+As a **DevOps engineer**, I want **a system diagnostics command**, so that **I can monitor if the application is running correctly**.
 
 **Acceptance Criteria:**
-1. Health check endpoint returns HTTP 200 when system is healthy
-2. Response includes system information (uptime, memory usage, database connection status)
-3. Endpoint responds within 500ms
-4. Endpoint does not require authentication
-5. Health check is documented in API documentation
+1. 'status' command prints system information (uptime, memory usage, database connection status)
+2. Command executes within 500ms
+3. Output is formatted as a readable table
+4. Command does not require authentication
+5. Command is documented in user guide
 
 ---
 
@@ -158,7 +142,7 @@ A user story is considered "Done" when ALL of the following criteria are met:
 ### Documentation Updates
 - [ ] Code includes Javadoc comments for public methods
 - [ ] README updated with new features or setup changes
-- [ ] API documentation updated (if applicable)
+- [ ] JavaDoc updated (if applicable)
 - [ ] Inline comments explain complex logic
 
 ### Code Review Completion
@@ -182,7 +166,7 @@ A user story is considered "Done" when ALL of the following criteria are met:
 ## 4. Sprint 1 Planning
 
 ### Sprint 1 Goal
-Establish foundational DevOps infrastructure and deliver initial high-priority features to enable automated testing and API capabilities.
+Establish foundational DevOps infrastructure and deliver initial high-priority features to enable automated testing and core capabilities.
 
 ### Selected User Stories for Sprint 1
 
@@ -253,11 +237,10 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 | US-3 | Automated Testing Framework | High | 5 | Sprint 1 |
 | US-7 | CI/CD Pipeline Setup | High | 5 | Sprint 1 |
 | US-5 | Comprehensive Logging System | Medium | 3 | Sprint 1 |
-| US-1 | RESTful API for Task Management | High | 8 | Sprint 2 |
 | US-2 | Enhanced Task Filtering | High | 5 | Sprint 2 |
 | US-4 | Task Assignment and Ownership | Medium | 3 | Sprint 2 |
 | US-6 | Task Priority Levels | Medium | 2 | Sprint 2 |
-| US-8 | Health Check Endpoint | Low | 2 | Future |
+| US-8 | System Diagnostics Command | Low | 2 | Future |
 
 **Total Backlog:** 33 Story Points
 
@@ -267,7 +250,7 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 
 1. **Team Velocity:** Assuming 12-15 story points per sprint based on Sprint 1 planning
 2. **Technical Debt:** Current system has good structure; no major refactoring needed
-3. **Dependencies:** US-1 (REST API) is high priority but saved for Sprint 2 due to complexity and need to establish DevOps foundation first
+3. **Dependencies:** US-2 (Filtering) and US-4 (Assignment) are high priority for Sprint 2 to enhance user experience
 4. **Tools:** Using GitHub Actions for CI/CD (free for public repos)
 5. **Testing:** JUnit 5 already in pom.xml; need to add test coverage reporting
 

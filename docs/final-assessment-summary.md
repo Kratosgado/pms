@@ -728,13 +728,7 @@ Trigger (Push/PR)
    - Improve coverage confidence
 
 ### Medium-Term Goals (Sprint 3-4)
-1. **US-1: RESTful API** (8 points)
-   - Spring Boot integration
-   - REST controllers
-   - API documentation
-   - Response formatting
-
-2. **US-6: Export Reports to PDF** (5 points)
+1. **US-6: Export Reports to PDF** (5 points)
    - PDF generation library
    - Report templates
    - Export functionality

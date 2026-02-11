@@ -421,7 +421,6 @@ All deliverables meet the Definition of Done criteria:
 - ✅ US-4: Task Assignment (3 points)
 
 ### Remaining High-Priority Items
-- 🔲 US-1: RESTful API Development (8 points)
 - 🔲 US-6: Export Reports to PDF (5 points)
 - 🔲 US-3: Enhanced Unit Testing (Already completed in Sprint 1, marked done)
 - 🔲 US-7: CI/CD Pipeline (Already completed in Sprint 1, marked done)
@@ -505,13 +504,12 @@ List<Task> unassigned = project.getUnassignedTasks();
 1. ✅ Complete Sprint 2 retrospective
 2. ✅ Merge Sprint 2 branch to main
 3. ✅ Update product backlog priorities
-4. 🔲 Plan Sprint 3 (US-1 or code quality fixes?)
+4. 🔲 Plan Sprint 3 (US-6 or code quality fixes?)
 
 ### Sprint 3 Planning Considerations
 **Option A: Continue Feature Development**
-- US-1: RESTful API (8 points)
 - US-6: Export Reports (5 points)
-- Total: 13 points
+- Total: 5 points
 
 **Option B: Balance Features and Quality**
 - Fix CheckStyle violations (2 points)

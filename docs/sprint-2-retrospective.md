@@ -67,11 +67,11 @@ US-2 (Enhanced Filtering) and US-4 (Task Assignment) shared implementation and t
 - Reduced duplication
 
 **Example:**
-`getFilteredTasks()` method supports both status filtering (US-2) and user filtering (US-4) in one unified API.
+`getFilteredTasks()` method supports both status filtering (US-2) and user filtering (US-4) in one unified interface.
 
 **Impact:**
 - More efficient development
-- Better API design
+- Better class design
 - Comprehensive test coverage
 - User-friendly combined filtering
 
@@ -554,9 +554,9 @@ What's our "normal" velocity for feature development?
 ### Proposed Sprint 3 Backlog
 
 **Option A: Feature-Heavy Sprint**
-- US-1: RESTful API (8 points)
 - UI Integration for US-2/US-4 (2 points)
-- **Total:** 10 points
+- US-6: Export Reports (5 points)
+- **Total:** 7 points
 
 **Option B: Balanced Sprint**
 - US-6: Export Reports (5 points)
@@ -603,7 +603,7 @@ What's our "normal" velocity for feature development?
 ## 📝 Key Learnings
 
 ### 1. Synergistic User Stories are Efficient
-When user stories naturally complement each other (US-2 + US-4), development becomes more efficient and the resulting API is more cohesive.
+When user stories naturally complement each other (US-2 + US-4), development becomes more efficient and the resulting design is more cohesive.
 
 **Application:**
 Look for story combinations during sprint planning.
