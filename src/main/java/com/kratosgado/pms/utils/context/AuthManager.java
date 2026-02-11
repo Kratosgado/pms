@@ -47,9 +47,18 @@ public class AuthManager {
    * Verifies that the user is an admin
    */
   public final void requireAdmin() throws UnauthorizedException {
-    if (!getCurrentUser().isAdmin()) {
+    if (getCurrentUser() == null || !getCurrentUser().isAdmin()) {
       throw new UnauthorizedException("Only Admin Users can perform this action");
     }
+  }
+
+  /**
+   * Checks if a user is currently logged in
+   *
+   * @return true if a user is logged in, false otherwise
+   */
+  public boolean isLoggedIn() {
+    return currentUser != null;
   }
 
 }
