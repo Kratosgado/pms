@@ -12,8 +12,6 @@ public class Main {
 
   public static void main(final String[] args) {
     final UserInMemoryDatabase usersDb = new UserInMemoryDatabase("data/users.json", Seed.seedUsers());
-    // final TaskInMemoryDatabase tasksDb = new
-    // TaskInMemoryDatabase(Seed.seedTasks());
     final ProjectInMemoryDatabase projectsDb = new ProjectInMemoryDatabase("data/projects.json", Seed.seedProjects());
     final AuthManager authManager = new AuthManager(usersDb);
     final NavigationManager navigationManager = new NavigationManager();

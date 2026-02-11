@@ -4,14 +4,14 @@
 "name":"Prince",
 "email":"prince@gmail.com",
 "password":"password",
-"role":"REGULAR"
+"role":"ADMIN"
 }, 
 {
 "id":"US003",
 "name":"Gado",
 "email":"gado@gmail.com",
 "password":"password",
-"role":"REGULAR"
+"role":"ADMIN"
 }, 
 {
 "id":"US000",
@@ -25,5 +25,5 @@
 "name":"Mbeah",
 "email":"mbeah@gmail.com",
 "password":"password",
-"role":"REGULAR"
+"role":"ADMIN"
 }]
