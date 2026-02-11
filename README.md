@@ -226,9 +226,34 @@ open target/site/jacoco/index.html
 
 See [`docs/testing-strategy.md`](docs/testing-strategy.md) for detailed testing strategy and approach.
 
+## Logging
+
+The application includes comprehensive logging using SLF4J and Logback:
+
+- **Console Output:** Real-time logs during development
+- **File Logging:** `logs/app.log` (all logs with daily rotation)
+- **Error Logging:** `logs/error.log` (errors only)
+- **Logged Operations:** Authentication, CRUD operations, errors
+
+### View Logs
+
+```bash
+# View all logs
+cat logs/app.log
+
+# View errors only
+cat logs/error.log
+
+# Tail logs in real-time
+tail -f logs/app.log
+```
+
+See [`docs/logging-documentation.md`](docs/logging-documentation.md) for detailed logging information.
+
 ## Notes
 
 > - The system uses an in-memory data structure (may be enhanced with database integration in future versions)
 > - User performance summaries are flagged for future expansion
 > - The system supports graceful error handling with user-friendly error messages
 > - Comprehensive test suite with 103 tests covering core business logic
+> - Full logging system for authentication, operations, and error tracking
