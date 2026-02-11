@@ -6,25 +6,25 @@ on:
   workflow_dispatch:
     inputs:
       title:
-        description: 'Pull Request Title'
+        description: "Pull Request Title"
         required: true
         type: string
       body:
-        description: 'Pull Request Body/Description'
+        description: "Pull Request Body/Description"
         required: true
         type: string
       source_branch:
-        description: 'Source branch (head branch)'
+        description: "Source branch (head branch)"
         required: true
         type: string
-        default: 'develop'
+        default: "develop"
       target_branch:
-        description: 'Target branch (base branch)'
+        description: "Target branch (base branch)"
         required: true
         type: string
-        default: 'main'
+        default: "main"
       draft:
-        description: 'Create as draft PR'
+        description: "Create as draft PR"
         required: false
         type: boolean
         default: false
@@ -158,32 +158,3 @@ jobs:
           echo "✅ Pull request created: $PR_URL"
         env:
           GH_TOKEN: ${{ github.token }}
-
-      - name: Comment on existing PR
-        if: steps.check-pr.outputs.exists == 'true'
-        run: |
-          PR_NUMBER="${{ steps.check-pr.outputs.pr_number }}"
-
-          gh pr comment "$PR_NUMBER" --body "🔄 **Automated Update**
-
-A new PR creation was requested with the following details:
-
-**Title:** ${{ steps.vars.outputs.title }}
-
-**Description:**
-${{ steps.vars.outputs.body }}
-
-This PR already exists, so the request was skipped. If you need to update this PR, please do so manually or close it first."
-        env:
-          GH_TOKEN: ${{ github.token }}
-
-      - name: Output PR information
-        run: |
-          if [ "${{ steps.check-pr.outputs.exists }}" == "true" ]; then
-            echo "### ⚠️  PR Already Exists"
-            echo "PR Number: #${{ steps.check-pr.outputs.pr_number }}"
-            echo "A comment was added to the existing PR."
-          else
-            echo "### ✅ PR Created Successfully"
-            echo "PR URL: ${{ steps.create-pr.outputs.pr_url }}"
-          fi
