@@ -15,6 +15,7 @@
 ### Selected User Stories (Total: 13 Story Points)
 
 #### 1. US-3: Automated Testing Framework (5 points) - HIGH PRIORITY
+
 **Status:** Not Started
 **Assignee:** TBD
 **Dependencies:** None
@@ -22,6 +23,7 @@
 **Goal:** Implement comprehensive unit and integration tests for core business logic to enable confident refactoring and prevent regressions.
 
 **Tasks:**
+
 - [ ] Configure JUnit 5 and test dependencies (already present)
 - [ ] Add JaCoCo Maven plugin for test coverage reporting
 - [ ] Write unit tests for ProjectService (create, update, delete, get)
@@ -34,6 +36,7 @@
 - [ ] Document testing strategy in README
 
 **Acceptance Criteria Checklist:**
+
 - [ ] Unit tests exist for all service classes
 - [ ] Unit tests exist for critical model classes
 - [ ] Integration tests verify database operations
@@ -43,6 +46,7 @@
 ---
 
 #### 2. US-7: CI/CD Pipeline Setup (5 points) - HIGH PRIORITY
+
 **Status:** Not Started
 **Assignee:** TBD
 **Dependencies:** US-3 (Tests must exist to run in pipeline)
@@ -50,6 +54,7 @@
 **Goal:** Implement automated CI/CD pipeline using GitHub Actions to automatically test and validate code changes.
 
 **Tasks:**
+
 - [ ] Create `.github/workflows/maven.yml` configuration file
 - [ ] Configure pipeline to trigger on push and pull_request events
 - [ ] Add job: Checkout code
@@ -63,6 +68,7 @@
 - [ ] Document pipeline stages and purpose
 
 **Acceptance Criteria Checklist:**
+
 - [ ] GitHub Actions workflow file exists and is configured
 - [ ] Pipeline runs automatically on every push and PR
 - [ ] Pipeline includes stages: compile, test, code quality
@@ -72,6 +78,7 @@
 ---
 
 #### 3. US-5: Comprehensive Logging System (3 points) - MEDIUM PRIORITY
+
 **Status:** Not Started
 **Assignee:** TBD
 **Dependencies:** None (Can be developed in parallel)
@@ -79,6 +86,7 @@
 **Goal:** Implement detailed application logging for key operations to enable troubleshooting, auditing, and system health monitoring.
 
 **Tasks:**
+
 - [ ] Add SLF4J and Logback dependencies to pom.xml
 - [ ] Create `src/main/resources/logback.xml` configuration file
 - [ ] Configure log levels and output formats
@@ -93,6 +101,7 @@
 - [ ] Document logging configuration in README
 
 **Acceptance Criteria Checklist:**
+
 - [ ] Application logs all authentication attempts
 - [ ] Application logs all CRUD operations with user and timestamp
 - [ ] Application logs all errors with stack traces
@@ -104,6 +113,7 @@
 ## Sprint 1 Execution Strategy
 
 ### Week 1 Focus (if 2-week sprint)
+
 1. **Day 1-2:** Set up testing framework (US-3)
    - Configure JaCoCo
    - Write unit tests for service classes
@@ -120,6 +130,7 @@
    - Test initial pipeline run
 
 ### Week 2 Focus (if 2-week sprint)
+
 1. **Day 1-2:** Complete logging implementation (US-5)
    - Add logging to all service classes
    - Test log output
@@ -142,6 +153,7 @@
 ## Daily Standup Questions
 
 Each day, team members should be prepared to answer:
+
 1. What did I complete yesterday?
 2. What will I work on today?
 3. Are there any blockers or impediments?
@@ -152,28 +164,31 @@ Each day, team members should be prepared to answer:
 
 ### Identified Risks
 
-| Risk | Probability | Impact | Mitigation Strategy |
-|------|-------------|--------|---------------------|
-| CI/CD setup takes longer than estimated | Medium | Medium | Start with basic pipeline, enhance incrementally |
-| Test coverage difficult to reach 70% | Low | Medium | Focus on service layer first, models secondary |
-| Logging framework integration issues | Low | Low | Use well-documented SLF4J/Logback stack |
-| Time constraint with 3 stories | Medium | High | US-5 (Logging) can be moved to Sprint 2 if needed |
+| Risk                                    | Probability | Impact | Mitigation Strategy                               |
+| --------------------------------------- | ----------- | ------ | ------------------------------------------------- |
+| CI/CD setup takes longer than estimated | Medium      | Medium | Start with basic pipeline, enhance incrementally  |
+| Test coverage difficult to reach 70%    | Low         | Medium | Focus on service layer first, models secondary    |
+| Logging framework integration issues    | Low         | Low    | Use well-documented SLF4J/Logback stack           |
+| Time constraint with 3 stories          | Medium      | High   | US-5 (Logging) can be moved to Sprint 2 if needed |
 
 ---
 
 ## Sprint Ceremonies Schedule
 
 ### Sprint Planning (Completed)
+
 - Backlog reviewed and stories selected
 - Tasks identified and estimated
 - Team capacity confirmed
 
 ### Daily Standup
+
 - **Time:** TBD (suggest: 9:00 AM daily)
 - **Duration:** 15 minutes max
 - **Format:** Sync or async (team choice)
 
 ### Sprint Review
+
 - **When:** Last day of sprint
 - **Duration:** 1 hour
 - **Attendees:** Development team + stakeholders
@@ -184,6 +199,7 @@ Each day, team members should be prepared to answer:
   - Collect feedback
 
 ### Sprint Retrospective
+
 - **When:** After Sprint Review
 - **Duration:** 45 minutes
 - **Attendees:** Development team only
@@ -197,6 +213,7 @@ Each day, team members should be prepared to answer:
 ## Definition of Done Reference
 
 Before marking any story as "Done", verify:
+
 - [ ] All acceptance criteria met
 - [ ] Code reviewed and approved
 - [ ] All tests passing in CI pipeline
@@ -211,11 +228,14 @@ See `/docs/definition-of-done.md` for complete checklist.
 ## Git Workflow for Sprint 1
 
 ### Branch Naming Convention
+
 - Feature branches: `feature/us-3-automated-testing`
 - Format: `feature/us-[number]-[short-description]`
 
 ### Commit Message Format
+
 Use conventional commits:
+
 - `feat: add unit tests for ProjectService`
 - `test: add integration tests for Repository`
 - `ci: create GitHub Actions workflow`
@@ -223,6 +243,7 @@ Use conventional commits:
 - `fix: resolve test failure in TaskService`
 
 ### Pull Request Process
+
 1. Create feature branch from `main`
 2. Make small, frequent commits (aim for 8-10+ commits per story)
 3. Open PR when story is complete
@@ -235,6 +256,7 @@ Use conventional commits:
 ## Tools and Resources
 
 ### Required Tools
+
 - **IDE:** IntelliJ IDEA, Eclipse, or VS Code
 - **Build Tool:** Maven 3.8.6+
 - **Version Control:** Git
@@ -243,6 +265,7 @@ Use conventional commits:
 - **Logging:** SLF4J + Logback (to be added)
 
 ### Documentation References
+
 - [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
 - [JaCoCo Maven Plugin](https://www.jacoco.org/jacoco/trunk/doc/maven.html)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
@@ -254,6 +277,7 @@ Use conventional commits:
 ## Sprint Success Metrics
 
 ### Quantitative Metrics
+
 - [ ] 13 story points completed
 - [ ] Test coverage ≥ 70%
 - [ ] CI pipeline success rate ≥ 95%
@@ -261,6 +285,7 @@ Use conventional commits:
 - [ ] 8-10+ meaningful commits per story
 
 ### Qualitative Metrics
+
 - [ ] Team confidence in automated testing
 - [ ] Positive feedback on CI/CD setup
 - [ ] Improved development workflow
@@ -275,6 +300,7 @@ Use conventional commits:
    - Schedule Sprint Review and Retrospective
 
 2. **Create Feature Branches:**
+
    ```bash
    git checkout -b feature/us-3-automated-testing
    git checkout main
@@ -300,6 +326,7 @@ Use conventional commits:
 ## Questions or Concerns?
 
 Before starting the sprint, ensure:
+
 - [ ] All team members understand the sprint goal
 - [ ] All user stories are clear and unambiguous
 - [ ] Definition of Done is understood and agreed upon
