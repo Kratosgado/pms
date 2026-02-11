@@ -1,5 +1,9 @@
 # Project Manager System (PMS)
 
+![Java CI with Maven](https://github.com/Kratosgado/pms/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://www.oracle.com/java/)
+[![Maven](https://img.shields.io/badge/Maven-3.8+-green.svg)](https://maven.apache.org/)
+
 A comprehensive Java-based project management system for managing projects, tasks, users, and generating status reports.
 
 ![Project Manager System UML Class Diagram](./docs/class-diagram.png)
