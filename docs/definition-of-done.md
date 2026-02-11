@@ -1,6 +1,7 @@
 # Definition of Done (DoD) - PMS Project
 
 ## Overview
+
 This document defines the criteria that MUST be met before any user story, feature, or task can be considered "Done" and ready for deployment.
 
 ---
@@ -8,6 +9,7 @@ This document defines the criteria that MUST be met before any user story, featu
 ## Code Quality Standards
 
 ### ✓ Coding Standards Compliance
+
 - [ ] Code follows Java naming conventions (PascalCase for classes, camelCase for methods/variables)
 - [ ] Code follows standard Java style guidelines
 - [ ] No compiler warnings or errors
@@ -15,6 +17,7 @@ This document defines the criteria that MUST be met before any user story, featu
 - [ ] No commented-out code blocks (remove or document why kept)
 
 ### ✓ Code Quality
+
 - [ ] No hardcoded values (use configuration files, constants, or environment variables)
 - [ ] No duplicate code (DRY principle followed)
 - [ ] Methods are concise and have single responsibility
@@ -24,6 +27,7 @@ This document defines the criteria that MUST be met before any user story, featu
 - [ ] Resource cleanup (close streams, connections, etc.)
 
 ### ✓ Code Analysis
+
 - [ ] No critical or major code smells identified by tools
 - [ ] Static analysis tools pass (if configured)
 - [ ] No security vulnerabilities introduced
@@ -33,6 +37,7 @@ This document defines the criteria that MUST be met before any user story, featu
 ## Testing Requirements
 
 ### ✓ Test Coverage
+
 - [ ] Unit tests written for all new/modified business logic
 - [ ] Integration tests written for database operations
 - [ ] Test coverage for new code is at least 70%
@@ -40,6 +45,7 @@ This document defines the criteria that MUST be met before any user story, featu
 - [ ] Error scenarios and exception handling are tested
 
 ### ✓ Test Execution
+
 - [ ] All new tests pass successfully
 - [ ] All existing tests continue to pass (no regressions)
 - [ ] Tests run successfully with `mvn test` command
@@ -47,6 +53,7 @@ This document defines the criteria that MUST be met before any user story, featu
 - [ ] Tests are repeatable and deterministic (no flaky tests)
 
 ### ✓ Test Quality
+
 - [ ] Tests follow naming convention: `methodName_scenario_expectedBehavior()`
 - [ ] Tests are independent (can run in any order)
 - [ ] Test assertions are clear and meaningful
@@ -57,18 +64,21 @@ This document defines the criteria that MUST be met before any user story, featu
 ## Documentation Updates
 
 ### ✓ Code Documentation
+
 - [ ] Public methods have Javadoc comments explaining purpose, parameters, and return values
 - [ ] Complex logic has inline comments explaining the "why"
 - [ ] Classes have Javadoc comments describing their purpose
 - [ ] Any non-obvious decisions are documented
 
 ### ✓ Project Documentation
+
 - [ ] README.md updated with new features or changes
 - [ ] Setup instructions updated (if dependencies changed)
-- [ ] API documentation updated (if API changes made)
+- [ ] JavaDoc updated (if public methods changed)
 - [ ] Architecture diagrams updated (if structure changed)
 
 ### ✓ User-Facing Documentation
+
 - [ ] User guide updated with new features (if applicable)
 - [ ] Change log or release notes updated
 - [ ] Known issues documented
@@ -78,6 +88,7 @@ This document defines the criteria that MUST be met before any user story, featu
 ## Code Review Completion
 
 ### ✓ Review Process
+
 - [ ] Pull request created with clear title and description
 - [ ] PR description includes:
   - Summary of changes
@@ -90,6 +101,7 @@ This document defines the criteria that MUST be met before any user story, featu
 - [ ] No unresolved conversations in PR
 
 ### ✓ Branch Management
+
 - [ ] Feature branch is up to date with main branch
 - [ ] No merge conflicts
 - [ ] Commit history is clean and meaningful
@@ -100,6 +112,7 @@ This document defines the criteria that MUST be met before any user story, featu
 ## CI/CD Pipeline Success
 
 ### ✓ Automated Checks
+
 - [ ] All automated tests pass in CI pipeline
 - [ ] Build completes successfully
 - [ ] No linting or code quality check failures
@@ -107,6 +120,7 @@ This document defines the criteria that MUST be met before any user story, featu
 - [ ] Pipeline completes within reasonable time (< 10 minutes)
 
 ### ✓ Deployment Verification
+
 - [ ] Application runs without errors after build
 - [ ] No broken dependencies
 - [ ] All required configuration files present
@@ -117,6 +131,7 @@ This document defines the criteria that MUST be met before any user story, featu
 ## Deployment Readiness
 
 ### ✓ Functional Verification
+
 - [ ] All acceptance criteria from user story are met
 - [ ] Feature works as expected in test environment
 - [ ] Feature is demonstrable to stakeholders
@@ -124,12 +139,14 @@ This document defines the criteria that MUST be met before any user story, featu
 - [ ] Error messages are user-friendly
 
 ### ✓ Integration Verification
+
 - [ ] New feature integrates properly with existing features
 - [ ] No negative impact on existing functionality
 - [ ] Database migrations run successfully (if applicable)
 - [ ] Backwards compatibility maintained (if required)
 
 ### ✓ Performance
+
 - [ ] No significant performance degradation
 - [ ] Resource usage is acceptable (memory, CPU)
 - [ ] Response times are within acceptable limits
@@ -139,12 +156,14 @@ This document defines the criteria that MUST be met before any user story, featu
 ## Additional Considerations
 
 ### ✓ Security
+
 - [ ] No sensitive data exposed in logs or error messages
 - [ ] User input is validated and sanitized
 - [ ] Authentication/authorization working correctly
 - [ ] No SQL injection or XSS vulnerabilities
 
 ### ✓ Maintainability
+
 - [ ] Code is readable and self-explanatory
 - [ ] Technical debt is not increased
 - [ ] Future enhancement paths are clear
@@ -164,12 +183,14 @@ Each user story has specific acceptance criteria that must also be met. This DoD
 ## Sign-Off
 
 ### Before marking a story as Done:
+
 1. Developer self-checks all DoD items
 2. Code reviewer verifies DoD compliance
 3. Product owner confirms acceptance criteria are met
 4. Scrum master validates process completion
 
 ### When all criteria are met:
+
 - [ ] Story moved to "Done" column
 - [ ] Demo prepared for Sprint Review
 - [ ] Knowledge shared with team (if applicable)
