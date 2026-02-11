@@ -24,6 +24,12 @@ jobs:
     - name: Build with Maven
       run: mvn -B clean compile
 
+    - name: Run CheckStyle
+      run: mvn -B checkstyle:check
+
+    - name: Run SpotBugs
+      run: mvn -B compile spotbugs:check
+
     - name: Run tests
       run: mvn -B test
 
