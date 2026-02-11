@@ -1,6 +1,6 @@
 # Sprint 1 Retrospective - PMS Task Management Application
 
-**Date:** 2026-02-11
+**Date:** 2026-01-28
 **Sprint:** Sprint 1
 **Participants:** Development Team
 **Duration:** 1 Sprint Cycle

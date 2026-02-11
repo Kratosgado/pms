@@ -275,5 +275,5 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 
 **Document Version:** 1.0
 **Created:** 2026-02-11
-**Sprint Start Date:** TBD
-**Sprint End Date:** TBD
+**Sprint Start Date:** 2026-01-07
+**Sprint End Date:** 2026-01-14

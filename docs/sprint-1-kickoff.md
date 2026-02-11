@@ -4,8 +4,8 @@
 
 **Sprint Number:** 1
 **Sprint Duration:** 1-2 weeks
-**Sprint Start Date:** TBD
-**Sprint End Date:** TBD
+**Sprint Start Date:** 2026-01-14
+**Sprint End Date:** 2026-01-28
 **Sprint Goal:** Establish foundational DevOps infrastructure and deliver initial high-priority features to enable automated testing and continuous integration.
 
 ---
