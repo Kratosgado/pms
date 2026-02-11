@@ -1,0 +1,189 @@
+name: Create Pull Request from n8n
+
+on:
+  repository_dispatch:
+    types: [create-pr]
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Pull Request Title'
+        required: true
+        type: string
+      body:
+        description: 'Pull Request Body/Description'
+        required: true
+        type: string
+      source_branch:
+        description: 'Source branch (head branch)'
+        required: true
+        type: string
+        default: 'develop'
+      target_branch:
+        description: 'Target branch (base branch)'
+        required: true
+        type: string
+        default: 'main'
+      draft:
+        description: 'Create as draft PR'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set PR variables from repository_dispatch
+        if: github.event_name == 'repository_dispatch'
+        id: dispatch-vars
+        run: |
+          echo "title=${{ github.event.client_payload.title }}" >> $GITHUB_OUTPUT
+          echo "body=${{ github.event.client_payload.body }}" >> $GITHUB_OUTPUT
+          echo "source_branch=${{ github.event.client_payload.source_branch || 'develop' }}" >> $GITHUB_OUTPUT
+          echo "target_branch=${{ github.event.client_payload.target_branch || 'main' }}" >> $GITHUB_OUTPUT
+          echo "draft=${{ github.event.client_payload.draft || 'false' }}" >> $GITHUB_OUTPUT
+
+      - name: Set PR variables from workflow_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        id: manual-vars
+        run: |
+          echo "title=${{ github.event.inputs.title }}" >> $GITHUB_OUTPUT
+          echo "body=${{ github.event.inputs.body }}" >> $GITHUB_OUTPUT
+          echo "source_branch=${{ github.event.inputs.source_branch }}" >> $GITHUB_OUTPUT
+          echo "target_branch=${{ github.event.inputs.target_branch }}" >> $GITHUB_OUTPUT
+          echo "draft=${{ github.event.inputs.draft }}" >> $GITHUB_OUTPUT
+
+      - name: Set final variables
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
+            echo "title=${{ steps.dispatch-vars.outputs.title }}" >> $GITHUB_OUTPUT
+            echo "body=${{ steps.dispatch-vars.outputs.body }}" >> $GITHUB_OUTPUT
+            echo "source_branch=${{ steps.dispatch-vars.outputs.source_branch }}" >> $GITHUB_OUTPUT
+            echo "target_branch=${{ steps.dispatch-vars.outputs.target_branch }}" >> $GITHUB_OUTPUT
+            echo "draft=${{ steps.dispatch-vars.outputs.draft }}" >> $GITHUB_OUTPUT
+          else
+            echo "title=${{ steps.manual-vars.outputs.title }}" >> $GITHUB_OUTPUT
+            echo "body=${{ steps.manual-vars.outputs.body }}" >> $GITHUB_OUTPUT
+            echo "source_branch=${{ steps.manual-vars.outputs.source_branch }}" >> $GITHUB_OUTPUT
+            echo "target_branch=${{ steps.manual-vars.outputs.target_branch }}" >> $GITHUB_OUTPUT
+            echo "draft=${{ steps.manual-vars.outputs.draft }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate branches exist
+        run: |
+          SOURCE="${{ steps.vars.outputs.source_branch }}"
+          TARGET="${{ steps.vars.outputs.target_branch }}"
+
+          echo "Checking if branches exist..."
+
+          # Fetch all branches
+          git fetch --all
+
+          # Check if source branch exists
+          if ! git rev-parse --verify "origin/$SOURCE" >/dev/null 2>&1; then
+            echo "❌ Error: Source branch 'origin/$SOURCE' does not exist"
+            exit 1
+          fi
+          echo "✅ Source branch 'origin/$SOURCE' exists"
+
+          # Check if target branch exists
+          if ! git rev-parse --verify "origin/$TARGET" >/dev/null 2>&1; then
+            echo "❌ Error: Target branch 'origin/$TARGET' does not exist"
+            exit 1
+          fi
+          echo "✅ Target branch 'origin/$TARGET' exists"
+
+          # Check if branches are the same
+          if [ "$SOURCE" == "$TARGET" ]; then
+            echo "❌ Error: Source and target branches cannot be the same"
+            exit 1
+          fi
+          echo "✅ Source and target branches are different"
+
+      - name: Check for existing PR
+        id: check-pr
+        run: |
+          SOURCE="${{ steps.vars.outputs.source_branch }}"
+          TARGET="${{ steps.vars.outputs.target_branch }}"
+
+          # Check if PR already exists
+          EXISTING_PR=$(gh pr list --head "$SOURCE" --base "$TARGET" --json number --jq '.[0].number')
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "pr_number=$EXISTING_PR" >> $GITHUB_OUTPUT
+            echo "⚠️  PR already exists: #$EXISTING_PR"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "✅ No existing PR found"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Create Pull Request
+        if: steps.check-pr.outputs.exists == 'false'
+        id: create-pr
+        run: |
+          TITLE="${{ steps.vars.outputs.title }}"
+          BODY="${{ steps.vars.outputs.body }}"
+          SOURCE="${{ steps.vars.outputs.source_branch }}"
+          TARGET="${{ steps.vars.outputs.target_branch }}"
+          DRAFT="${{ steps.vars.outputs.draft }}"
+
+          # Build PR command
+          PR_CMD="gh pr create --title \"$TITLE\" --body \"$BODY\" --head \"$SOURCE\" --base \"$TARGET\""
+
+          # Add draft flag if needed
+          if [ "$DRAFT" == "true" ]; then
+            PR_CMD="$PR_CMD --draft"
+          fi
+
+          # Create the PR
+          echo "Creating pull request..."
+          echo "Title: $TITLE"
+          echo "Source: $SOURCE"
+          echo "Target: $TARGET"
+          echo "Draft: $DRAFT"
+
+          PR_URL=$(eval $PR_CMD)
+
+          echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
+          echo "✅ Pull request created: $PR_URL"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Comment on existing PR
+        if: steps.check-pr.outputs.exists == 'true'
+        run: |
+          PR_NUMBER="${{ steps.check-pr.outputs.pr_number }}"
+
+          gh pr comment "$PR_NUMBER" --body "🔄 **Automated Update**
+
+A new PR creation was requested with the following details:
+
+**Title:** ${{ steps.vars.outputs.title }}
+
+**Description:**
+${{ steps.vars.outputs.body }}
+
+This PR already exists, so the request was skipped. If you need to update this PR, please do so manually or close it first."
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Output PR information
+        run: |
+          if [ "${{ steps.check-pr.outputs.exists }}" == "true" ]; then
+            echo "### ⚠️  PR Already Exists"
+            echo "PR Number: #${{ steps.check-pr.outputs.pr_number }}"
+            echo "A comment was added to the existing PR."
+          else
+            echo "### ✅ PR Created Successfully"
+            echo "PR URL: ${{ steps.create-pr.outputs.pr_url }}"
+          fi
