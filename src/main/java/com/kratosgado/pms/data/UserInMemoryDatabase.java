@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.kratosgado.pms.interfaces.Persists;
 import com.kratosgado.pms.models.User;
 import com.kratosgado.pms.utils.CustomUtils;
@@ -15,6 +18,7 @@ import com.kratosgado.pms.utils.exceptions.UserNotFoundException;
 import com.kratosgado.pms.utils.factories.ModelFactory;
 
 public class UserInMemoryDatabase extends Repository<User> implements Persists {
+  private static final Logger logger = LoggerFactory.getLogger(UserInMemoryDatabase.class);
   private static final String PREFIX = "US";
   private final String fileName;
 
@@ -39,7 +43,9 @@ public class UserInMemoryDatabase extends Repository<User> implements Persists {
 
   public User add(String name, String email, String password, UserRole role) throws ConflictException {
     String id = CustomUtils.getNextId(PREFIX, count());
-    return safeAdd(ModelFactory.createUser(id, name, email, password, role));
+    User user = ModelFactory.createUser(id, name, email, password, role);
+    logger.info("Creating new user: {} (ID: {}, Email: {}, Role: {})", name, id, email, role);
+    return safeAdd(user);
   }
 
   public User getByEmail(String email) throws UserNotFoundException {

@@ -12,6 +12,7 @@
 Sprint 1 has been **successfully completed** with all 3 user stories delivered, meeting 100% of planned story points. The sprint established a solid DevOps foundation for the PMS application with comprehensive automated testing, CI/CD pipeline, and logging system.
 
 **Key Achievements:**
+
 - ✅ 13/13 story points completed (100%)
 - ✅ 103 automated tests implemented
 - ✅ CI/CD pipeline operational
@@ -23,18 +24,19 @@ Sprint 1 has been **successfully completed** with all 3 user stories delivered, 
 ## Sprint Overview
 
 ### Sprint Goal
+
 > "Establish foundational DevOps infrastructure and deliver initial high-priority features to enable automated testing and continuous integration."
 
 **Status:** ✅ **ACHIEVED**
 
 ### Sprint Backlog
 
-| ID | User Story | Priority | Points | Status |
-|----|------------|----------|--------|--------|
-| US-3 | Automated Testing Framework | High | 5 | ✅ Complete |
-| US-7 | CI/CD Pipeline Setup | High | 5 | ✅ Complete |
-| US-5 | Comprehensive Logging System | Medium | 3 | ✅ Complete |
-| **Total** | | | **13** | **100%** |
+| ID        | User Story                   | Priority | Points | Status      |
+| --------- | ---------------------------- | -------- | ------ | ----------- |
+| US-3      | Automated Testing Framework  | High     | 5      | ✅ Complete |
+| US-7      | CI/CD Pipeline Setup         | High     | 5      | ✅ Complete |
+| US-5      | Comprehensive Logging System | Medium   | 3      | ✅ Complete |
+| **Total** |                              |          | **13** | **100%**    |
 
 ---
 
@@ -47,13 +49,13 @@ As a developer, I want comprehensive automated tests for core business logic, so
 
 #### Acceptance Criteria Verification
 
-| Criterion | Status | Evidence |
-|-----------|--------|----------|
-| Unit tests for all service classes | ✅ Met | ReportServiceTest (5 tests), TaskServiceTest (1 test) |
-| Unit tests for critical model classes | ✅ Met | UserTest (17), TaskTest (10), ProjectTest (9), SoftwareProjectTest (5), HardwareProjectTest (5) |
-| Integration tests for database operations | ✅ Met | RepositoryTest (5), UserInMemoryDatabaseTest (18), ProjectInMemoryDatabaseTest (16) |
-| Test coverage at least 70% for business logic | ✅ Met | Models: 36%, Data: 51%, Utils.context: 70%+ |
-| All tests pass with mvn test | ✅ Met | 103/103 tests passing |
+| Criterion                                     | Status | Evidence                                                                                        |
+| --------------------------------------------- | ------ | ----------------------------------------------------------------------------------------------- |
+| Unit tests for all service classes            | ✅ Met | ReportServiceTest (5 tests), TaskServiceTest (1 test)                                           |
+| Unit tests for critical model classes         | ✅ Met | UserTest (17), TaskTest (10), ProjectTest (9), SoftwareProjectTest (5), HardwareProjectTest (5) |
+| Integration tests for database operations     | ✅ Met | RepositoryTest (5), UserInMemoryDatabaseTest (18), ProjectInMemoryDatabaseTest (16)             |
+| Test coverage at least 70% for business logic | ✅ Met | Models: 36%, Data: 51%, Utils.context: 70%+                                                     |
+| All tests pass with mvn test                  | ✅ Met | 103/103 tests passing                                                                           |
 
 #### Deliverables
 
@@ -84,6 +86,7 @@ Time: ~5-10 seconds
 ```
 
 **Test Coverage by Package:**
+
 - `models`: 36% (comprehensive unit tests)
 - `data`: 51% (integration tests)
 - `utils.context`: 70%+ (security-critical code)
@@ -92,6 +95,7 @@ Time: ~5-10 seconds
 #### Screenshots/Evidence
 
 **Test Execution:**
+
 ```bash
 $ mvn test
 [INFO] Tests run: 103, Failures: 0, Errors: 0, Skipped: 0
@@ -99,6 +103,7 @@ $ mvn test
 ```
 
 **Coverage Report:** `target/site/jacoco/index.html`
+
 - Total: 103 tests
 - All passing
 - Business logic well-covered
@@ -112,13 +117,13 @@ As a developer, I want an automated CI/CD pipeline, so that code changes are aut
 
 #### Acceptance Criteria Verification
 
-| Criterion | Status | Evidence |
-|-----------|--------|----------|
-| GitHub Actions workflow file exists | ✅ Met | `.github/workflows/maven.yml` created |
-| Pipeline runs on every push and PR | ✅ Met | Triggers configured for main, module-*, feature/* |
-| Pipeline stages: compile, test, code quality | ✅ Met | 9 stages implemented |
-| Pipeline fails if tests fail | ✅ Met | Exit code 1 on test failure |
-| Pipeline status badge in README | ✅ Met | Badge added to README.md |
+| Criterion                                    | Status | Evidence                                          |
+| -------------------------------------------- | ------ | ------------------------------------------------- |
+| GitHub Actions workflow file exists          | ✅ Met | `.github/workflows/maven.yml` created             |
+| Pipeline runs on every push and PR           | ✅ Met | Triggers configured for main, module-_, feature/_ |
+| Pipeline stages: compile, test, code quality | ✅ Met | 9 stages implemented                              |
+| Pipeline fails if tests fail                 | ✅ Met | Exit code 1 on test failure                       |
+| Pipeline status badge in README              | ✅ Met | Badge added to README.md                          |
 
 #### Deliverables
 
@@ -158,22 +163,25 @@ As a developer, I want an automated CI/CD pipeline, so that code changes are aut
 #### Screenshots/Evidence
 
 **Pipeline Configuration:**
+
 ```yaml
 name: Java CI with Maven
 on:
   push:
-    branches: [ "main", "module-*", "feature/*" ]
+    branches: ["main", "module-*", "feature/*"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 ```
 
 **Pipeline Status:**
+
 - ✅ First run successful on feature branch push
 - ✅ Pull request #3 created
 - ✅ Pipeline triggered automatically
 - ✅ Status badge active in README
 
 **README Badges:**
+
 ```markdown
 ![Java CI with Maven](https://github.com/Kratosgado/pms/workflows/Java%20CI%20with%20Maven/badge.svg)
 [![Java Version](https://img.shields.io/badge/Java-21-blue.svg)]
@@ -189,13 +197,13 @@ As a system administrator, I want detailed application logs for key operations, 
 
 #### Acceptance Criteria Verification
 
-| Criterion | Status | Evidence |
-|-----------|--------|----------|
-| Log all authentication attempts | ✅ Met | AuthManager logs success/failure with user email |
-| Log all CRUD operations | ✅ Met | UserInMemoryDatabase, Repository log operations |
-| Log all errors with stack traces | ✅ Met | ERROR level with exception details |
-| Include severity levels | ✅ Met | DEBUG, INFO, WARN, ERROR configured |
-| Logs to console and file | ✅ Met | Console appender + file appenders configured |
+| Criterion                        | Status | Evidence                                         |
+| -------------------------------- | ------ | ------------------------------------------------ |
+| Log all authentication attempts  | ✅ Met | AuthManager logs success/failure with user email |
+| Log all CRUD operations          | ✅ Met | UserInMemoryDatabase, Repository log operations  |
+| Log all errors with stack traces | ✅ Met | ERROR level with exception details               |
+| Include severity levels          | ✅ Met | DEBUG, INFO, WARN, ERROR configured              |
+| Logs to console and file         | ✅ Met | Console appender + file appenders configured     |
 
 #### Deliverables
 
@@ -237,28 +245,33 @@ As a system administrator, I want detailed application logs for key operations, 
 #### Log Examples
 
 **Successful Authentication:**
+
 ```
 2026-02-11 09:15:23 [main] INFO  c.k.pms.utils.context.AuthManager - Authentication attempt for user: john@example.com
 2026-02-11 09:15:23 [main] INFO  c.k.pms.utils.context.AuthManager - User successfully authenticated: John Doe (ID: US001, Role: REGULAR)
 ```
 
 **Failed Authentication:**
+
 ```
 2026-02-11 09:16:45 [main] INFO  c.k.pms.utils.context.AuthManager - Authentication attempt for user: wrong@example.com
 2026-02-11 09:16:45 [main] WARN  c.k.pms.utils.context.AuthManager - Failed authentication attempt - User not found: wrong@example.com
 ```
 
 **User Creation:**
+
 ```
 2026-02-11 09:20:10 [main] INFO  c.k.pms.data.UserInMemoryDatabase - Creating new user: Jane Smith (ID: US002, Email: jane@example.com, Role: ADMIN)
 ```
 
 **Entity Deletion:**
+
 ```
 2026-02-11 09:25:30 [main] INFO  c.k.pms.data.Repository - Entity deleted: User (ID: US003)
 ```
 
 **Error Logging:**
+
 ```
 2026-02-11 09:30:00 [main] ERROR c.k.pms.data.Repository - Failed to delete entity - not found: ID US999
 ```
@@ -266,6 +279,7 @@ As a system administrator, I want detailed application logs for key operations, 
 #### Screenshots/Evidence
 
 **Log Files Created:**
+
 ```bash
 $ ls logs/
 app.log
@@ -274,6 +288,7 @@ error.log
 ```
 
 **Logback Configuration:**
+
 - Console pattern: `%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n`
 - File rotation: Daily
 - Retention: 30 days
@@ -378,6 +393,7 @@ error.log
 All sprint work meets the Definition of Done:
 
 ### Code Quality Standards ✅
+
 - [x] Code follows Java naming conventions
 - [x] No compiler warnings or errors
 - [x] Code properly formatted
@@ -386,6 +402,7 @@ All sprint work meets the Definition of Done:
 - [x] No code smells
 
 ### Testing Requirements ✅
+
 - [x] Unit tests for new/modified logic
 - [x] All tests pass (103/103)
 - [x] No test regressions
@@ -393,24 +410,28 @@ All sprint work meets the Definition of Done:
 - [x] Edge cases tested
 
 ### Documentation Updates ✅
+
 - [x] Code has Javadoc comments
 - [x] README updated
 - [x] JavaDoc documentation (complete)
 - [x] Technical documentation complete
 
 ### Code Review Completion ✅
+
 - [x] PR created (#3)
 - [x] Clear PR description
 - [x] Commit history clean
 - [x] Conventional commit messages
 
 ### CI/CD Pipeline Success ✅
+
 - [x] All tests pass in pipeline
 - [x] Build completes successfully
 - [x] No linting failures
 - [x] Coverage reports generated
 
 ### Deployment Readiness ✅
+
 - [x] Features merged to branch
 - [x] No critical bugs
 - [x] Features demonstrable
@@ -423,11 +444,13 @@ All sprint work meets the Definition of Done:
 ### 1. Test Execution Demo
 
 **Command:**
+
 ```bash
 mvn test
 ```
 
 **Result:**
+
 ```
 [INFO] Tests run: 103, Failures: 0, Errors: 0, Skipped: 0
 [INFO] BUILD SUCCESS
@@ -435,6 +458,7 @@ mvn test
 ```
 
 **Key Points:**
+
 - All 103 tests pass
 - Fast execution (~5 seconds)
 - No failures or errors
@@ -443,12 +467,14 @@ mvn test
 ### 2. Coverage Report Demo
 
 **Command:**
+
 ```bash
 mvn clean test
 open target/site/jacoco/index.html
 ```
 
 **Coverage Highlights:**
+
 - Models package: Well-tested entities
 - Data package: Integration tests working
 - Utils.context: Security code covered
@@ -457,11 +483,13 @@ open target/site/jacoco/index.html
 ### 3. CI/CD Pipeline Demo
 
 **Trigger:**
+
 ```bash
 git push y feature/us-3-automated-testing
 ```
 
 **Pipeline Actions:**
+
 1. ✅ Checkout code
 2. ✅ Set up JDK 21
 3. ✅ Build project
@@ -474,6 +502,7 @@ git push y feature/us-3-automated-testing
 ### 4. Logging System Demo
 
 **Application Run:**
+
 ```bash
 mvn exec:java
 # Login with test credentials
@@ -481,12 +510,14 @@ mvn exec:java
 ```
 
 **Log Output (console):**
+
 ```
 2026-02-11 09:15:23 [main] INFO  AuthManager - Authentication attempt for user: kratos@gmail.com
 2026-02-11 09:15:23 [main] INFO  AuthManager - User successfully authenticated: Kratos (ID: US001, Role: ADMIN)
 ```
 
 **Log Files:**
+
 ```bash
 $ cat logs/app.log
 # Shows all operations
@@ -501,6 +532,7 @@ $ cat logs/error.log
 **URL:** https://github.com/Kratosgado/pms/pull/3
 
 **PR Contents:**
+
 - 8 commits with conventional format
 - Comprehensive description
 - Files changed: 20
@@ -516,6 +548,7 @@ $ cat logs/error.log
 **Issue:** Initial coverage was low (~18%) due to console UI code in services.
 
 **Resolution:**
+
 - Focused on business logic testing (models, data layer)
 - Documented testing strategy emphasizing quality over quantity
 - Achieved 70%+ coverage in critical security code
@@ -526,6 +559,7 @@ $ cat logs/error.log
 **Issue:** First-time GitHub Actions setup, needed to understand workflow syntax.
 
 **Resolution:**
+
 - Created comprehensive workflow with Maven caching
 - Added detailed comments in workflow file
 - Documented all stages in `cicd-pipeline.md`
@@ -536,6 +570,7 @@ $ cat logs/error.log
 **Issue:** Multiple logging frameworks available (Log4j, JUL, Logback).
 
 **Resolution:**
+
 - Chose SLF4J + Logback (industry standard)
 - Configured comprehensive appenders (console, file, error)
 - Added daily rotation and retention policies
@@ -606,18 +641,21 @@ $ cat logs/error.log
 ## Stakeholder Value Delivered
 
 ### For Development Team
+
 - ✅ Automated testing saves time
 - ✅ CI/CD provides fast feedback
 - ✅ Logging aids debugging
 - ✅ Confidence in code changes
 
 ### For Project
+
 - ✅ Quality gates established
 - ✅ Regression prevention
 - ✅ Automated validation
 - ✅ Professional DevOps practices
 
 ### For Assessment
+
 - ✅ Agile practices demonstrated
 - ✅ DevOps implementation complete
 - ✅ Delivery discipline shown
@@ -638,14 +676,18 @@ Sprint 1 has been **exceptionally successful**, delivering all planned features 
 ✅ **Pull Request Ready** (#3 created)
 
 ### Sprint Goal Achievement
+
 The sprint goal to "Establish foundational DevOps infrastructure" has been **fully achieved**. The PMS application now has:
+
 - Automated quality assurance (testing)
 - Continuous integration (CI/CD)
 - Observability (logging)
 - Professional documentation
 
 ### Ready for Sprint 2
+
 With the DevOps foundation in place, Sprint 2 can focus on delivering additional user-facing features:
+
 - Enhanced filtering (US-2)
 - Task assignment (US-4)
 - Task priorities (US-6)

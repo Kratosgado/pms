@@ -117,6 +117,70 @@ public abstract class Project implements HasId, JsonSerializable {
     return ((double) getCompletedTasks() / getTasks().size() * 100);
   }
 
+  /**
+   * Filter tasks by status
+   *
+   * @param status The task status to filter by
+   * @return List of tasks matching the status
+   */
+  public List<Task> getTasksByStatus(TaskStatus status) {
+    return tasks.stream()
+        .filter(task -> task.getStatus().equals(status))
+        .toList();
+  }
+
+  /**
+   * Filter tasks by assigned user
+   *
+   * @param userId The user ID to filter by
+   * @return List of tasks assigned to the user
+   */
+  public List<Task> getTasksByUser(String userId) {
+    return tasks.stream()
+        .filter(task -> task.getUserId() != null && task.getUserId().equals(userId))
+        .toList();
+  }
+
+  /**
+   * Search tasks by name or description (partial match, case-insensitive)
+   *
+   * @param searchTerm The term to search for
+   * @return List of tasks matching the search term
+   */
+  public List<Task> searchTasks(String searchTerm) {
+    String lowerSearch = searchTerm.toLowerCase();
+    return tasks.stream()
+        .filter(task -> task.getName().toLowerCase().contains(lowerSearch))
+        .toList();
+  }
+
+  /**
+   * Get tasks with combined filters
+   *
+   * @param status     Optional status filter (null to skip)
+   * @param userId     Optional user ID filter (null to skip)
+   * @param searchTerm Optional search term (null to skip)
+   * @return List of tasks matching all provided filters
+   */
+  public List<Task> getFilteredTasks(TaskStatus status, String userId, String searchTerm) {
+    return tasks.stream()
+        .filter(task -> status == null || task.getStatus().equals(status))
+        .filter(task -> userId == null || (task.getUserId() != null && task.getUserId().equals(userId)))
+        .filter(task -> searchTerm == null || task.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+        .toList();
+  }
+
+  /**
+   * Get unassigned tasks
+   *
+   * @return List of tasks without assigned user
+   */
+  public List<Task> getUnassignedTasks() {
+    return tasks.stream()
+        .filter(task -> task.getUserId() == null || task.getUserId().isEmpty())
+        .toList();
+  }
+
   public abstract String getProjectDetails();
 
   public abstract ProjectType getProjectType();

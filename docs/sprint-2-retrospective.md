@@ -17,11 +17,13 @@ This retrospective follows the **Start-Stop-Continue** format combined with **Wh
 ## Sprint 2 Overview
 
 ### Sprint Goal (Recap)
+
 > "Deliver user-facing improvements and enhance development quality by implementing high-priority filtering features and establishing automated code quality checks."
 
 **Achievement:** ✅ **FULLY ACHIEVED**
 
 ### Delivery Metrics
+
 - **Story Points Planned:** 10 (US-2: 5, US-4: 3, Code Quality: 2)
 - **Story Points Delivered:** 10 (100%)
 - **Velocity:** 10 points
@@ -40,12 +42,14 @@ This retrospective follows the **Start-Stop-Continue** format combined with **Wh
 Sprint 2 had a clear, achievable scope with 3 well-defined deliverables. All items were completed successfully.
 
 **Why It Worked:**
+
 - Learned from Sprint 1 velocity (13 points)
 - Selected realistic scope (10 points)
 - No scope creep or last-minute additions
 - Clear priorities from product backlog
 
 **Impact:**
+
 - 100% delivery rate
 - No stress or rushing
 - High-quality deliverables
@@ -61,6 +65,7 @@ Sprint 2 had a clear, achievable scope with 3 well-defined deliverables. All ite
 US-2 (Enhanced Filtering) and US-4 (Task Assignment) shared implementation and tests, creating natural synergies.
 
 **Why It Worked:**
+
 - Both stories involved Project.java filtering methods
 - Tests covered both stories in one comprehensive suite
 - Implementation efficiency gained
@@ -70,6 +75,7 @@ US-2 (Enhanced Filtering) and US-4 (Task Assignment) shared implementation and t
 `getFilteredTasks()` method supports both status filtering (US-2) and user filtering (US-4) in one unified interface.
 
 **Impact:**
+
 - More efficient development
 - Better class design
 - Comprehensive test coverage
@@ -85,18 +91,21 @@ US-2 (Enhanced Filtering) and US-4 (Task Assignment) shared implementation and t
 Team successfully integrated code quality tools (CheckStyle, SpotBugs) without being asked explicitly.
 
 **Why It Worked:**
+
 - Action item from Sprint 1 retrospective
 - High-priority process improvement
 - Implemented early in sprint
 - Configured to not block development
 
 **Approach:**
+
 - Configured tools to report, not fail build
 - Created comprehensive CheckStyle ruleset
 - Integrated into CI/CD pipeline
 - Documented 79 quality issues for future work
 
 **Impact:**
+
 - Visibility into code quality baseline
 - Foundation for continuous improvement
 - No disruption to development workflow
@@ -112,6 +121,7 @@ Team successfully integrated code quality tools (CheckStyle, SpotBugs) without b
 Added 23 new tests for US-2 and US-4 with excellent edge case coverage.
 
 **Test Quality Highlights:**
+
 - Null parameter handling
 - Empty string handling
 - Combined filter scenarios
@@ -119,12 +129,14 @@ Added 23 new tests for US-2 and US-4 with excellent edge case coverage.
 - Case-insensitive search
 
 **Why It Worked:**
+
 - Test-driven mindset from Sprint 1
 - Clear acceptance criteria
 - Focus on edge cases
 - Integration with existing tests
 
 **Coverage Stats:**
+
 ```
 New Tests:              23
 All Tests:              126
@@ -142,18 +154,21 @@ Execution Time:         ~5 seconds
 Created feature branch, made focused commits, and prepared for clean PR.
 
 **Commit Quality:**
+
 ```
 7082761 feat(module-3): implement task filtering and assignment (US-2, US-4)
 870a4b5 ci: add CheckStyle and SpotBugs to code quality pipeline
 ```
 
 **Why It Worked:**
+
 - Conventional commit format
 - Descriptive commit messages
 - Logical commit grouping
 - Co-authorship attribution
 
 **Impact:**
+
 - Clear project history
 - Easy code review
 - Professional presentation
@@ -169,6 +184,7 @@ Created feature branch, made focused commits, and prepared for clean PR.
 Made pragmatic decision to configure quality tools to report but not fail build.
 
 **Why It Worked:**
+
 - Acknowledged existing code quality issues
 - Enabled incremental improvement
 - Didn't block ongoing development
@@ -178,6 +194,7 @@ Made pragmatic decision to configure quality tools to report but not fail build.
 Could have failed build on violations, forcing immediate fixes of 79 issues. Rejected as too disruptive.
 
 **Impact:**
+
 - Tools successfully integrated
 - Team can see all issues
 - Can prioritize fixes systematically
@@ -196,10 +213,12 @@ Could have failed build on violations, forcing immediate fixes of 79 issues. Rej
 
 **Observation:**
 Sprint 2 identified 79 code quality issues but didn't address them:
+
 - 43 CheckStyle violations
 - 36 SpotBugs findings
 
 **Current Status:**
+
 - Tools report issues
 - Issues documented
 - No plan to fix them
@@ -225,6 +244,7 @@ Technical debt is now visible but growing. Without a systematic approach to addr
    - Consider stricter rules for new code
 
 **Action Items for Sprint 3:**
+
 - [ ] Create backlog items for top-priority SpotBugs findings
 - [ ] Fix at least 10 CheckStyle violations
 - [ ] Establish "boy scout rule" (leave code better than you found it)
@@ -239,12 +259,14 @@ Technical debt is now visible but growing. Without a systematic approach to addr
 US-2 and US-4 implemented backend filtering methods but no UI integration.
 
 **Gap:**
+
 - `Project.java` has filtering methods ✅
 - Tests verify filtering works ✅
 - Console UI can't access new features ❌
 - Users can't benefit from improvements ❌
 
 **Why This Happened:**
+
 - Focus on backend logic and tests
 - UI integration not explicit in acceptance criteria
 - Assumed UI would be added later
@@ -267,6 +289,7 @@ US-2 and US-4 implemented backend filtering methods but no UI integration.
    - Show mockups or flows
 
 **Action Items for Sprint 3:**
+
 - [ ] Add UI integration for US-2 and US-4 filtering
 - [ ] Update Definition of Done to include UI access
 - [ ] Review all user stories for UI completeness
@@ -281,12 +304,14 @@ US-2 and US-4 implemented backend filtering methods but no UI integration.
 23 unit tests added but no integration tests for filtering features.
 
 **Gap:**
+
 - Unit tests verify individual methods ✅
 - No tests for complete user workflows ❌
 - No tests for service layer integration ❌
 - No tests for error propagation ❌
 
 **Example Missing Tests:**
+
 ```
 Integration Test: Filter tasks via service layer
 Integration Test: Search tasks with invalid project ID
@@ -295,6 +320,7 @@ Integration Test: Filter large project (1000+ tasks)
 ```
 
 **Why This Matters:**
+
 - Unit tests don't catch integration issues
 - Service layer may have different behavior
 - Error handling across layers untested
@@ -315,6 +341,7 @@ Integration Test: Filter large project (1000+ tasks)
    - Performance testing
 
 **Action Items for Sprint 3:**
+
 - [ ] Add integration tests for filtering workflows
 - [ ] Test filtering via service layer
 - [ ] Add performance tests for large projects
@@ -330,6 +357,7 @@ Integration Test: Filter large project (1000+ tasks)
 CheckStyle and SpotBugs integrated but no baseline metrics or trends tracked.
 
 **Current State:**
+
 - Tools report violations ✅
 - Numbers documented (43, 36) ✅
 - No historical data ❌
@@ -338,6 +366,7 @@ CheckStyle and SpotBugs integrated but no baseline metrics or trends tracked.
 
 **Gap:**
 Can't answer questions like:
+
 - Are violations increasing or decreasing?
 - Which areas have most issues?
 - Is code quality improving?
@@ -363,6 +392,7 @@ Can't answer questions like:
    - Aspirational: 0 SpotBugs findings
 
 **Action Items for Sprint 3:**
+
 - [ ] Document Sprint 2 quality baseline
 - [ ] Create simple spreadsheet to track trends
 - [ ] Set quality improvement targets
@@ -378,6 +408,7 @@ Can't answer questions like:
 Sprint velocities vary: Sprint 1 (13 points), Sprint 2 (10 points).
 
 **Analysis:**
+
 - Sprint 1: DevOps setup + features (overhead heavy)
 - Sprint 2: Pure feature work (more efficient)
 - Difference: 3 story points (23% variance)
@@ -386,6 +417,7 @@ Sprint velocities vary: Sprint 1 (13 points), Sprint 2 (10 points).
 What's our "normal" velocity for feature development?
 
 **Challenge:**
+
 - Hard to predict future capacity
 - Sprint planning less accurate
 - Team capacity unclear
@@ -411,6 +443,7 @@ What's our "normal" velocity for feature development?
    - Unexpected issues
 
 **Action Items for Sprint 3:**
+
 - [ ] Document Sprint 3 velocity
 - [ ] Calculate 3-sprint rolling average
 - [ ] Identify velocity patterns
@@ -546,6 +579,7 @@ What's our "normal" velocity for feature development?
 ## 📊 Sprint 3 Planning Insights
 
 ### Established Velocity Trend
+
 - **Sprint 1:** 13 points (infrastructure)
 - **Sprint 2:** 10 points (features)
 - **Average:** 11.5 points
@@ -554,11 +588,13 @@ What's our "normal" velocity for feature development?
 ### Proposed Sprint 3 Backlog
 
 **Option A: Feature-Heavy Sprint**
+
 - UI Integration for US-2/US-4 (2 points)
 - US-6: Export Reports (5 points)
 - **Total:** 7 points
 
 **Option B: Balanced Sprint**
+
 - US-6: Export Reports (5 points)
 - UI Integration for US-2/US-4 (2 points)
 - Technical Debt (2 points)
@@ -566,6 +602,7 @@ What's our "normal" velocity for feature development?
 - **Total:** 11 points ⬅️ **RECOMMENDED**
 
 **Option C: Quality-Focused Sprint**
+
 - Technical Debt (2 points)
 - Integration Tests (2 points)
 - UI Integration (2 points)
@@ -573,7 +610,9 @@ What's our "normal" velocity for feature development?
 - **Total:** 9 points
 
 ### Recommendation: Option B
+
 **Rationale:**
+
 - Balances new features with quality
 - Completes US-2/US-4 properly (with UI)
 - Addresses technical debt
@@ -587,6 +626,7 @@ What's our "normal" velocity for feature development?
 ### What Made You Proud This Sprint?
 
 **Achievements:**
+
 - 100% delivery rate for second consecutive sprint
 - Successfully integrated professional code quality tools
 - Created powerful, well-tested filtering features
@@ -596,6 +636,7 @@ What's our "normal" velocity for feature development?
 **Team Morale:** ✅ **High**
 
 **Quote:**
+
 > "We're building momentum. Two successful sprints, strong testing discipline, and now code quality visibility. The project feels professional and well-managed."
 
 ---
@@ -603,6 +644,7 @@ What's our "normal" velocity for feature development?
 ## 📝 Key Learnings
 
 ### 1. Synergistic User Stories are Efficient
+
 When user stories naturally complement each other (US-2 + US-4), development becomes more efficient and the resulting design is more cohesive.
 
 **Application:**
@@ -611,6 +653,7 @@ Look for story combinations during sprint planning.
 ---
 
 ### 2. Non-Failing Quality Tools Enable Adoption
+
 Configuring CheckStyle and SpotBugs to report but not fail enabled smooth integration without disrupting development.
 
 **Application:**
@@ -619,6 +662,7 @@ When introducing new tools, start lenient and tighten gradually.
 ---
 
 ### 3. Backend Without UI is Incomplete
+
 Implementing filtering methods without UI integration left features unusable by actual users.
 
 **Application:**
@@ -627,6 +671,7 @@ Always deliver end-to-end functionality in same sprint.
 ---
 
 ### 4. Incremental Improvement Beats Perfection
+
 Rather than blocking development to fix 79 violations, chose to improve incrementally.
 
 **Application:**
@@ -635,6 +680,7 @@ Rather than blocking development to fix 79 violations, chose to improve incremen
 ---
 
 ### 5. Testing Discipline Pays Off
+
 Comprehensive testing (23 new tests) caught issues early and provides confidence for future refactoring.
 
 **Application:**
@@ -671,14 +717,14 @@ Complete unfinished work (UI integration), balance new features with quality imp
 
 ## Retrospective Action Summary
 
-| Action | Priority | Target | Owner | Points |
-|--------|----------|--------|-------|--------|
-| UI integration for US-2/US-4 | High | Sprint 3 | Dev Team | 2 |
-| Fix CheckStyle violations | High | Sprint 3 | Dev Team | 1 |
-| Address SpotBugs findings | High | Sprint 3 | Dev Team | 1 |
-| Add integration tests | Medium | Sprint 3 | Dev Team | 2 |
-| Code quality metrics | Medium | Sprint 3 | Dev Team | 0 |
-| Velocity trend analysis | Low | Sprint 3 Retro | SM | 0 |
+| Action                       | Priority | Target         | Owner    | Points |
+| ---------------------------- | -------- | -------------- | -------- | ------ |
+| UI integration for US-2/US-4 | High     | Sprint 3       | Dev Team | 2      |
+| Fix CheckStyle violations    | High     | Sprint 3       | Dev Team | 1      |
+| Address SpotBugs findings    | High     | Sprint 3       | Dev Team | 1      |
+| Add integration tests        | Medium   | Sprint 3       | Dev Team | 2      |
+| Code quality metrics         | Medium   | Sprint 3       | Dev Team | 0      |
+| Velocity trend analysis      | Low      | Sprint 3 Retro | SM       | 0      |
 
 **Total Estimated Points for Improvements:** 6 points
 
@@ -686,15 +732,15 @@ Complete unfinished work (UI integration), balance new features with quality imp
 
 ## Comparison: Sprint 1 vs Sprint 2
 
-| Metric | Sprint 1 | Sprint 2 | Trend |
-|--------|----------|----------|-------|
-| Story Points | 13 | 10 | ⬇️ (infrastructure vs features) |
-| Delivery Rate | 100% | 100% | ✅ Consistent |
-| Tests Added | 60 | 23 | ⬇️ (fewer features) |
-| Total Tests | 103 | 126 | ⬆️ Growing |
-| Commits | 8 | 2 | ⬇️ (more focused) |
-| Quality Issues Found | 0 | 79 | ⬆️ (now visible!) |
-| Documentation | Excellent | Excellent | ✅ Consistent |
+| Metric               | Sprint 1  | Sprint 2  | Trend                           |
+| -------------------- | --------- | --------- | ------------------------------- |
+| Story Points         | 13        | 10        | ⬇️ (infrastructure vs features) |
+| Delivery Rate        | 100%      | 100%      | ✅ Consistent                   |
+| Tests Added          | 60        | 23        | ⬇️ (fewer features)             |
+| Total Tests          | 103       | 126       | ⬆️ Growing                      |
+| Commits              | 8         | 2         | ⬇️ (more focused)               |
+| Quality Issues Found | 0         | 79        | ⬆️ (now visible!)               |
+| Documentation        | Excellent | Excellent | ✅ Consistent                   |
 
 **Overall Trend:** ✅ **Positive - Sustainable, quality-focused development**
 

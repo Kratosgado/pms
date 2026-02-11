@@ -7,3 +7,4 @@ target/
 GEMINI.md
 ./projects.json
 ./users.json
+logs/

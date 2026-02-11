@@ -1,5 +1,9 @@
 # Project Manager System (PMS)
 
+![Java CI with Maven](https://github.com/Kratosgado/pms/workflows/Java%20CI%20with%20Maven/badge.svg)
+[![Java Version](https://img.shields.io/badge/Java-21-blue.svg)](https://www.oracle.com/java/)
+[![Maven](https://img.shields.io/badge/Maven-3.8+-green.svg)](https://maven.apache.org/)
+
 A comprehensive Java-based project management system for managing projects, tasks, users, and generating status reports.
 
 ![Project Manager System UML Class Diagram](./docs/class-diagram.png)
@@ -77,6 +81,13 @@ mvn exec:java
 
 ```bash
 mvn test
+```
+
+### 4. Run tests with coverage report
+
+```bash
+mvn clean test
+# View coverage report: open target/site/jacoco/index.html in browser
 ```
 
 The application will start with an authentication menu.
@@ -186,8 +197,63 @@ The system validates all user inputs:
 > - Check that all class files were compiled to the `bin` directory
 > - Ensure proper input format when prompted
 
+## Testing
+
+The project includes comprehensive unit and integration tests:
+
+- **Total Tests:** 103
+- **Test Coverage:** Focused on business logic (models, data layer, calculations)
+- **Test Framework:** JUnit 5
+- **Coverage Tool:** JaCoCo
+
+### Running Tests
+
+```bash
+# Run all tests
+mvn test
+
+# Run tests with coverage report
+mvn clean test
+
+# Run specific test class
+mvn test -Dtest=UserTest
+
+# View coverage report
+open target/site/jacoco/index.html
+```
+
+### Test Documentation
+
+See [`docs/testing-strategy.md`](docs/testing-strategy.md) for detailed testing strategy and approach.
+
+## Logging
+
+The application includes comprehensive logging using SLF4J and Logback:
+
+- **Console Output:** Real-time logs during development
+- **File Logging:** `logs/app.log` (all logs with daily rotation)
+- **Error Logging:** `logs/error.log` (errors only)
+- **Logged Operations:** Authentication, CRUD operations, errors
+
+### View Logs
+
+```bash
+# View all logs
+cat logs/app.log
+
+# View errors only
+cat logs/error.log
+
+# Tail logs in real-time
+tail -f logs/app.log
+```
+
+See [`docs/logging-documentation.md`](docs/logging-documentation.md) for detailed logging information.
+
 ## Notes
 
 > - The system uses an in-memory data structure (may be enhanced with database integration in future versions)
 > - User performance summaries are flagged for future expansion
 > - The system supports graceful error handling with user-friendly error messages
+> - Comprehensive test suite with 103 tests covering core business logic
+> - Full logging system for authentication, operations, and error tracking

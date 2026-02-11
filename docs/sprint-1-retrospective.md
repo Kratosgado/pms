@@ -17,11 +17,13 @@ This retrospective follows the **Start-Stop-Continue** format combined with **Wh
 ## Sprint 1 Overview
 
 ### Sprint Goal (Recap)
+
 > "Establish foundational DevOps infrastructure and deliver initial high-priority features to enable automated testing and continuous integration."
 
 **Achievement:** ✅ **FULLY ACHIEVED**
 
 ### Delivery Metrics
+
 - **Story Points Planned:** 13
 - **Story Points Delivered:** 13 (100%)
 - **Velocity:** 13 points
@@ -40,6 +42,7 @@ This retrospective follows the **Start-Stop-Continue** format combined with **Wh
 All three user stories (US-3, US-7, US-5) had well-defined acceptance criteria that were specific, measurable, and testable.
 
 **Why It Worked:**
+
 - Each criterion could be verified objectively
 - No ambiguity about "done"
 - Easy to track progress
@@ -58,6 +61,7 @@ US-3 specified "Unit tests for all service classes" and "Test coverage at least 
 The sprint showed steady progress with 8 well-structured commits following conventional commit format.
 
 **Commit History:**
+
 ```
 9bbca9f feat: add JaCoCo plugin
 df36d21 test: add comprehensive unit tests for User, AuthManager
@@ -70,6 +74,7 @@ acb0f91 feat: implement logging system
 ```
 
 **Why It Worked:**
+
 - Small, focused changes
 - Easy to review
 - Clear commit messages
@@ -84,6 +89,7 @@ acb0f91 feat: implement logging system
 
 **Observation:**
 Created 7 comprehensive documentation files alongside code:
+
 - testing-strategy.md
 - cicd-pipeline.md
 - logging-documentation.md
@@ -93,6 +99,7 @@ Created 7 comprehensive documentation files alongside code:
 - SPRINT-0-SUMMARY.md
 
 **Why It Worked:**
+
 - Documentation created as features were built
 - Clear explanations with examples
 - Troubleshooting sections included
@@ -100,6 +107,7 @@ Created 7 comprehensive documentation files alongside code:
 - Demonstrates professional practices
 
 **Impact:**
+
 - Easy onboarding for new team members
 - Self-service troubleshooting
 - Clear reference material
@@ -115,12 +123,14 @@ Created 7 comprehensive documentation files alongside code:
 Focused testing efforts on business logic (models, data layer, security) rather than trying to achieve 100% coverage including UI code.
 
 **Strategic Decisions:**
+
 - Prioritized models package (36% coverage)
 - Emphasized data layer (51% coverage)
 - Security-critical code (70%+ coverage)
 - Documented rationale in testing-strategy.md
 
 **Why It Worked:**
+
 - Valuable tests written
 - Testing time well-spent
 - High confidence in critical code
@@ -128,6 +138,7 @@ Focused testing efforts on business logic (models, data layer, security) rather 
 - Realistic and pragmatic approach
 
 **Impact:**
+
 - 103 reliable tests
 - Fast test execution (~5 seconds)
 - No flaky tests
@@ -143,6 +154,7 @@ Focused testing efforts on business logic (models, data layer, security) rather 
 GitHub Actions pipeline set up early (US-7) and worked smoothly from first push.
 
 **Pipeline Features:**
+
 - 9 stages, all functional
 - Maven caching reduces build time
 - Automatic artifact preservation
@@ -150,12 +162,14 @@ GitHub Actions pipeline set up early (US-7) and worked smoothly from first push.
 - Fast feedback (40-80 seconds)
 
 **Why It Worked:**
+
 - Well-planned configuration
 - Tested incrementally
 - Comprehensive documentation
 - Standard Maven workflow
 
 **Impact:**
+
 - Immediate quality feedback
 - Confidence in code changes
 - Professional development process
@@ -171,12 +185,14 @@ GitHub Actions pipeline set up early (US-7) and worked smoothly from first push.
 Sprint 1 selected 13 story points with consideration for DevOps setup overhead, which proved accurate.
 
 **Planning Accuracy:**
+
 - Estimated 13 points ✅
 - Delivered 13 points ✅
 - No scope creep
 - Buffer for learning
 
 **Why It Worked:**
+
 - Acknowledged setup time needed
 - Included learning curve
 - Focused scope
@@ -197,11 +213,13 @@ First sprint velocity of 13 points provides baseline for Sprint 2 planning.
 Service classes have low coverage (~2-5%) due to console UI code.
 
 **Challenge:**
+
 - Services mix UI and business logic
 - Console I/O difficult to test
 - Low value in testing UI code
 
 **Improvement Opportunities:**
+
 1. **Refactor services** to separate business logic from UI
    - Extract business methods to separate classes
    - Test business logic independently
@@ -213,6 +231,7 @@ Service classes have low coverage (~2-5%) due to console UI code.
    - Focus on business outcomes
 
 **Action Items for Sprint 2:**
+
 - [ ] Consider refactoring ReportService calculation methods
 - [ ] Add integration tests for key workflows
 - [ ] Document service testing strategy
@@ -227,17 +246,20 @@ Service classes have low coverage (~2-5%) due to console UI code.
 CI/CD pipeline lacks automated code quality checks (CheckStyle, SpotBugs, PMD).
 
 **Current State:**
+
 - Manual code review only
 - No automated style enforcement
 - No static analysis for bugs
 - No code smell detection
 
 **Impact:**
+
 - Code style inconsistencies possible
 - Potential bugs might slip through
 - Technical debt not tracked
 
 **Improvement Plan:**
+
 1. **Add CheckStyle** (Sprint 2)
    - Enforce Java coding standards
    - Fail build on violations
@@ -254,6 +276,7 @@ CI/CD pipeline lacks automated code quality checks (CheckStyle, SpotBugs, PMD).
    - Best practice enforcement
 
 **Action Items for Sprint 2:**
+
 - [ ] Add CheckStyle plugin to pom.xml
 - [ ] Create checkstyle.xml configuration
 - [ ] Add CheckStyle stage to CI pipeline
@@ -269,17 +292,20 @@ CI/CD pipeline lacks automated code quality checks (CheckStyle, SpotBugs, PMD).
 Good unit test coverage, but fewer integration tests for complex multi-component workflows.
 
 **Current Integration Tests:**
+
 - Repository + Database (good ✅)
 - Individual service methods (limited)
 - End-to-end workflows (missing)
 
 **Missing Coverage:**
+
 - Complete user authentication flow
 - Project creation → Task addition → Status update flow
 - Report generation with multiple projects
 - Error handling across layers
 
 **Improvement Opportunities:**
+
 1. **Add workflow integration tests**
    - Test realistic user scenarios
    - Verify component interactions
@@ -291,6 +317,7 @@ Good unit test coverage, but fewer integration tests for complex multi-component
    - Test concurrent access
 
 **Action Items for Sprint 2:**
+
 - [ ] Create IntegrationTest package
 - [ ] Add workflow test for user creation → login → action
 - [ ] Add workflow test for project → tasks → report
@@ -306,17 +333,20 @@ Good unit test coverage, but fewer integration tests for complex multi-component
 No baseline performance metrics or tracking in place.
 
 **Current State:**
+
 - No performance tests
 - No benchmarks
 - No metrics collection
 - No trend analysis
 
 **Potential Issues:**
+
 - Performance regressions undetected
 - No optimization targets
 - Unknown bottlenecks
 
 **Improvement Plan:**
+
 1. **Add JMH Benchmarks** (Future)
    - Benchmark critical operations
    - Track over time
@@ -328,6 +358,7 @@ No baseline performance metrics or tracking in place.
    - Coverage trends
 
 **Action Items for Sprint 2:**
+
 - [ ] Document current baseline metrics
 - [ ] Add simple timing to critical paths
 - [ ] Track CI pipeline duration trends
@@ -342,12 +373,14 @@ No baseline performance metrics or tracking in place.
 Sprint review requires manual screenshot collection and evidence gathering.
 
 **Current Process:**
+
 - Run commands manually
 - Take screenshots
 - Copy output to documents
 - Time-consuming
 
 **Improvement Opportunities:**
+
 1. **Automate evidence collection** (Future)
    - CI pipeline screenshots
    - Auto-generate reports
@@ -359,6 +392,7 @@ Sprint review requires manual screenshot collection and evidence gathering.
    - Screenshot utilities
 
 **Action Items for Future:**
+
 - [ ] Create script to collect evidence
 - [ ] Automate screenshot capture
 - [ ] Generate review doc template
@@ -378,7 +412,7 @@ Sprint review requires manual screenshot collection and evidence gathering.
    - **Owner:** Development Team
    - **Target:** Sprint 2
 
-3. **Begin US-2: Enhanced Filtering**
+2. **Begin US-2: Enhanced Filtering**
    - High priority feature (5 points)
    - Improves user experience
    - **Owner:** Development Team
@@ -472,10 +506,12 @@ Sprint review requires manual screenshot collection and evidence gathering.
 ## 📊 Sprint 2 Planning Insights
 
 ### Velocity Established
+
 - **Sprint 1 Velocity:** 13 points
 - **Sprint 2 Capacity:** 15-18 points (more experience, less setup)
 
 ### Proposed Sprint 2 Backlog
+
 1. **US-2: Enhanced Filtering** (5 points) - High
 2. **US-4: Task Assignment** (3 points) - Medium
 3. **Code Quality Tools** (estimate: 2 points) - High
@@ -483,12 +519,15 @@ Sprint review requires manual screenshot collection and evidence gathering.
 **Total:** 10 points (manageable goal)
 
 ### Dependencies
+
 - None (clean slate after DevOps foundation)
 
 ### Risks
+
 - Code quality tools might surface existing issues
 
 ### Mitigation
+
 - Prioritize code quality early in sprint
 - Regular check-ins on progress
 
@@ -499,6 +538,7 @@ Sprint review requires manual screenshot collection and evidence gathering.
 ### What Made You Proud This Sprint?
 
 **Achievements:**
+
 - Delivered 100% of committed work
 - High-quality tests and documentation
 - Professional DevOps setup
@@ -563,13 +603,13 @@ With Sprint 1's DevOps foundation in place and lessons learned, the team is well
 
 ## Retrospective Action Summary
 
-| Action | Priority | Target | Owner |
-|--------|----------|--------|-------|
-| Add CheckStyle to CI | High | Sprint 2 | Dev Team |
-| Add SpotBugs to CI | High | Sprint 2 | Dev Team |
-| Add integration tests | Medium | Sprint 2 | Dev Team |
-| Refactor services | Medium | Sprint 2+ | Dev Team |
-| Performance baseline | Low | Sprint 2-3 | Dev Team |
+| Action                | Priority | Target     | Owner    |
+| --------------------- | -------- | ---------- | -------- |
+| Add CheckStyle to CI  | High     | Sprint 2   | Dev Team |
+| Add SpotBugs to CI    | High     | Sprint 2   | Dev Team |
+| Add integration tests | Medium   | Sprint 2   | Dev Team |
+| Refactor services     | Medium   | Sprint 2+  | Dev Team |
+| Performance baseline  | Low      | Sprint 2-3 | Dev Team |
 
 ---
 

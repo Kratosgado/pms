@@ -9,6 +9,7 @@
 ## 2. Product Backlog
 
 ### User Story 2: Enhanced Task Filtering and Search
+
 **Priority:** High
 **Story Points:** 5
 
@@ -16,6 +17,7 @@
 As a **project manager**, I want **to filter and search tasks by multiple criteria**, so that **I can quickly find specific tasks and identify bottlenecks in my projects**.
 
 **Acceptance Criteria:**
+
 1. Users can filter tasks by status (Pending, In Progress, Completed)
 2. Users can filter tasks by project
 3. Users can search tasks by name or description (partial match support)
@@ -25,6 +27,7 @@ As a **project manager**, I want **to filter and search tasks by multiple criter
 ---
 
 ### User Story 3: Automated Testing Framework
+
 **Priority:** High
 **Story Points:** 5
 
@@ -32,6 +35,7 @@ As a **project manager**, I want **to filter and search tasks by multiple criter
 As a **developer**, I want **comprehensive automated tests for core business logic**, so that **I can confidently refactor code and prevent regressions**.
 
 **Acceptance Criteria:**
+
 1. Unit tests exist for all service classes (ProjectService, TaskService, UserService, ReportService)
 2. Unit tests exist for critical model classes (Project, Task, User)
 3. Integration tests verify database operations (Repository, InMemoryDatabase)
@@ -41,6 +45,7 @@ As a **developer**, I want **comprehensive automated tests for core business log
 ---
 
 ### User Story 4: Task Assignment and Ownership
+
 **Priority:** Medium
 **Story Points:** 3
 
@@ -48,6 +53,7 @@ As a **developer**, I want **comprehensive automated tests for core business log
 As a **project manager**, I want **to assign tasks to specific team members**, so that **everyone knows their responsibilities and I can track individual workload**.
 
 **Acceptance Criteria:**
+
 1. Tasks can be assigned to a specific user during creation
 2. Tasks can be reassigned to different users after creation
 3. Users can view all tasks assigned to them (filtered view)
@@ -57,6 +63,7 @@ As a **project manager**, I want **to assign tasks to specific team members**, s
 ---
 
 ### User Story 5: Comprehensive Logging System
+
 **Priority:** Medium
 **Story Points:** 3
 
@@ -64,6 +71,7 @@ As a **project manager**, I want **to assign tasks to specific team members**, s
 As a **system administrator**, I want **detailed application logs for key operations**, so that **I can troubleshoot issues, audit user actions, and monitor system health**.
 
 **Acceptance Criteria:**
+
 1. Application logs all authentication attempts (success and failure)
 2. Application logs all CRUD operations (create, update, delete) with user and timestamp
 3. Application logs all errors with stack traces
@@ -73,6 +81,7 @@ As a **system administrator**, I want **detailed application logs for key operat
 ---
 
 ### User Story 6: Task Priority Levels
+
 **Priority:** Medium
 **Story Points:** 2
 
@@ -80,6 +89,7 @@ As a **system administrator**, I want **detailed application logs for key operat
 As a **team member**, I want **to set priority levels for tasks**, so that **I can focus on the most important work first**.
 
 **Acceptance Criteria:**
+
 1. Tasks support priority levels: Critical, High, Medium, Low
 2. Priority can be set during task creation
 3. Priority can be updated after task creation
@@ -89,6 +99,7 @@ As a **team member**, I want **to set priority levels for tasks**, so that **I c
 ---
 
 ### User Story 7: CI/CD Pipeline Setup
+
 **Priority:** High
 **Story Points:** 5
 
@@ -96,6 +107,7 @@ As a **team member**, I want **to set priority levels for tasks**, so that **I c
 As a **developer**, I want **an automated CI/CD pipeline**, so that **code changes are automatically tested and validated before merging**.
 
 **Acceptance Criteria:**
+
 1. GitHub Actions workflow file exists and is properly configured
 2. Pipeline runs automatically on every push and pull request
 3. Pipeline includes stages: compile, test, code quality check
@@ -105,6 +117,7 @@ As a **developer**, I want **an automated CI/CD pipeline**, so that **code chang
 ---
 
 ### User Story 8: System Diagnostics Command
+
 **Priority:** Low
 **Story Points:** 2
 
@@ -112,6 +125,7 @@ As a **developer**, I want **an automated CI/CD pipeline**, so that **code chang
 As a **DevOps engineer**, I want **a system diagnostics command**, so that **I can monitor if the application is running correctly**.
 
 **Acceptance Criteria:**
+
 1. 'status' command prints system information (uptime, memory usage, database connection status)
 2. Command executes within 500ms
 3. Output is formatted as a readable table
@@ -125,6 +139,7 @@ As a **DevOps engineer**, I want **a system diagnostics command**, so that **I c
 A user story is considered "Done" when ALL of the following criteria are met:
 
 ### Code Quality Standards
+
 - [ ] Code follows Java naming conventions and style guidelines
 - [ ] No compiler warnings or errors
 - [ ] Code is properly formatted and indented
@@ -133,6 +148,7 @@ A user story is considered "Done" when ALL of the following criteria are met:
 - [ ] Code smells identified by linting tools are resolved
 
 ### Testing Requirements
+
 - [ ] Unit tests written for new/modified business logic
 - [ ] All new tests pass successfully
 - [ ] Existing tests continue to pass (no regressions)
@@ -140,22 +156,26 @@ A user story is considered "Done" when ALL of the following criteria are met:
 - [ ] Edge cases and error scenarios are tested
 
 ### Documentation Updates
+
 - [ ] Code includes Javadoc comments for public methods
 - [ ] README updated with new features or setup changes
 - [ ] JavaDoc updated (if applicable)
 - [ ] Inline comments explain complex logic
 
 ### Code Review Completion
+
 - [ ] Code reviewed by at least one team member
 - [ ] All review comments addressed or discussed
 - [ ] PR approved by reviewer(s)
 
 ### CI/CD Pipeline Success
+
 - [ ] All automated tests pass in CI pipeline
 - [ ] Build completes successfully
 - [ ] No linting or code quality check failures
 
 ### Deployment Readiness
+
 - [ ] Feature merged to main branch
 - [ ] No known critical bugs
 - [ ] Feature is demonstrable to stakeholders
@@ -166,25 +186,30 @@ A user story is considered "Done" when ALL of the following criteria are met:
 ## 4. Sprint 1 Planning
 
 ### Sprint 1 Goal
+
 Establish foundational DevOps infrastructure and deliver initial high-priority features to enable automated testing and core capabilities.
 
 ### Selected User Stories for Sprint 1
 
 #### Story 1: US-3 - Automated Testing Framework
+
 **Priority:** High | **Story Points:** 5
 **Rationale:** Essential foundation for DevOps practices. Required before CI/CD implementation.
 
 #### Story 2: US-7 - CI/CD Pipeline Setup
+
 **Priority:** High | **Story Points:** 5
 **Rationale:** Core DevOps requirement. Depends on having tests to run in the pipeline.
 
 #### Story 3: US-5 - Comprehensive Logging System
+
 **Priority:** Medium | **Story Points:** 3
 **Rationale:** Provides visibility into system behavior and is relatively self-contained.
 
 **Total Story Points:** 13
 
 ### Sprint 1 Capacity Planning
+
 - Sprint duration: 1-2 weeks
 - Focus: DevOps infrastructure (60%) + Feature delivery (40%)
 - Risk: Setting up CI/CD for the first time may take longer than estimated
@@ -193,6 +218,7 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 ### Sprint 1 Tasks Breakdown
 
 #### US-3: Automated Testing Framework
+
 1. Set up JUnit 5 testing dependencies (already present)
 2. Write unit tests for ProjectService methods
 3. Write unit tests for TaskService methods
@@ -202,6 +228,7 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 7. Verify 70% coverage threshold
 
 #### US-7: CI/CD Pipeline Setup
+
 1. Create `.github/workflows/maven.yml` file
 2. Configure pipeline stages: compile, test, package
 3. Add code quality checks (optional: CheckStyle or SpotBugs)
@@ -210,6 +237,7 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 6. Document pipeline in repository
 
 #### US-5: Comprehensive Logging System
+
 1. Add logging framework dependency (SLF4J + Logback)
 2. Create logging configuration file
 3. Add logging to authentication operations
@@ -218,10 +246,12 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 6. Test log output to console and file
 
 ### Sprint 1 Dependencies
+
 - US-7 (CI/CD) depends on US-3 (Tests) being substantially complete
 - US-5 (Logging) is independent and can be developed in parallel
 
 ### Sprint 1 Exit Criteria
+
 - All selected user stories meet Definition of Done
 - CI/CD pipeline successfully runs on every commit
 - Test suite executes automatically in pipeline
@@ -232,15 +262,15 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 
 ## Backlog Prioritization Summary
 
-| Story | Title | Priority | Points | Sprint |
-|-------|-------|----------|--------|--------|
-| US-3 | Automated Testing Framework | High | 5 | Sprint 1 |
-| US-7 | CI/CD Pipeline Setup | High | 5 | Sprint 1 |
-| US-5 | Comprehensive Logging System | Medium | 3 | Sprint 1 |
-| US-2 | Enhanced Task Filtering | High | 5 | Sprint 2 |
-| US-4 | Task Assignment and Ownership | Medium | 3 | Sprint 2 |
-| US-6 | Task Priority Levels | Medium | 2 | Sprint 2 |
-| US-8 | System Diagnostics Command | Low | 2 | Future |
+| Story | Title                         | Priority | Points | Sprint   |
+| ----- | ----------------------------- | -------- | ------ | -------- |
+| US-3  | Automated Testing Framework   | High     | 5      | Sprint 1 |
+| US-7  | CI/CD Pipeline Setup          | High     | 5      | Sprint 1 |
+| US-5  | Comprehensive Logging System  | Medium   | 3      | Sprint 1 |
+| US-2  | Enhanced Task Filtering       | High     | 5      | Sprint 2 |
+| US-4  | Task Assignment and Ownership | Medium   | 3      | Sprint 2 |
+| US-6  | Task Priority Levels          | Medium   | 2      | Sprint 2 |
+| US-8  | System Diagnostics Command    | Low      | 2      | Future   |
 
 **Total Backlog:** 33 Story Points
 
