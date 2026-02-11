@@ -8,7 +8,7 @@
 
 ## 2. Product Backlog
 
-### User Story 2: Enhanced Task Filtering and Search
+### __TMP_US_STORY_{old}__ Enhanced Task Filtering and Search
 
 **Priority:** High
 **Story Points:** 5
@@ -26,7 +26,7 @@ As a **project manager**, I want **to filter and search tasks by multiple criter
 
 ---
 
-### User Story 3: Automated Testing Framework
+### __TMP_US_STORY_{old}__ Automated Testing Framework
 
 **Priority:** High
 **Story Points:** 5
@@ -44,7 +44,7 @@ As a **developer**, I want **comprehensive automated tests for core business log
 
 ---
 
-### User Story 4: Task Assignment and Ownership
+### __TMP_US_STORY_{old}__ Task Assignment and Ownership
 
 **Priority:** Medium
 **Story Points:** 3
@@ -62,7 +62,7 @@ As a **project manager**, I want **to assign tasks to specific team members**, s
 
 ---
 
-### User Story 5: Comprehensive Logging System
+### __TMP_US_STORY_{old}__ Comprehensive Logging System
 
 **Priority:** Medium
 **Story Points:** 3
@@ -80,7 +80,7 @@ As a **system administrator**, I want **detailed application logs for key operat
 
 ---
 
-### User Story 6: Task Priority Levels
+### __TMP_US_STORY_{old}__ Task Priority Levels
 
 **Priority:** Medium
 **Story Points:** 2
@@ -98,7 +98,7 @@ As a **team member**, I want **to set priority levels for tasks**, so that **I c
 
 ---
 
-### User Story 7: CI/CD Pipeline Setup
+### __TMP_US_STORY_{old}__ CI/CD Pipeline Setup
 
 **Priority:** High
 **Story Points:** 5
@@ -116,23 +116,7 @@ As a **developer**, I want **an automated CI/CD pipeline**, so that **code chang
 
 ---
 
-### User Story 8: System Diagnostics Command
 
-**Priority:** Low
-**Story Points:** 2
-
-**User Story:**
-As a **DevOps engineer**, I want **a system diagnostics command**, so that **I can monitor if the application is running correctly**.
-
-**Acceptance Criteria:**
-
-1. 'status' command prints system information (uptime, memory usage, database connection status)
-2. Command executes within 500ms
-3. Output is formatted as a readable table
-4. Command does not require authentication
-5. Command is documented in user guide
-
----
 
 ## 3. Definition of Done (DoD)
 
@@ -191,17 +175,17 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 
 ### Selected User Stories for Sprint 1
 
-#### Story 1: US-3 - Automated Testing Framework
+#### Story 1: US-2 - Automated Testing Framework
 
 **Priority:** High | **Story Points:** 5
 **Rationale:** Essential foundation for DevOps practices. Required before CI/CD implementation.
 
-#### Story 2: US-7 - CI/CD Pipeline Setup
+#### Story 2: US-6 - CI/CD Pipeline Setup
 
 **Priority:** High | **Story Points:** 5
 **Rationale:** Core DevOps requirement. Depends on having tests to run in the pipeline.
 
-#### Story 3: US-5 - Comprehensive Logging System
+#### Story 3: US-4 - Comprehensive Logging System
 
 **Priority:** Medium | **Story Points:** 3
 **Rationale:** Provides visibility into system behavior and is relatively self-contained.
@@ -213,11 +197,11 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 - Sprint duration: 1-2 weeks
 - Focus: DevOps infrastructure (60%) + Feature delivery (40%)
 - Risk: Setting up CI/CD for the first time may take longer than estimated
-- Mitigation: If time is limited, US-5 (Logging) can be moved to Sprint 2
+- Mitigation: If time is limited, US-4 (Logging) can be moved to Sprint 2
 
 ### Sprint 1 Tasks Breakdown
 
-#### US-3: Automated Testing Framework
+#### US-2: Automated Testing Framework
 
 1. Set up JUnit 5 testing dependencies (already present)
 2. Write unit tests for ProjectService methods
@@ -227,7 +211,7 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 6. Configure test coverage reporting (JaCoCo plugin)
 7. Verify 70% coverage threshold
 
-#### US-7: CI/CD Pipeline Setup
+#### US-6: CI/CD Pipeline Setup
 
 1. Create `.github/workflows/maven.yml` file
 2. Configure pipeline stages: compile, test, package
@@ -236,7 +220,7 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 5. Add pipeline status badge to README
 6. Document pipeline in repository
 
-#### US-5: Comprehensive Logging System
+#### US-4: Comprehensive Logging System
 
 1. Add logging framework dependency (SLF4J + Logback)
 2. Create logging configuration file
@@ -247,8 +231,8 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 
 ### Sprint 1 Dependencies
 
-- US-7 (CI/CD) depends on US-3 (Tests) being substantially complete
-- US-5 (Logging) is independent and can be developed in parallel
+- US-6 (CI/CD) depends on US-2 (Tests) being substantially complete
+- US-4 (Logging) is independent and can be developed in parallel
 
 ### Sprint 1 Exit Criteria
 
@@ -264,13 +248,13 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 
 | Story | Title                         | Priority | Points | Sprint   |
 | ----- | ----------------------------- | -------- | ------ | -------- |
-| US-3  | Automated Testing Framework   | High     | 5      | Sprint 1 |
-| US-7  | CI/CD Pipeline Setup          | High     | 5      | Sprint 1 |
-| US-5  | Comprehensive Logging System  | Medium   | 3      | Sprint 1 |
-| US-2  | Enhanced Task Filtering       | High     | 5      | Sprint 2 |
-| US-4  | Task Assignment and Ownership | Medium   | 3      | Sprint 2 |
-| US-6  | Task Priority Levels          | Medium   | 2      | Sprint 2 |
-| US-8  | System Diagnostics Command    | Low      | 2      | Future   |
+| US-2  | Automated Testing Framework   | High     | 5      | Sprint 1 |
+| US-6  | CI/CD Pipeline Setup          | High     | 5      | Sprint 1 |
+| US-4  | Comprehensive Logging System  | Medium   | 3      | Sprint 1 |
+| US-1  | Enhanced Task Filtering       | High     | 5      | Sprint 2 |
+| US-3  | Task Assignment and Ownership | Medium   | 3      | Sprint 2 |
+| US-5  | Task Priority Levels          | Medium   | 2      | Sprint 2 |
+|   | System Diagnostics Command    | Low      | 2      | Future   |
 
 **Total Backlog:** 33 Story Points
 
@@ -280,7 +264,7 @@ Establish foundational DevOps infrastructure and deliver initial high-priority f
 
 1. **Team Velocity:** Assuming 12-15 story points per sprint based on Sprint 1 planning
 2. **Technical Debt:** Current system has good structure; no major refactoring needed
-3. **Dependencies:** US-2 (Filtering) and US-4 (Assignment) are high priority for Sprint 2 to enhance user experience
+3. **Dependencies:** US-1 (Filtering) and US-3 (Assignment) are high priority for Sprint 2 to enhance user experience
 4. **Tools:** Using GitHub Actions for CI/CD (free for public repos)
 5. **Testing:** JUnit 5 already in pom.xml; need to add test coverage reporting
 

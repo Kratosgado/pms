@@ -90,7 +90,7 @@ A comprehensive Java 21 application for managing projects, tasks, and users with
 
 #### User Stories Completed
 
-##### US-3: Comprehensive Unit Testing (5 points)
+##### US-2: Comprehensive Unit Testing (5 points)
 
 - Added JaCoCo plugin for coverage reporting
 - Created 60+ new tests for User, AuthManager, Repository, Projects
@@ -106,7 +106,7 @@ A comprehensive Java 21 application for managing projects, tasks, and users with
 - `src/test/java/com/kratosgado/pms/models/HardwareProjectTest.java` (5 tests)
 - `src/test/java/com/kratosgado/pms/services/ReportServiceTest.java` (5 tests)
 
-##### US-7: CI/CD Pipeline Integration (5 points)
+##### US-6: CI/CD Pipeline Integration (5 points)
 
 - Set up GitHub Actions workflow
 - 9-stage pipeline (build, test, coverage, artifacts)
@@ -136,7 +136,7 @@ A comprehensive Java 21 application for managing projects, tasks, and users with
 - Maven caching reduces build time by ~30%
 - All stages consistently passing
 
-##### US-5: Logging System (3 points)
+##### US-4: Logging System (3 points)
 
 - Integrated SLF4J + Logback
 - Console, file, and error file appenders
@@ -183,7 +183,7 @@ Commits:                8 meaningful commits
 
 #### User Stories Completed
 
-##### US-2: Enhanced Task Filtering (5 points)
+##### US-1: Enhanced Task Filtering (5 points)
 
 - Filter tasks by status (Pending/In Progress/Completed)
 - Search tasks by name (case-insensitive, partial match)
@@ -205,7 +205,7 @@ getFilteredTasks(TaskStatus, String userId, String searchTerm)
 - Combined filters: 9 tests
 - Edge cases: 4 tests
 
-##### US-4: Task Assignment and Ownership (3 points)
+##### US-3: Task Assignment and Ownership (3 points)
 
 - Filter tasks by assigned user
 - View unassigned tasks
@@ -749,7 +749,7 @@ Trigger (Push/PR)
 
 **1. UI Integration**
 
-- Backend features (US-2, US-4) need UI integration
+- Backend features (US-1, US-3) need UI integration
 - Complete end-to-end functionality required
 - Users can't access new filtering features yet
 
@@ -783,7 +783,7 @@ Trigger (Push/PR)
 
 ### Immediate Actions (Sprint 3)
 
-1. **Complete US-2/US-4 UI Integration** (2 points)
+1. **Complete US-1/US-3 UI Integration** (2 points)
    - Add filtering/search to console menus
    - Enable users to access new features
    - Demo complete functionality
@@ -800,7 +800,7 @@ Trigger (Push/PR)
 
 ### Medium-Term Goals (Sprint 3-4)
 
-1. **US-6: Export Reports to PDF** (5 points)
+1. **US-5: Export Reports to PDF** (5 points)
    - PDF generation library
    - Report templates
    - Export functionality
@@ -976,7 +976,7 @@ acb0f91 feat: implement logging system
 74f2c8b docs: add logging documentation
 
 Sprint 2:
-7082761 feat(module-3): implement task filtering and assignment (US-2, US-4)
+7082761 feat(module-3): implement task filtering and assignment (US-1, US-3)
 870a4b5 ci: add CheckStyle and SpotBugs to code quality pipeline
 b3efa87 docs: add Sprint 2 review and retrospective
 ```

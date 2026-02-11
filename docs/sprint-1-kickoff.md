@@ -14,7 +14,7 @@
 
 ### Selected User Stories (Total: 13 Story Points)
 
-#### 1. US-3: Automated Testing Framework (5 points) - HIGH PRIORITY
+#### 1. US-2: Automated Testing Framework (5 points) - HIGH PRIORITY
 
 **Status:** Not Started
 **Assignee:** TBD
@@ -45,11 +45,11 @@
 
 ---
 
-#### 2. US-7: CI/CD Pipeline Setup (5 points) - HIGH PRIORITY
+#### 2. US-6: CI/CD Pipeline Setup (5 points) - HIGH PRIORITY
 
 **Status:** Not Started
 **Assignee:** TBD
-**Dependencies:** US-3 (Tests must exist to run in pipeline)
+**Dependencies:** US-2 (Tests must exist to run in pipeline)
 
 **Goal:** Implement automated CI/CD pipeline using GitHub Actions to automatically test and validate code changes.
 
@@ -77,7 +77,7 @@
 
 ---
 
-#### 3. US-5: Comprehensive Logging System (3 points) - MEDIUM PRIORITY
+#### 3. US-4: Comprehensive Logging System (3 points) - MEDIUM PRIORITY
 
 **Status:** Not Started
 **Assignee:** TBD
@@ -114,29 +114,29 @@
 
 ### Week 1 Focus (if 2-week sprint)
 
-1. **Day 1-2:** Set up testing framework (US-3)
+1. **Day 1-2:** Set up testing framework (US-2)
    - Configure JaCoCo
    - Write unit tests for service classes
    - Aim for 50% coverage by end of day 2
 
-2. **Day 3-4:** Complete testing and start logging (US-3 + US-5)
+2. **Day 3-4:** Complete testing and start logging (US-2 + US-4)
    - Write integration tests
    - Reach 70% coverage threshold
    - Add logging dependencies and configuration
 
-3. **Day 5:** Set up CI/CD pipeline (US-7)
+3. **Day 5:** Set up CI/CD pipeline (US-6)
    - Create GitHub Actions workflow
    - Configure basic pipeline stages
    - Test initial pipeline run
 
 ### Week 2 Focus (if 2-week sprint)
 
-1. **Day 1-2:** Complete logging implementation (US-5)
+1. **Day 1-2:** Complete logging implementation (US-4)
    - Add logging to all service classes
    - Test log output
    - Verify log rotation
 
-2. **Day 3-4:** Enhance and finalize CI/CD (US-7)
+2. **Day 3-4:** Enhance and finalize CI/CD (US-6)
    - Add code quality checks
    - Optimize pipeline performance
    - Add status badge
@@ -169,7 +169,7 @@ Each day, team members should be prepared to answer:
 | CI/CD setup takes longer than estimated | Medium      | Medium | Start with basic pipeline, enhance incrementally  |
 | Test coverage difficult to reach 70%    | Low         | Medium | Focus on service layer first, models secondary    |
 | Logging framework integration issues    | Low         | Low    | Use well-documented SLF4J/Logback stack           |
-| Time constraint with 3 stories          | Medium      | High   | US-5 (Logging) can be moved to Sprint 2 if needed |
+| Time constraint with 3 stories          | Medium      | High   | US-4 (Logging) can be moved to Sprint 2 if needed |
 
 ---
 
@@ -314,7 +314,7 @@ Use conventional commits:
    - Update backlog with assignments
 
 4. **Begin Development:**
-   - Start with US-3 (Testing) as it's a dependency
+   - Start with US-2 (Testing) as it's a dependency
    - Make first commit to kick off the sprint
 
 5. **Set Up Daily Standup:**

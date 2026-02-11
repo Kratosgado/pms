@@ -33,16 +33,16 @@ Sprint 1 has been **successfully completed** with all 3 user stories delivered, 
 
 | ID        | User Story                   | Priority | Points | Status      |
 | --------- | ---------------------------- | -------- | ------ | ----------- |
-| US-3      | Automated Testing Framework  | High     | 5      | ✅ Complete |
-| US-7      | CI/CD Pipeline Setup         | High     | 5      | ✅ Complete |
-| US-5      | Comprehensive Logging System | Medium   | 3      | ✅ Complete |
+| US-2      | Automated Testing Framework  | High     | 5      | ✅ Complete |
+| US-6      | CI/CD Pipeline Setup         | High     | 5      | ✅ Complete |
+| US-4      | Comprehensive Logging System | Medium   | 3      | ✅ Complete |
 | **Total** |                              |          | **13** | **100%**    |
 
 ---
 
 ## User Stories Delivered
 
-### US-3: Automated Testing Framework (5 Points) ✅
+### US-2: Automated Testing Framework (5 Points) ✅
 
 **User Story:**
 As a developer, I want comprehensive automated tests for core business logic, so that I can confidently refactor code and prevent regressions.
@@ -110,7 +110,7 @@ $ mvn test
 
 ---
 
-### US-7: CI/CD Pipeline Setup (5 Points) ✅
+### US-6: CI/CD Pipeline Setup (5 Points) ✅
 
 **User Story:**
 As a developer, I want an automated CI/CD pipeline, so that code changes are automatically tested and validated.
@@ -190,7 +190,7 @@ on:
 
 ---
 
-### US-5: Comprehensive Logging System (3 Points) ✅
+### US-4: Comprehensive Logging System (3 Points) ✅
 
 **User Story:**
 As a system administrator, I want detailed application logs for key operations, so that I can troubleshoot issues and audit user actions.
@@ -630,8 +630,8 @@ $ cat logs/error.log
 
 ### Action Items for Sprint 2 📋
 
-1. **US-2: Enhanced Task Filtering** (5 points) - High priority
-2. **US-4: Task Assignment** (3 points) - Medium priority
+1. **US-1: Enhanced Task Filtering** (5 points) - High priority
+2. **US-3: Task Assignment** (3 points) - Medium priority
 3. **Add code quality checks** to CI/CD pipeline
 4. **Expand integration tests** for complex scenarios
 5. **Create Sprint 2 review template** based on Sprint 1 learnings
@@ -688,9 +688,9 @@ The sprint goal to "Establish foundational DevOps infrastructure" has been **ful
 
 With the DevOps foundation in place, Sprint 2 can focus on delivering additional user-facing features:
 
-- Enhanced filtering (US-2)
-- Task assignment (US-4)
-- Task priorities (US-6)
+- Enhanced filtering (US-1)
+- Task assignment (US-3)
+- Task priorities (US-5)
 
 ---
 

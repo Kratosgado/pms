@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the Continuous Integration and Continuous Deployment (CI/CD) pipeline for the PMS Task Management Application, implemented as part of Sprint 1 (US-7: CI/CD Pipeline Setup).
+This document describes the Continuous Integration and Continuous Deployment (CI/CD) pipeline for the PMS Task Management Application, implemented as part of Sprint 1 (US-6: CI/CD Pipeline Setup).
 
 ---
 
@@ -173,5 +173,5 @@ The CI/CD pipeline provides **automated quality assurance** for every code chang
 
 **Last Updated:** 2026-02-11
 **Sprint:** Sprint 1
-**User Story:** US-7 - CI/CD Pipeline Setup
+**User Story:** US-6 - CI/CD Pipeline Setup
 **Workflow File:** `.github/workflows/maven.yml`

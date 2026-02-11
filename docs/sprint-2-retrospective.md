@@ -24,7 +24,7 @@ This retrospective follows the **Start-Stop-Continue** format combined with **Wh
 
 ### Delivery Metrics
 
-- **Story Points Planned:** 10 (US-2: 5, US-4: 3, Code Quality: 2)
+- **Story Points Planned:** 10 (US-1: 5, US-3: 3, Code Quality: 2)
 - **Story Points Delivered:** 10 (100%)
 - **Velocity:** 10 points
 - **Tests Added:** 23 new tests
@@ -62,7 +62,7 @@ Sprint 2 had a clear, achievable scope with 3 well-defined deliverables. All ite
 ### 2. Complementary User Stories
 
 **Observation:**
-US-2 (Enhanced Filtering) and US-4 (Task Assignment) shared implementation and tests, creating natural synergies.
+US-1 (Enhanced Filtering) and US-3 (Task Assignment) shared implementation and tests, creating natural synergies.
 
 **Why It Worked:**
 
@@ -72,7 +72,7 @@ US-2 (Enhanced Filtering) and US-4 (Task Assignment) shared implementation and t
 - Reduced duplication
 
 **Example:**
-`getFilteredTasks()` method supports both status filtering (US-2) and user filtering (US-4) in one unified interface.
+`getFilteredTasks()` method supports both status filtering (US-1) and user filtering (US-3) in one unified interface.
 
 **Impact:**
 
@@ -118,7 +118,7 @@ Team successfully integrated code quality tools (CheckStyle, SpotBugs) without b
 ### 4. Comprehensive Test Coverage
 
 **Observation:**
-Added 23 new tests for US-2 and US-4 with excellent edge case coverage.
+Added 23 new tests for US-1 and US-3 with excellent edge case coverage.
 
 **Test Quality Highlights:**
 
@@ -156,7 +156,7 @@ Created feature branch, made focused commits, and prepared for clean PR.
 **Commit Quality:**
 
 ```
-7082761 feat(module-3): implement task filtering and assignment (US-2, US-4)
+7082761 feat(module-3): implement task filtering and assignment (US-1, US-3)
 870a4b5 ci: add CheckStyle and SpotBugs to code quality pipeline
 ```
 
@@ -256,7 +256,7 @@ Technical debt is now visible but growing. Without a systematic approach to addr
 ### 2. Missing UI Implementation for New Features
 
 **Observation:**
-US-2 and US-4 implemented backend filtering methods but no UI integration.
+US-1 and US-3 implemented backend filtering methods but no UI integration.
 
 **Gap:**
 
@@ -290,7 +290,7 @@ US-2 and US-4 implemented backend filtering methods but no UI integration.
 
 **Action Items for Sprint 3:**
 
-- [ ] Add UI integration for US-2 and US-4 filtering
+- [ ] Add UI integration for US-1 and US-3 filtering
 - [ ] Update Definition of Done to include UI access
 - [ ] Review all user stories for UI completeness
 
@@ -458,7 +458,7 @@ What's our "normal" velocity for feature development?
 ### High Priority
 
 1. **Add UI Integration for Filtering Features**
-   - Integrate US-2 and US-4 into console menus
+   - Integrate US-1 and US-3 into console menus
    - Enable users to filter/search tasks
    - **Owner:** Development Team
    - **Target:** Sprint 3
@@ -589,14 +589,14 @@ What's our "normal" velocity for feature development?
 
 **Option A: Feature-Heavy Sprint**
 
-- UI Integration for US-2/US-4 (2 points)
-- US-6: Export Reports (5 points)
+- UI Integration for US-1/US-3 (2 points)
+- US-5: Export Reports (5 points)
 - **Total:** 7 points
 
 **Option B: Balanced Sprint**
 
-- US-6: Export Reports (5 points)
-- UI Integration for US-2/US-4 (2 points)
+- US-5: Export Reports (5 points)
+- UI Integration for US-1/US-3 (2 points)
 - Technical Debt (2 points)
 - Integration Tests (2 points)
 - **Total:** 11 points ⬅️ **RECOMMENDED**
@@ -606,7 +606,7 @@ What's our "normal" velocity for feature development?
 - Technical Debt (2 points)
 - Integration Tests (2 points)
 - UI Integration (2 points)
-- US-8: Data Backup (3 points)
+- : Data Backup (3 points)
 - **Total:** 9 points
 
 ### Recommendation: Option B
@@ -614,7 +614,7 @@ What's our "normal" velocity for feature development?
 **Rationale:**
 
 - Balances new features with quality
-- Completes US-2/US-4 properly (with UI)
+- Completes US-1/US-3 properly (with UI)
 - Addresses technical debt
 - Improves test coverage
 - Realistic scope
@@ -645,7 +645,7 @@ What's our "normal" velocity for feature development?
 
 ### 1. Synergistic User Stories are Efficient
 
-When user stories naturally complement each other (US-2 + US-4), development becomes more efficient and the resulting design is more cohesive.
+When user stories naturally complement each other (US-1 + US-3), development becomes more efficient and the resulting design is more cohesive.
 
 **Application:**
 Look for story combinations during sprint planning.
@@ -691,7 +691,7 @@ Never skip tests, even under time pressure.
 ## 🎉 Sprint 2 Success Factors
 
 1. ✅ **Focused Scope** - Clear, achievable goals
-2. ✅ **Complementary Stories** - US-2 + US-4 synergy
+2. ✅ **Complementary Stories** - US-1 + US-3 synergy
 3. ✅ **Proactive Quality** - Integrated tools without being asked
 4. ✅ **Testing Excellence** - 23 comprehensive tests
 5. ✅ **Pragmatic Decisions** - Report but don't fail build
@@ -719,7 +719,7 @@ Complete unfinished work (UI integration), balance new features with quality imp
 
 | Action                       | Priority | Target         | Owner    | Points |
 | ---------------------------- | -------- | -------------- | -------- | ------ |
-| UI integration for US-2/US-4 | High     | Sprint 3       | Dev Team | 2      |
+| UI integration for US-1/US-3 | High     | Sprint 3       | Dev Team | 2      |
 | Fix CheckStyle violations    | High     | Sprint 3       | Dev Team | 1      |
 | Address SpotBugs findings    | High     | Sprint 3       | Dev Team | 1      |
 | Add integration tests        | Medium   | Sprint 3       | Dev Team | 2      |

@@ -39,7 +39,7 @@ This retrospective follows the **Start-Stop-Continue** format combined with **Wh
 ### 1. Clear User Stories and Acceptance Criteria
 
 **Observation:**
-All three user stories (US-3, US-7, US-5) had well-defined acceptance criteria that were specific, measurable, and testable.
+All three user stories (US-2, US-6, US-4) had well-defined acceptance criteria that were specific, measurable, and testable.
 
 **Why It Worked:**
 
@@ -49,7 +49,7 @@ All three user stories (US-3, US-7, US-5) had well-defined acceptance criteria t
 - Clear scope boundaries
 
 **Example:**
-US-3 specified "Unit tests for all service classes" and "Test coverage at least 70%", which were clear targets.
+US-2 specified "Unit tests for all service classes" and "Test coverage at least 70%", which were clear targets.
 
 **Continue This Practice:** ✅
 
@@ -151,7 +151,7 @@ Focused testing efforts on business logic (models, data layer, security) rather 
 ### 5. CI/CD Pipeline Integration
 
 **Observation:**
-GitHub Actions pipeline set up early (US-7) and worked smoothly from first push.
+GitHub Actions pipeline set up early (US-6) and worked smoothly from first push.
 
 **Pipeline Features:**
 
@@ -196,7 +196,7 @@ Sprint 1 selected 13 story points with consideration for DevOps setup overhead, 
 - Acknowledged setup time needed
 - Included learning curve
 - Focused scope
-- Dependency management (US-7 depends on US-3)
+- Dependency management (US-6 depends on US-2)
 
 **Lesson Learned:**
 First sprint velocity of 13 points provides baseline for Sprint 2 planning.
@@ -412,7 +412,7 @@ Sprint review requires manual screenshot collection and evidence gathering.
    - **Owner:** Development Team
    - **Target:** Sprint 2
 
-2. **Begin US-2: Enhanced Filtering**
+2. **Begin US-1: Enhanced Filtering**
    - High priority feature (5 points)
    - Improves user experience
    - **Owner:** Development Team
@@ -512,8 +512,8 @@ Sprint review requires manual screenshot collection and evidence gathering.
 
 ### Proposed Sprint 2 Backlog
 
-1. **US-2: Enhanced Filtering** (5 points) - High
-2. **US-4: Task Assignment** (3 points) - Medium
+1. **US-1: Enhanced Filtering** (5 points) - High
+2. **US-3: Task Assignment** (3 points) - Medium
 3. **Code Quality Tools** (estimate: 2 points) - High
 
 **Total:** 10 points (manageable goal)

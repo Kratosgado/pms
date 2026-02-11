@@ -16,8 +16,8 @@ Sprint 2 focused on delivering high-value user features and process improvements
 
 **Key Achievements:**
 
-- Enhanced task filtering and search capabilities (US-2)
-- Task assignment and ownership tracking (US-4)
+- Enhanced task filtering and search capabilities (US-1)
+- Task assignment and ownership tracking (US-3)
 - Code quality tools integration (CheckStyle + SpotBugs)
 - Maintained 100% test passing rate (126 tests)
 - Zero regressions from Sprint 1
@@ -38,7 +38,7 @@ The sprint successfully delivered all committed user stories and process improve
 
 ## Completed User Stories
 
-### US-2: Enhanced Task Filtering and Search
+### US-1: Enhanced Task Filtering and Search
 
 **Story Points:** 5
 **Status:** ✅ COMPLETED
@@ -81,12 +81,12 @@ Search Tests:               4/4 passing
 Combined Filter Tests:      9/9 passing
 Edge Case Tests:            4/4 passing
 User Assignment Tests:      3/3 passing
-Total US-2 Related Tests:  23/23 passing ✅
+Total US-1 Related Tests:  23/23 passing ✅
 ```
 
 ---
 
-### US-4: Task Assignment and Ownership
+### US-3: Task Assignment and Ownership
 
 **Story Points:** 3
 **Status:** ✅ COMPLETED
@@ -104,7 +104,7 @@ As a project manager, I want to assign tasks to team members and track task owne
 | 2   | View unassigned tasks                   | ✅ PASSED | `ProjectFilteringTest.java:107-112` - Unassigned task test  |
 | 3   | Combine user filter with other filters  | ✅ PASSED | `ProjectFilteringTest.java:173-194` - Combined filter tests |
 | 4   | Handle null/invalid user IDs gracefully | ✅ PASSED | `ProjectFilteringTest.java:100-104, 228-232` - Edge cases   |
-| 5   | All tests passing                       | ✅ PASSED | Tests integrated with US-2 tests                            |
+| 5   | All tests passing                       | ✅ PASSED | Tests integrated with US-1 tests                            |
 
 #### Implementation Details
 
@@ -121,7 +121,7 @@ As a project manager, I want to assign tasks to team members and track task owne
 User Filtering Tests:       3/3 passing
 Unassigned Task Tests:      1/1 passing
 Null/Invalid ID Tests:      2/2 passing
-Total US-4 Related Tests:   6/6 passing ✅
+Total US-3 Related Tests:   6/6 passing ✅
 ```
 
 ---
@@ -210,7 +210,7 @@ Execution Time:     ~5 seconds
 
 | Test Suite                  | Tests | Status      | Coverage Focus             |
 | --------------------------- | ----- | ----------- | -------------------------- |
-| ProjectFilteringTest        | 23    | ✅ All Pass | US-2, US-4 filtering logic |
+| ProjectFilteringTest        | 23    | ✅ All Pass | US-1, US-3 filtering logic |
 | UserTest                    | 17    | ✅ All Pass | User models                |
 | ProjectInMemoryDatabaseTest | 16    | ✅ All Pass | Data persistence           |
 | AuthManagerTest             | 12    | ✅ All Pass | Security & auth            |
@@ -330,7 +330,7 @@ Build Status:           ✅ PASSING
 ### Sprint 2 Metrics
 
 ```
-Story Points Committed:     10 (US-2: 5, US-4: 3, Code Quality: 2)
+Story Points Committed:     10 (US-1: 5, US-3: 3, Code Quality: 2)
 Story Points Delivered:     10
 Completion Rate:            100%
 Sprint 2 Velocity:          10 points
@@ -460,15 +460,15 @@ All deliverables meet the Definition of Done criteria:
 
 ### Completed in Sprint 2
 
-- ✅ US-2: Enhanced Task Filtering (5 points)
-- ✅ US-4: Task Assignment (3 points)
+- ✅ US-1: Enhanced Task Filtering (5 points)
+- ✅ US-3: Task Assignment (3 points)
 
 ### Remaining High-Priority Items
 
-- 🔲 US-6: Export Reports to PDF (5 points)
-- 🔲 US-3: Enhanced Unit Testing (Already completed in Sprint 1, marked done)
-- 🔲 US-7: CI/CD Pipeline (Already completed in Sprint 1, marked done)
-- 🔲 US-5: Logging System (Already completed in Sprint 1, marked done)
+- 🔲 US-5: Export Reports to PDF (5 points)
+- 🔲 US-2: Enhanced Unit Testing (Already completed in Sprint 1, marked done)
+- 🔲 US-6: CI/CD Pipeline (Already completed in Sprint 1, marked done)
+- 🔲 US-4: Logging System (Already completed in Sprint 1, marked done)
 
 ### New Items Identified
 
@@ -557,20 +557,20 @@ List<Task> unassigned = project.getUnassignedTasks();
 1. ✅ Complete Sprint 2 retrospective
 2. ✅ Merge Sprint 2 branch to main
 3. ✅ Update product backlog priorities
-4. 🔲 Plan Sprint 3 (US-6 or code quality fixes?)
+4. 🔲 Plan Sprint 3 (US-5 or code quality fixes?)
 
 ### Sprint 3 Planning Considerations
 
 **Option A: Continue Feature Development**
 
-- US-6: Export Reports (5 points)
+- US-5: Export Reports (5 points)
 - Total: 5 points
 
 **Option B: Balance Features and Quality**
 
 - Fix CheckStyle violations (2 points)
 - Address SpotBugs findings (3 points)
-- US-6: Export Reports (5 points)
+- US-5: Export Reports (5 points)
 - Total: 10 points
 
 **Recommendation:** Option B - Balance technical debt with new features
@@ -594,7 +594,7 @@ The integration of automated code quality tools represents a strategic investmen
 ## Appendix: Commit History
 
 ```
-7082761 feat(module-3): implement task filtering and assignment (US-2, US-4)
+7082761 feat(module-3): implement task filtering and assignment (US-1, US-3)
 870a4b5 ci: add CheckStyle and SpotBugs to code quality pipeline
 ```
 

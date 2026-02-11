@@ -44,7 +44,7 @@ public class ProjectFilteringTest {
     project.addTask(task6);
   }
 
-  // US-2: Enhanced Task Filtering - Status Filter Tests
+  // US-1: Enhanced Task Filtering - Status Filter Tests
 
   @Test
   void testGetTasksByStatus_completed() {
@@ -70,7 +70,7 @@ public class ProjectFilteringTest {
     assertTrue(pendingTasks.stream().allMatch(t -> t.getStatus() == TaskStatus.PENDING));
   }
 
-  // US-4: Task Assignment - User Filter Tests
+  // US-3: Task Assignment - User Filter Tests
 
   @Test
   void testGetTasksByUser_user001() {
@@ -111,7 +111,7 @@ public class ProjectFilteringTest {
     assertEquals("T005", unassignedTasks.get(0).getId());
   }
 
-  // US-2: Enhanced Task Filtering - Search Tests
+  // US-1: Enhanced Task Filtering - Search Tests
 
   @Test
   void testSearchTasks_byName_partialMatch() {
@@ -144,7 +144,7 @@ public class ProjectFilteringTest {
     assertEquals(0, results.size());
   }
 
-  // US-2: Combined Filters Tests
+  // US-1: Combined Filters Tests
 
   @Test
   void testGetFilteredTasks_statusOnly() {

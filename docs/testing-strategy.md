@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the testing approach for the PMS application as part of Sprint 1 (US-3: Automated Testing Framework).
+This document outlines the testing approach for the PMS application as part of Sprint 1 (US-2: Automated Testing Framework).
 
 ---
 
@@ -253,7 +253,7 @@ void testAdd_duplicateId_throwsConflictException() throws ConflictException {
 
 ## CI/CD Integration
 
-Tests are integrated into the CI/CD pipeline (US-7):
+Tests are integrated into the CI/CD pipeline (US-6):
 - **Trigger:** Every push and pull request
 - **Failure:** Pipeline fails if any test fails
 - **Reports:** Coverage reports generated automatically
@@ -274,4 +274,4 @@ This approach ensures we have **confidence in our core logic** while avoiding th
 
 **Last Updated:** 2026-02-11
 **Sprint:** Sprint 1
-**User Story:** US-3 - Automated Testing Framework
+**User Story:** US-2 - Automated Testing Framework

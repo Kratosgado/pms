@@ -382,5 +382,5 @@ All logs are captured with appropriate detail while maintaining security and per
 
 **Last Updated:** 2026-02-11
 **Sprint:** Sprint 1
-**User Story:** US-5 - Comprehensive Logging System
+**User Story:** US-4 - Comprehensive Logging System
 **Configuration:** `src/main/resources/logback.xml`

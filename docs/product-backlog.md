@@ -8,7 +8,7 @@
 
 ## Backlog Items
 
-### US-2: Enhanced Task Filtering and Search
+### US-1: Enhanced Task Filtering and Search
 
 - **Priority:** High
 - **Story Points:** 5
@@ -29,7 +29,7 @@ As a project manager, I want to filter and search tasks by multiple criteria, so
 
 ---
 
-### US-3: Automated Testing Framework ⭐ Sprint 1
+### US-2: Automated Testing Framework ⭐ Sprint 1
 
 - **Priority:** High
 - **Story Points:** 5
@@ -50,7 +50,7 @@ As a developer, I want comprehensive automated tests for core business logic, so
 
 ---
 
-### US-4: Task Assignment and Ownership
+### US-3: Task Assignment and Ownership
 
 - **Priority:** Medium
 - **Story Points:** 3
@@ -71,7 +71,7 @@ As a project manager, I want to assign tasks to specific team members, so that e
 
 ---
 
-### US-5: Comprehensive Logging System ⭐ Sprint 1
+### US-4: Comprehensive Logging System ⭐ Sprint 1
 
 - **Priority:** Medium
 - **Story Points:** 3
@@ -92,7 +92,7 @@ As a system administrator, I want detailed application logs for key operations, 
 
 ---
 
-### US-6: Task Priority Levels
+### US-5: Task Priority Levels
 
 - **Priority:** Medium
 - **Story Points:** 2
@@ -113,7 +113,7 @@ As a team member, I want to set priority levels for tasks, so that I can focus o
 
 ---
 
-### US-7: CI/CD Pipeline Setup ⭐ Sprint 1
+### US-6: CI/CD Pipeline Setup ⭐ Sprint 1
 
 - **Priority:** High
 - **Story Points:** 5
@@ -134,25 +134,7 @@ As a developer, I want an automated CI/CD pipeline, so that code changes are aut
 
 ---
 
-### US-8: System Diagnostics Command
 
-- **Priority:** Low
-- **Story Points:** 2
-- **Status:** Not Started
-- **Sprint:** Future
-- **Assignee:** TBD
-
-**Description:**
-As a DevOps engineer, I want a system diagnostics command, so that I can monitor if the application is running correctly.
-
-**Acceptance Criteria:**
-
-- [ ] 'status' command prints system information (uptime, memory, DB status)
-- [ ] Command executes within 500ms
-- [ ] Output is formatted as a readable table
-- [ ] Documented in user guide
-
----
 
 ## Sprint Planning
 
@@ -162,9 +144,9 @@ As a DevOps engineer, I want a system diagnostics command, so that I can monitor
 
 | Story                              | Points | Priority |
 | ---------------------------------- | ------ | -------- |
-| US-3: Automated Testing Framework  | 5      | High     |
-| US-7: CI/CD Pipeline Setup         | 5      | High     |
-| US-5: Comprehensive Logging System | 3      | Medium   |
+| US-2: Automated Testing Framework  | 5      | High     |
+| US-6: CI/CD Pipeline Setup         | 5      | High     |
+| US-4: Comprehensive Logging System | 3      | Medium   |
 | **Total**                          | **13** |          |
 
 ### Sprint 2 (Planned)
@@ -173,16 +155,16 @@ As a DevOps engineer, I want a system diagnostics command, so that I can monitor
 
 | Story                    | Points | Priority |
 | ------------------------ | ------ | -------- |
-| US-2: Enhanced Filtering | 5      | High     |
-| US-4: Task Assignment    | 3      | Medium   |
-| US-6: Task Priority      | 2      | Medium   |
+| US-1: Enhanced Filtering | 5      | High     |
+| US-3: Task Assignment    | 3      | Medium   |
+| US-5: Task Priority      | 2      | Medium   |
 | **Total**                | **18** |          |
 
 ### Backlog (Future Sprints)
 
 | Story                            | Points | Priority |
 | -------------------------------- | ------ | -------- |
-| US-8: System Diagnostics Command | 2      | Low      |
+| : System Diagnostics Command | 2      | Low      |
 
 ---
 

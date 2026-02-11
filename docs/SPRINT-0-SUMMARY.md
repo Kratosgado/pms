@@ -20,13 +20,13 @@
 | US-1 | RESTful API for Task Management    | High     | 8      | Sprint 2     |
 =======
 >>>>>>> 7fac42aea455f20d7978688a68730b1236da36c8
-| US-2 | Enhanced Task Filtering and Search | High     | 5      | Sprint 2     |
-| US-3 | Automated Testing Framework        | High     | 5      | **Sprint 1** |
-| US-4 | Task Assignment and Ownership      | Medium   | 3      | Sprint 2     |
-| US-5 | Comprehensive Logging System       | Medium   | 3      | **Sprint 1** |
-| US-6 | Task Priority Levels               | Medium   | 2      | Sprint 2     |
-| US-7 | CI/CD Pipeline Setup               | High     | 5      | **Sprint 1** |
-| US-8 | Health Check Endpoint              | Low      | 2      | Future       |
+| US-1 | Enhanced Task Filtering and Search | High     | 5      | Sprint 2     |
+| US-2 | Automated Testing Framework        | High     | 5      | **Sprint 1** |
+| US-3 | Task Assignment and Ownership      | Medium   | 3      | Sprint 2     |
+| US-4 | Comprehensive Logging System       | Medium   | 3      | **Sprint 1** |
+| US-5 | Task Priority Levels               | Medium   | 2      | Sprint 2     |
+| US-6 | CI/CD Pipeline Setup               | High     | 5      | **Sprint 1** |
+|  | Health Check Endpoint              | Low      | 2      | Future       |
 
 **Total Backlog:** 33 Story Points
 
@@ -47,9 +47,9 @@ Comprehensive DoD document created covering:
 
 **Selected Stories (13 points):**
 
-1. US-3: Automated Testing Framework (5 points)
-2. US-7: CI/CD Pipeline Setup (5 points)
-3. US-5: Comprehensive Logging System (3 points)
+1. US-2: Automated Testing Framework (5 points)
+2. US-6: CI/CD Pipeline Setup (5 points)
+3. US-4: Comprehensive Logging System (3 points)
 
 **Rationale:** Focus on DevOps infrastructure first to enable quality delivery in subsequent sprints.
 
@@ -76,21 +76,21 @@ All planning documents are located in `/docs/` directory:
 
 ### Sprint 1 Stories Summary
 
-#### US-3: Automated Testing Framework (5 pts)
+#### US-2: Automated Testing Framework (5 pts)
 
 - Write unit tests for all service classes
 - Write integration tests for data layer
 - Achieve 70% code coverage
 - Configure JaCoCo for coverage reporting
 
-#### US-7: CI/CD Pipeline Setup (5 pts)
+#### US-6: CI/CD Pipeline Setup (5 pts)
 
 - Create GitHub Actions workflow
 - Automate build, test, and code quality checks
 - Add pipeline status badge to README
 - Pipeline must pass before merging
 
-#### US-5: Comprehensive Logging System (3 pts)
+#### US-4: Comprehensive Logging System (3 pts)
 
 - Implement SLF4J + Logback logging
 - Log authentication, CRUD operations, and errors
@@ -126,7 +126,7 @@ All planning documents are located in `/docs/` directory:
 
 3. **Begin Sprint 1:**
    - Create feature branches for each story
-   - Start with US-3 (Automated Testing) as it's a dependency for US-7
+   - Start with US-2 (Automated Testing) as it's a dependency for US-6
    - Follow git workflow: frequent commits, conventional commit messages
    - Open PRs when stories are complete
 
@@ -179,9 +179,9 @@ This Sprint 0 planning addresses all assessment grading dimensions:
 
 ### 2. DevOps Practice (25%)
 
-✅ CI/CD pipeline planned (US-7)
-✅ Automated testing planned (US-3)
-✅ Logging/monitoring planned (US-5)
+✅ CI/CD pipeline planned (US-6)
+✅ Automated testing planned (US-2)
+✅ Logging/monitoring planned (US-4)
 ✅ Pipeline stages defined
 
 ### 3. Delivery Discipline (20%)
